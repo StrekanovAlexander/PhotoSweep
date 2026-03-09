@@ -22,6 +22,7 @@ object fmMain: TfmMain
     Top = 63
     Width = 978
     Height = 1
+    Margins.Bottom = 8
     Align = alTop
     Shape = bsBottomLine
     ExplicitLeft = 0
@@ -44,7 +45,7 @@ object fmMain: TfmMain
       AlignWithMargins = True
       Left = 106
       Top = 22
-      Width = 694
+      Width = 684
       Height = 27
       Margins.Left = 16
       Margins.Top = 14
@@ -111,9 +112,9 @@ object fmMain: TfmMain
     end
     object btnAbout: TBitBtn
       AlignWithMargins = True
-      Left = 892
+      Left = 887
       Top = 16
-      Width = 80
+      Width = 85
       Height = 28
       Margins.Top = 8
       Margins.Right = 0
@@ -124,12 +125,13 @@ object fmMain: TfmMain
       ImageName = 'information-circle'
       Images = svgBtnList
       TabOrder = 2
+      ExplicitLeft = 892
     end
     object btnSource: TBitBtn
       AlignWithMargins = True
-      Left = 806
+      Left = 796
       Top = 16
-      Width = 80
+      Width = 85
       Height = 28
       Margins.Top = 8
       Margins.Bottom = 8
@@ -139,6 +141,7 @@ object fmMain: TfmMain
       ImageName = 'folder-open'
       Images = svgBtnList
       TabOrder = 1
+      ExplicitLeft = 806
     end
   end
   object stbMain: TStatusBar
@@ -151,37 +154,86 @@ object fmMain: TfmMain
   end
   object MainPanel: TPanel
     Left = 0
-    Top = 67
+    Top = 72
     Width = 984
-    Height = 475
+    Height = 470
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitTop = 67
+    ExplicitHeight = 475
     object pnlFiles: TPanel
-      Left = 0
-      Top = 0
-      Width = 703
-      Height = 475
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 692
+      Height = 464
       Align = alClient
       Caption = 'pnlFiles'
       TabOrder = 0
-      ExplicitLeft = 240
-      ExplicitTop = 176
-      ExplicitWidth = 185
-      ExplicitHeight = 41
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 703
+      ExplicitHeight = 475
     end
     object pnlTools: TPanel
       AlignWithMargins = True
       Left = 706
       Top = 3
       Width = 275
-      Height = 469
+      Height = 464
+      Margins.Left = 8
       Align = alRight
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
-      StyleName = 'Charcoal Dark Slate'
       ExplicitLeft = 709
+      ExplicitHeight = 469
+      object pnlModeBtns: TPanel
+        Left = 0
+        Top = 0
+        Width = 275
+        Height = 31
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object btnSort: TBitBtn
+          AlignWithMargins = True
+          Left = 3
+          Top = 0
+          Width = 132
+          Height = 28
+          Margins.Top = 0
+          Align = alLeft
+          Caption = 'Sort'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ImageIndex = 2
+          ImageName = 'arrows-up-down'
+          Images = svgBtnList
+          ParentFont = False
+          TabOrder = 0
+          ExplicitHeight = 38
+        end
+        object btnDuplicates: TBitBtn
+          AlignWithMargins = True
+          Left = 140
+          Top = 0
+          Width = 132
+          Height = 28
+          Margins.Top = 0
+          Align = alRight
+          Caption = 'Duplicates'
+          ImageIndex = 3
+          ImageName = 'document-duplicate'
+          Images = svgBtnList
+          TabOrder = 1
+          ExplicitHeight = 38
+        end
+      end
     end
   end
   object svgBtnList: TSVGIconImageList
@@ -210,9 +262,35 @@ object fmMain: TfmMain
           '0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 ' +
           '20.25 9v.776" />'#13#10'</svg>'#13#10
         FixedColor = clLightgray
+      end
+      item
+        IconName = 'arrows-up-down'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0' +
+          ' 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">' +
+          #13#10'  <path stroke-linecap="round" stroke-linejoin="round" d="M3 7' +
+          '.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.' +
+          '5V7.5" />'#13#10'</svg>'#13#10
+        FixedColor = clLightgray
+      end
+      item
+        IconName = 'document-duplicate'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0' +
+          ' 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">' +
+          #13#10'  <path stroke-linecap="round" stroke-linejoin="round" d="M15.' +
+          '75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0' +
+          ' 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.' +
+          '06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V' +
+          '11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.37' +
+          '5c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125' +
+          ' 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375' +
+          '-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0' +
+          '-3.375-3.375H9.75" />'#13#10'</svg>'#13#10
+        FixedColor = clLightgray
       end>
     Scaled = True
-    Left = 112
-    Top = 8
+    Left = 40
+    Top = 104
   end
 end

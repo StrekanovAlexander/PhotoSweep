@@ -23,6 +23,9 @@ type
     MainPanel: TPanel;
     pnlFiles: TPanel;
     pnlTools: TPanel;
+    pnlModeBtns: TPanel;
+    btnSort: TBitBtn;
+    btnDuplicates: TBitBtn;
   private
     { Private declarations }
   public
