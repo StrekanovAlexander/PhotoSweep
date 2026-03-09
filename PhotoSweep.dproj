@@ -143,6 +143,16 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="src\Core\uImgItem.pas"/>
+        <DCCReference Include="libs\CCRExif\CCR.Exif.pas"/>
+        <DCCReference Include="libs\CCRExif\CCR.Exif.BaseUtils.pas"/>
+        <DCCReference Include="libs\CCRExif\CCR.Exif.StreamHelper.pas"/>
+        <DCCReference Include="libs\CCRExif\CCR.Exif.Consts.pas"/>
+        <DCCReference Include="libs\CCRExif\CCR.Exif.TagIDs.pas"/>
+        <DCCReference Include="libs\CCRExif\CCR.Exif.IPTC.pas"/>
+        <DCCReference Include="libs\CCRExif\CCR.Exif.TiffUtils.pas"/>
+        <DCCReference Include="libs\CCRExif\CCR.Exif.XMPUtils.pas"/>
+        <DCCReference Include="src\Core\uIImgMetadataReader.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
