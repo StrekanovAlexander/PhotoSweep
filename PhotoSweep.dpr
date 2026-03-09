@@ -4,7 +4,11 @@ uses
   Vcl.Forms,
   uMain in 'src\uMain.pas' {fmMain},
   Vcl.Themes,
-  Vcl.Styles;
+  Vcl.Styles,
+  uAppTypes in 'src\Model\uAppTypes.pas',
+  uToolsPanelController in 'src\Controllers\uToolsPanelController.pas',
+  ufrSortTools in 'src\UI\Frames\ufrSortTools.pas' {frSortTools: TFrame},
+  ufrDuplicateTools in 'src\UI\Frames\ufrDuplicateTools.pas' {frDuplicateTools: TFrame};
 
 {$R *.res}
 

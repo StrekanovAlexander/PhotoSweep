@@ -5,7 +5,7 @@ object fmMain: TfmMain
   Margins.Top = 0
   Margins.Right = 0
   Caption = 'PhotoSweep'
-  ClientHeight = 561
+  ClientHeight = 611
   ClientWidth = 984
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,6 +15,7 @@ object fmMain: TfmMain
   Font.Style = []
   Position = poScreenCenter
   StyleName = 'Carbon'
+  OnCreate = FormCreate
   TextHeight = 15
   object bvlTop: TBevel
     AlignWithMargins = True
@@ -125,7 +126,6 @@ object fmMain: TfmMain
       ImageName = 'information-circle'
       Images = svgBtnList
       TabOrder = 2
-      ExplicitLeft = 892
     end
     object btnSource: TBitBtn
       AlignWithMargins = True
@@ -141,54 +141,90 @@ object fmMain: TfmMain
       ImageName = 'folder-open'
       Images = svgBtnList
       TabOrder = 1
-      ExplicitLeft = 806
     end
   end
   object stbMain: TStatusBar
     Left = 0
-    Top = 542
+    Top = 592
     Width = 984
     Height = 19
     Enabled = False
     Panels = <>
+    ExplicitTop = 542
   end
   object MainPanel: TPanel
     Left = 0
     Top = 72
     Width = 984
-    Height = 470
+    Height = 520
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitTop = 67
-    ExplicitHeight = 475
+    ExplicitHeight = 470
     object pnlFiles: TPanel
       AlignWithMargins = True
       Left = 3
       Top = 3
       Width = 692
-      Height = 464
+      Height = 514
       Align = alClient
-      Caption = 'pnlFiles'
+      BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 703
-      ExplicitHeight = 475
+      ExplicitHeight = 464
+      object lvwFiles: TListView
+        Left = 0
+        Top = 0
+        Width = 692
+        Height = 514
+        Align = alClient
+        Checkboxes = True
+        Columns = <
+          item
+            AutoSize = True
+            Caption = 'Name'
+          end
+          item
+            Caption = 'Date'
+            Width = 150
+          end
+          item
+            Caption = 'Device'
+            Width = 150
+          end
+          item
+            Caption = 'Resolution'
+            Width = 150
+          end
+          item
+            Caption = 'Size'
+            Width = 75
+          end
+          item
+            Caption = 'Has EXIF'
+            Width = 75
+          end>
+        DoubleBuffered = True
+        OwnerData = True
+        ReadOnly = True
+        RowSelect = True
+        ParentDoubleBuffered = False
+        TabOrder = 0
+        ViewStyle = vsReport
+        ExplicitHeight = 461
+      end
     end
     object pnlTools: TPanel
       AlignWithMargins = True
       Left = 706
       Top = 3
       Width = 275
-      Height = 464
+      Height = 514
       Margins.Left = 8
       Align = alRight
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 709
-      ExplicitHeight = 469
+      ExplicitHeight = 464
       object pnlModeBtns: TPanel
         Left = 0
         Top = 0
@@ -199,10 +235,11 @@ object fmMain: TfmMain
         TabOrder = 0
         object btnSort: TBitBtn
           AlignWithMargins = True
-          Left = 3
+          Left = 0
           Top = 0
-          Width = 132
+          Width = 133
           Height = 28
+          Margins.Left = 0
           Margins.Top = 0
           Align = alLeft
           Caption = 'Sort'
@@ -216,14 +253,14 @@ object fmMain: TfmMain
           Images = svgBtnList
           ParentFont = False
           TabOrder = 0
-          ExplicitHeight = 38
         end
         object btnDuplicates: TBitBtn
           AlignWithMargins = True
-          Left = 140
+          Left = 139
           Top = 0
-          Width = 132
+          Width = 133
           Height = 28
+          Margins.Left = 0
           Margins.Top = 0
           Align = alRight
           Caption = 'Duplicates'
@@ -231,8 +268,20 @@ object fmMain: TfmMain
           ImageName = 'document-duplicate'
           Images = svgBtnList
           TabOrder = 1
-          ExplicitHeight = 38
         end
+      end
+      object pnlToolsHost: TPanel
+        AlignWithMargins = True
+        Left = 3
+        Top = 36
+        Width = 269
+        Height = 475
+        Margins.Top = 5
+        Align = alClient
+        BevelOuter = bvNone
+        TabOrder = 1
+        ExplicitTop = 34
+        ExplicitHeight = 295
       end
     end
   end
@@ -290,7 +339,7 @@ object fmMain: TfmMain
         FixedColor = clLightgray
       end>
     Scaled = True
-    Left = 40
-    Top = 104
+    Left = 584
+    Top = 440
   end
 end
