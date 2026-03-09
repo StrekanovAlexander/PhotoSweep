@@ -46,7 +46,7 @@ object fmMain: TfmMain
       AlignWithMargins = True
       Left = 106
       Top = 22
-      Width = 684
+      Width = 603
       Height = 27
       Margins.Left = 16
       Margins.Top = 14
@@ -142,6 +142,22 @@ object fmMain: TfmMain
       Images = svgBtnList
       TabOrder = 1
     end
+    object Button1: TButton
+      AlignWithMargins = True
+      Left = 715
+      Top = 16
+      Width = 75
+      Height = 28
+      Margins.Top = 8
+      Margins.Bottom = 8
+      Align = alRight
+      Caption = 'Test'
+      TabOrder = 3
+      OnClick = Button1Click
+      ExplicitLeft = 718
+      ExplicitTop = 8
+      ExplicitHeight = 44
+    end
   end
   object stbMain: TStatusBar
     Left = 0
@@ -150,7 +166,6 @@ object fmMain: TfmMain
     Height = 19
     Enabled = False
     Panels = <>
-    ExplicitTop = 542
   end
   object MainPanel: TPanel
     Left = 0
@@ -160,7 +175,6 @@ object fmMain: TfmMain
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitHeight = 470
     object pnlFiles: TPanel
       AlignWithMargins = True
       Left = 3
@@ -170,8 +184,7 @@ object fmMain: TfmMain
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitHeight = 464
-      object lvwFiles: TListView
+      object lvwImgItems: TListView
         Left = 0
         Top = 0
         Width = 692
@@ -193,24 +206,33 @@ object fmMain: TfmMain
           end
           item
             Caption = 'Resolution'
-            Width = 150
+            Width = 100
           end
           item
+            Alignment = taCenter
+            Caption = 'MP'
+          end
+          item
+            Caption = 'Orientation'
+            Width = 75
+          end
+          item
+            Alignment = taRightJustify
             Caption = 'Size'
             Width = 75
           end
           item
+            Alignment = taCenter
             Caption = 'Has EXIF'
             Width = 75
           end>
         DoubleBuffered = True
-        OwnerData = True
         ReadOnly = True
         RowSelect = True
         ParentDoubleBuffered = False
         TabOrder = 0
         ViewStyle = vsReport
-        ExplicitHeight = 461
+        ExplicitLeft = 8
       end
     end
     object pnlTools: TPanel
@@ -224,7 +246,7 @@ object fmMain: TfmMain
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 1
-      ExplicitHeight = 464
+      Visible = False
       object pnlModeBtns: TPanel
         Left = 0
         Top = 0
@@ -280,8 +302,6 @@ object fmMain: TfmMain
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitTop = 34
-        ExplicitHeight = 295
       end
     end
   end
@@ -339,7 +359,7 @@ object fmMain: TfmMain
         FixedColor = clLightgray
       end>
     Scaled = True
-    Left = 584
-    Top = 440
+    Left = 720
+    Top = 120
   end
 end

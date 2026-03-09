@@ -7,7 +7,9 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, SVGIconImage, Vcl.StdCtrls,
   System.ImageList, Vcl.ImgList, SVGIconImageListBase, SVGIconImageList,
   Vcl.Buttons, Vcl.ComCtrls,
-  uToolsPanelController
+  uToolsPanelController,
+  System.IOUtils, uImgItem, uIImgMetadataReader,
+  System.Types
   ;
 
 type
@@ -30,9 +32,11 @@ type
     pnlModeBtns: TPanel;
     btnSort: TBitBtn;
     btnDuplicates: TBitBtn;
-    lvwFiles: TListView;
+    lvwImgItems: TListView;
     pnlToolsHost: TPanel;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     FToolsController: TToolsPanelController;
   public
@@ -56,5 +60,49 @@ begin
   );
 end;
 
+procedure TfmMain.Button1Click(Sender: TObject);
+var
+  Files: TStringDynArray;
+  Meta: TImgMetadata;
+  Item: TListItem;
+  Img: TImgItem;
+begin
+  pnlTools.Show;
+
+  lvwImgItems.Items.BeginUpdate;
+  try
+    lvwImgItems.Items.Clear;
+    Files := TDirectory.GetFiles('C:\source4', '*.jpg'); // пример
+
+    for var FilePath in Files do
+    begin
+
+      Meta.Width := 4000;
+      Meta.Height := 3000;
+      Meta.HasExif := True;
+      Meta.CameraMake := 'Canon R6';
+      Meta.DateTimeOriginal := Now;
+      Meta.Orientation := poLandscape;
+
+      Img := TImgItem.Create(FilePath, Meta);
+
+      Item := lvwImgItems.Items.Add;
+      Item.Caption := Img.FileName;
+      Item.SubItems.Add(DateToStr(Img.DateTimeOriginal));
+      Item.SubItems.Add(Img.FullDeviceName);
+      Item.SubItems.Add(Img.Resolution);
+      Item.SubItems.Add(FloatToStr(Img.MegaPixels));
+      Item.SubItems.Add(Img.OrientationText);
+      Item.SubItems.Add(Img.FormattedFileSize);
+      if Img.HasExif then
+        Item.SubItems.Add('Yes')
+      else
+        Item.SubItems.Add('No');
+
+    end;
+  finally
+    lvwImgItems.Items.EndUpdate;
+  end;
+end;
 
 end.

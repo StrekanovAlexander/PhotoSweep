@@ -8,8 +8,6 @@ uses
   uIImgMetadataReader;
 
 type
-  //TImgOrientation = (poLandscape, poPortrait, poSquare);
-
   TImgItem = class
   private
     FFilePath: string;
@@ -34,8 +32,8 @@ type
     function GetResolution: string;
     function GetMegaPixels: Double;
     function GetFullDeviceName: string;
-//    function GetOrientation: TImgOrientation;
-//    function GetOrientationText: string;
+    function GetOrientation: TImgOrientation;
+    function GetOrientationText: string;
   public
     constructor Create(const AFilePath: string; const Meta: TImgMetadata);
     property FilePath: string read FFilePath;
@@ -53,8 +51,8 @@ type
     property Height: Integer read FHeight;
     property Resolution: string read GetResolution;
     property MegaPixels: Double read GetMegaPixels;
-//    property Orientation: TImgOrientation read GetOrientation;
-//    property OrientationText: string read GetOrientationText;
+    property Orientation: TImgOrientation read GetOrientation;
+    property OrientationText: string read GetOrientationText;
   end;
 
 implementation
@@ -62,13 +60,18 @@ implementation
 constructor TImgItem.Create(const AFilePath: string; const Meta: TImgMetadata);
 begin
   FFilePath := AFilePath;
+  FFileName := ExtractFileName(FFilePath);
+  if FileExists(FFilePath) then
+    FFileSize := TFile.GetSize(FFilePath)
+  else
+    FFileSize := 0;
+
   FWidth := Meta.Width;
   FHeight := Meta.Height;
   FHasExif := Meta.HasExif;
   FCameraMake := Meta.CameraMake;
   FDateTimeOriginal := Meta.DateTimeOriginal;
   FOrientation := Meta.Orientation;
-
 {
   FFilePath := AFilePath;
   FFileName := ExtractFileName(FFilePath);
@@ -78,7 +81,7 @@ begin
   else
     FFileSize := 0;
   LoadMetaData;
-  }
+}
 end;
 
 procedure TImgItem.LoadMetaData;
@@ -199,7 +202,6 @@ begin
     Result := 0;
 end;
 
-{
 function TImgItem.GetOrientation: TImgOrientation;
 begin
   if FWidth > FHeight then
@@ -218,7 +220,6 @@ begin
     poSquare:    Result := 'Square';
   end;
 end;
-}
 
 function TImgItem.GetFullDeviceName: string;
 begin
