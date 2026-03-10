@@ -5,6 +5,7 @@ interface
 uses
   System.SysUtils,
   CCR.Exif,
+  uImgMetadata,
   uIImgMetadataReader;
 
 type

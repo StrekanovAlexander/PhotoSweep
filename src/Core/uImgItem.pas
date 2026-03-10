@@ -5,7 +5,9 @@ interface
 uses
   System.SysUtils, System.IOUtils, CCR.Exif,
   Vcl.Imaging.pngimage, Vcl.Imaging.GIFImg,
-  uIImgMetadataReader;
+  uImgMetadata
+  //uIImgMetadataReader
+  ;
 
 type
   TImgItem = class

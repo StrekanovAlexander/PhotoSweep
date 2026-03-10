@@ -9,7 +9,9 @@ uses
   Vcl.Buttons, Vcl.ComCtrls, System.IOUtils, System.Types,
   uToolsPanelController,
   uImgItem,
-  uIImgMetadataReader,
+  uFileScanThread,
+//  uIImgMetadataReader,
+  uImgMetadata,
   uImgMetadataReader
 ;
 
@@ -64,7 +66,7 @@ end;
 procedure TfmMain.Button1Click(Sender: TObject);
 var
   Files: TStringDynArray;
-  Meta: TImgMetadata;
+  // Meta: TImgMetadata;
   Reader: TImgMetadataReader;
 
   Item: TListItem;
@@ -77,76 +79,28 @@ begin
   try
     lvwImgItems.Items.Clear;
     Files := TDirectory.GetFiles('C:\source4', '*.jpg'); // пример
-
     Reader := TImgMetadataReader.Create;
 
-    for var FilePath in Files do
-    begin
-      Meta := Reader.Read(FilePath);
-
-    {
-      Jpeg := TJpegImageEx.Create;
-      try
-        Jpeg.LoadFromFile(FilePath);
-
-        Meta.Width := Jpeg.Width;
-        Meta.Height := Jpeg.Height;
-
-        if Meta.Width > Meta.Height then
-          Meta.Orientation := poLandscape
-        else if Meta.Height > Meta.Width then
-          Meta.Orientation := poPortrait
+    TFileScanThread.Create(Files, Reader,
+      procedure(Meta: TImgMetadata)
+      var
+        Img: TImgItem;
+        Item: TListItem;
+      begin
+        Img := TImgItem.Create(Meta.FilePath, Meta);
+        Item := lvwImgItems.Items.Add;
+        Item.Caption := Img.FileName;
+        Item.SubItems.Add(DateToStr(Img.DateTimeOriginal));
+        Item.SubItems.Add(Img.FullDeviceName);
+        Item.SubItems.Add(Img.Resolution);
+        Item.SubItems.Add(FloatToStr(Img.MegaPixels));
+        if Img.HasExif then
+          Item.SubItems.Add('Yes')
         else
-          Meta.Orientation := poSquare;
+          Item.SubItems.Add('No');
+      end
+    );
 
-        Meta.HasExif := Assigned(Jpeg.ExifData);
-
-        if Meta.HasExif then
-        begin
-          Meta.CameraMake := Jpeg.ExifData.CameraMake;
-          Meta.CameraModel := Jpeg.ExifData.CameraModel;
-
-
-          if Jpeg.ExifData.DateTimeOriginal > 0 then
-            Meta.DateTimeOriginal := Jpeg.ExifData.DateTimeOriginal
-          else
-            Meta.DateTimeOriginal := TFile.GetLastWriteTime(FilePath);
-        end
-        else
-        begin
-          Meta.CameraMake := '';
-          Meta.DateTimeOriginal := TFile.GetLastWriteTime(FilePath);
-        end;
-
-      finally
-        Jpeg.Free;
-      end;
-      }
-     {
-      Meta.Width := 4000;
-      Meta.Height := 3000;
-      Meta.HasExif := True;
-      Meta.CameraMake := 'Canon R6';
-      Meta.DateTimeOriginal := Now;
-      Meta.Orientation := poLandscape;
-      }
-
-      Img := TImgItem.Create(FilePath, Meta);
-
-      Item := lvwImgItems.Items.Add;
-      Item.Caption := Img.FileName;
-      Item.SubItems.Add(DateToStr(Img.DateTimeOriginal));
-      Item.SubItems.Add(Img.FullDeviceName);
-      Item.SubItems.Add(Img.Resolution);
-      Item.SubItems.Add(FloatToStr(Img.MegaPixels));
-      Item.SubItems.Add(Img.OrientationText);
-      Item.SubItems.Add(Img.FormattedFileSize);
-      if Img.HasExif then
-        Item.SubItems.Add('Yes')
-      else
-        Item.SubItems.Add('No');
-
-    end;
   finally
     lvwImgItems.Items.EndUpdate;
   end;

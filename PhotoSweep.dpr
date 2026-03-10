@@ -19,7 +19,9 @@ uses
   CCR.Exif.TiffUtils in 'libs\CCRExif\CCR.Exif.TiffUtils.pas',
   CCR.Exif.XMPUtils in 'libs\CCRExif\CCR.Exif.XMPUtils.pas',
   uIImgMetadataReader in 'src\Core\uIImgMetadataReader.pas',
-  uImgMetadataReader in 'src\Core\uImgMetadataReader.pas';
+  uImgMetadataReader in 'src\Core\uImgMetadataReader.pas',
+  uFileScanThread in 'src\Core\uFileScanThread.pas',
+  uImgMetadata in 'src\Core\uImgMetadata.pas';
 
 {$R *.res}
 
