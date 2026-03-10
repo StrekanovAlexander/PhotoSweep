@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.IOUtils, CCR.Exif,
   Vcl.Imaging.pngimage, Vcl.Imaging.GIFImg,
-  uImgMetadata
+  uFileMetadata
   //uIImgMetadataReader
   ;
 
@@ -37,7 +37,7 @@ type
     function GetOrientation: TImgOrientation;
     function GetOrientationText: string;
   public
-    constructor Create(const AFilePath: string; const Meta: TImgMetadata);
+    constructor Create(const AFilePath: string; const Meta: TFileMetadata);
     property FilePath: string read FFilePath;
     property FileName: string read FFileName;
     property Extension: string read FExtension;
@@ -59,7 +59,7 @@ type
 
 implementation
 
-constructor TImgItem.Create(const AFilePath: string; const Meta: TImgMetadata);
+constructor TImgItem.Create(const AFilePath: string; const Meta: TFileMetadata);
 begin
   FFilePath := AFilePath;
   FFileName := ExtractFileName(FFilePath);

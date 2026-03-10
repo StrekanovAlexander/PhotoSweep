@@ -6,7 +6,7 @@ uses
   System.Classes,
   System.SysUtils,
   System.Types,
-  uImgMetadata,
+  uFileMetadata,
   uIImgMetadataReader;
 
 type
@@ -14,21 +14,21 @@ type
   private
     FFiles: TStringDynArray;
     FReader: IImgMetadataReader;
-    FOnItemRead: TProc<TImgMetadata>;
+    FOnItemRead: TProc<TFileMetadata>;
   protected
     procedure Execute; override;
-    procedure DoItemRead(Meta: TImgMetadata);
+    procedure DoItemRead(Meta: TFileMetadata);
   public
     constructor Create(const Files: TStringDynArray;
                        Reader: IImgMetadataReader;
-                       OnItemRead: TProc<TImgMetadata>);
+                       OnItemRead: TProc<TFileMetadata>);
   end;
 
 implementation
 
 constructor TFileScanThread.Create(const Files: TStringDynArray;
                                    Reader: IImgMetadataReader;
-                                   OnItemRead: TProc<TImgMetadata>);
+                                   OnItemRead: TProc<TFileMetadata>);
 begin
   inherited Create(False);
   FreeOnTerminate := True;
@@ -40,7 +40,7 @@ end;
 procedure TFileScanThread.Execute;
 var
   FilePath: string;
-  Meta: TImgMetadata;
+  Meta: TFileMetadata;
 begin
   for FilePath in FFiles do
   begin
@@ -50,7 +50,7 @@ begin
   end;
 end;
 
-procedure TFileScanThread.DoItemRead(Meta: TImgMetadata);
+procedure TFileScanThread.DoItemRead(Meta: TFileMetadata);
 begin
   if Assigned(FOnItemRead) then
     Synchronize(

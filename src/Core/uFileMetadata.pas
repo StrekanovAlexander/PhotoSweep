@@ -1,4 +1,4 @@
-unit uImgMetadata;
+unit uFileMetadata;
 
 interface
 
@@ -6,7 +6,7 @@ type
 
   TImgOrientation = (poLandscape, poPortrait, poSquare);
 
-  TImgMetadata = record
+  TFileMetadata = record
     FilePath: string;
     Width: Integer;
     Height: Integer;

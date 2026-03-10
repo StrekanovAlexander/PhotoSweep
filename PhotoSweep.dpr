@@ -21,7 +21,7 @@ uses
   uIImgMetadataReader in 'src\Core\uIImgMetadataReader.pas',
   uImgMetadataReader in 'src\Core\uImgMetadataReader.pas',
   uFileScanThread in 'src\Core\uFileScanThread.pas',
-  uImgMetadata in 'src\Core\uImgMetadata.pas';
+  uFileMetadata in 'src\Core\uFileMetadata.pas';
 
 {$R *.res}
 

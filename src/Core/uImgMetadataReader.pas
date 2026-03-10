@@ -5,24 +5,24 @@ interface
 uses
   System.SysUtils,
   CCR.Exif,
-  uImgMetadata,
+  uFileMetadata,
   uIImgMetadataReader;
 
 type
   TImgMetadataReader = class(TInterfacedObject, IImgMetadataReader)
   private
-    function ReadJpegMetadata(const FileName: string): TImgMetadata;
+    function ReadJpegMetadata(const FileName: string): TFileMetadata;
   public
-    function Read(const FileName: string): TImgMetadata;
+    function Read(const FileName: string): TFileMetadata;
   end;
 
 implementation
 
-function TImgMetadataReader.Read(const FileName: string): TImgMetadata;
+function TImgMetadataReader.Read(const FileName: string): TFileMetadata;
 var
   Ext: string;
 begin
-  Result := Default(TImgMetadata);
+  Result := Default(TFileMetadata);
   Ext := LowerCase(ExtractFileExt(FileName));
 
   if (Ext = '.jpg') or (Ext = '.jpeg') then
@@ -31,11 +31,11 @@ begin
   end;
 end;
 
-function TImgMetadataReader.ReadJpegMetadata(const FileName: string): TImgMetadata;
+function TImgMetadataReader.ReadJpegMetadata(const FileName: string): TFileMetadata;
 var
   Jpeg: TJpegImageEx;
 begin
-  Result := Default(TImgMetadata);
+  Result := Default(TFileMetadata);
 
   Jpeg := TJpegImageEx.Create;
   try

@@ -155,7 +155,7 @@
         <DCCReference Include="src\Core\uIImgMetadataReader.pas"/>
         <DCCReference Include="src\Core\uImgMetadataReader.pas"/>
         <DCCReference Include="src\Core\uFileScanThread.pas"/>
-        <DCCReference Include="src\Core\uImgMetadata.pas"/>
+        <DCCReference Include="src\Core\uFileMetadata.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -11,7 +11,7 @@ uses
   uImgItem,
   uFileScanThread,
 //  uIImgMetadataReader,
-  uImgMetadata,
+  uFileMetadata,
   uImgMetadataReader
 ;
 
@@ -82,7 +82,7 @@ begin
     Reader := TImgMetadataReader.Create;
 
     TFileScanThread.Create(Files, Reader,
-      procedure(Meta: TImgMetadata)
+      procedure(Meta: TFileMetadata)
       var
         Img: TImgItem;
         Item: TListItem;
