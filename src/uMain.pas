@@ -10,7 +10,6 @@ uses
   uToolsPanelController,
   uImgItem,
   uFileScanThread,
-//  uIImgMetadataReader,
   uFileMetadata,
   uImgMetadataReader
 ;
@@ -66,9 +65,7 @@ end;
 procedure TfmMain.Button1Click(Sender: TObject);
 var
   Files: TStringDynArray;
-  // Meta: TImgMetadata;
   Reader: TImgMetadataReader;
-
   Item: TListItem;
   Img: TImgItem;
 
@@ -78,7 +75,7 @@ begin
   lvwImgItems.Items.BeginUpdate;
   try
     lvwImgItems.Items.Clear;
-    Files := TDirectory.GetFiles('C:\source4', '*.jpg'); // пример
+    Files := TDirectory.GetFiles('C:\source4', '*.jpg');
     Reader := TImgMetadataReader.Create;
 
     TFileScanThread.Create(Files, Reader,

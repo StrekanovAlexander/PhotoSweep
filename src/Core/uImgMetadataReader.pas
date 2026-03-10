@@ -6,10 +6,10 @@ uses
   System.SysUtils,
   CCR.Exif,
   uFileMetadata,
-  uIImgMetadataReader;
+  uIFileMetadataReader;
 
 type
-  TImgMetadataReader = class(TInterfacedObject, IImgMetadataReader)
+  TImgMetadataReader = class(TInterfacedObject, IFileMetadataReader)
   private
     function ReadJpegMetadata(const FileName: string): TFileMetadata;
   public

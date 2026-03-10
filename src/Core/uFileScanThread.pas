@@ -7,27 +7,27 @@ uses
   System.SysUtils,
   System.Types,
   uFileMetadata,
-  uIImgMetadataReader;
+  uIFileMetadataReader;
 
 type
   TFileScanThread = class(TThread)
   private
     FFiles: TStringDynArray;
-    FReader: IImgMetadataReader;
+    FReader: IFileMetadataReader;
     FOnItemRead: TProc<TFileMetadata>;
   protected
     procedure Execute; override;
     procedure DoItemRead(Meta: TFileMetadata);
   public
     constructor Create(const Files: TStringDynArray;
-                       Reader: IImgMetadataReader;
+                       Reader: IFileMetadataReader;
                        OnItemRead: TProc<TFileMetadata>);
   end;
 
 implementation
 
 constructor TFileScanThread.Create(const Files: TStringDynArray;
-                                   Reader: IImgMetadataReader;
+                                   Reader: IFileMetadataReader;
                                    OnItemRead: TProc<TFileMetadata>);
 begin
   inherited Create(False);
