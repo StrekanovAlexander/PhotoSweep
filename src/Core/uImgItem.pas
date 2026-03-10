@@ -4,9 +4,8 @@ interface
 
 uses
   System.SysUtils, System.IOUtils, CCR.Exif,
-  Vcl.Imaging.pngimage, Vcl.Imaging.GIFImg,
+  Vcl.Graphics, Vcl.Imaging.pngimage, Vcl.Imaging.GIFImg,
   uFileMetadata
-  //uIImgMetadataReader
   ;
 
 type
@@ -18,12 +17,16 @@ type
     FFileSize: Int64;
     // Exif
     FHasExif: Boolean;
+    FHasThumbnail: Boolean;
+
     FDateTimeOriginal: TDateTime;
     FCameraMake: string;
     FCameraModel: string;
     FWidth: Integer;
     FHeight: Integer;
     FOrientation: TImgOrientation;
+
+    FThumbnail: TBitmap;
 
     procedure LoadMetaData;
     procedure LoadJpegMetaData;
@@ -38,13 +41,17 @@ type
     function GetOrientationText: string;
   public
     constructor Create(const AFilePath: string; const Meta: TFileMetadata);
+    destructor Destroy;
     property FilePath: string read FFilePath;
     property FileName: string read FFileName;
     property Extension: string read FExtension;
     property FileSize: Int64 read FFileSize;
     property FormattedFileSize: string read GetFormattedFileSize;
+
     // Exif
     property HasExif: Boolean read FHasExif;
+    property HasThumbnail: Boolean read FHasThumbnail;
+
     property DateTimeOriginal: TDateTime read FDateTimeOriginal;
     property CameraMake: string read FCameraMake;
     property CameraModel: string read FCameraModel;
@@ -55,6 +62,8 @@ type
     property MegaPixels: Double read GetMegaPixels;
     property Orientation: TImgOrientation read GetOrientation;
     property OrientationText: string read GetOrientationText;
+
+    property Thumbnail: TBitmap read FThumbnail;
   end;
 
 implementation
@@ -70,11 +79,25 @@ begin
 
   FWidth := Meta.Width;
   FHeight := Meta.Height;
+
   FHasExif := Meta.HasExif;
+
   FCameraMake := Meta.CameraMake;
   FCameraModel := Meta.CameraModel;
   FDateTimeOriginal := Meta.DateTimeOriginal;
   FOrientation := Meta.Orientation;
+
+  if Meta.HasThumbnail and Assigned(Meta.Thumbnail) then
+  begin
+    FHasThumbnail := True;
+    FThumbnail := TBitmap.Create;
+    FThumbnail.Assign(Meta.Thumbnail);
+  end
+  else
+  begin
+    FHasThumbnail := False;
+    FThumbnail := nil;
+  end;
 {
   FFilePath := AFilePath;
   FFileName := ExtractFileName(FFilePath);
@@ -85,6 +108,12 @@ begin
     FFileSize := 0;
   LoadMetaData;
 }
+end;
+
+destructor TImgItem.Destroy;
+begin
+  FThumbnail.Free;
+  inherited;
 end;
 
 procedure TImgItem.LoadMetaData;

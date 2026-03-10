@@ -153,7 +153,7 @@
         <DCCReference Include="libs\CCRExif\CCR.Exif.TiffUtils.pas"/>
         <DCCReference Include="libs\CCRExif\CCR.Exif.XMPUtils.pas"/>
         <DCCReference Include="src\Core\uIFileMetadataReader.pas"/>
-        <DCCReference Include="src\Core\uImgMetadataReader.pas"/>
+        <DCCReference Include="src\Core\uFileMetadataReader.pas"/>
         <DCCReference Include="src\Core\uFileScanThread.pas"/>
         <DCCReference Include="src\Core\uFileMetadata.pas"/>
         <BuildConfiguration Include="Base">

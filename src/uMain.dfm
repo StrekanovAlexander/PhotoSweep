@@ -227,6 +227,7 @@ object fmMain: TfmMain
         ReadOnly = True
         RowSelect = True
         ParentDoubleBuffered = False
+        SmallImages = imlThumbnails
         TabOrder = 0
         ViewStyle = vsReport
       end
@@ -297,6 +298,7 @@ object fmMain: TfmMain
         Margins.Top = 5
         Align = alClient
         BevelOuter = bvNone
+        Caption = 'imlThumbnails'
         TabOrder = 1
       end
     end
@@ -357,5 +359,11 @@ object fmMain: TfmMain
     Scaled = True
     Left = 720
     Top = 120
+  end
+  object imlThumbnails: TImageList
+    Height = 64
+    Width = 64
+    Left = 725
+    Top = 199
   end
 end

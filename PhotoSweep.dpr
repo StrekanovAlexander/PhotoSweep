@@ -19,7 +19,7 @@ uses
   CCR.Exif.TiffUtils in 'libs\CCRExif\CCR.Exif.TiffUtils.pas',
   CCR.Exif.XMPUtils in 'libs\CCRExif\CCR.Exif.XMPUtils.pas',
   uIFileMetadataReader in 'src\Core\uIFileMetadataReader.pas',
-  uImgMetadataReader in 'src\Core\uImgMetadataReader.pas',
+  uFileMetadataReader in 'src\Core\uFileMetadataReader.pas',
   uFileScanThread in 'src\Core\uFileScanThread.pas',
   uFileMetadata in 'src\Core\uFileMetadata.pas';
 
