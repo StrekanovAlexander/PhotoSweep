@@ -3,8 +3,11 @@
 interface
 
 uses
-  System.SysUtils, System.IOUtils, CCR.Exif,
-  Vcl.Graphics, Vcl.Imaging.pngimage, Vcl.Imaging.GIFImg,
+  System.SysUtils, System.IOUtils,
+//  CCR.Exif,
+  Vcl.Graphics,
+//  Vcl.Imaging.pngimage,
+//  Vcl.Imaging.GIFImg,
   uFileMetadata
   ;
 
@@ -24,20 +27,22 @@ type
     FCameraModel: string;
     FWidth: Integer;
     FHeight: Integer;
-    FOrientation: TImgOrientation;
+//  FOrientation: TOrientation;
 
     FThumbnail: TBitmap;
 
+    {
     procedure LoadMetaData;
     procedure LoadJpegMetaData;
     procedure LoadPngMetaData;
     procedure LoadGifMetaData;
+    }
     // Other
     function GetFormattedFileSize: string;
     function GetResolution: string;
     function GetMegaPixels: Double;
     function GetFullDeviceName: string;
-    function GetOrientation: TImgOrientation;
+//    function GetOrientation: TOrientation;
     function GetOrientationText: string;
   public
     constructor Create(const AFilePath: string; const Meta: TFileMetadata);
@@ -60,7 +65,7 @@ type
     property Height: Integer read FHeight;
     property Resolution: string read GetResolution;
     property MegaPixels: Double read GetMegaPixels;
-    property Orientation: TImgOrientation read GetOrientation;
+//    property Orientation: TOrientation read GetOrientation;
     property OrientationText: string read GetOrientationText;
 
     property Thumbnail: TBitmap read FThumbnail;
@@ -72,10 +77,8 @@ constructor TImgItem.Create(const AFilePath: string; const Meta: TFileMetadata);
 begin
   FFilePath := AFilePath;
   FFileName := ExtractFileName(FFilePath);
-  if FileExists(FFilePath) then
-    FFileSize := TFile.GetSize(FFilePath)
-  else
-    FFileSize := 0;
+  FExtension := LowerCase(ExtractFileExt(FFilePath));
+  FFileSize := TFile.GetSize(FFilePath);
 
   FWidth := Meta.Width;
   FHeight := Meta.Height;
@@ -85,7 +88,7 @@ begin
   FCameraMake := Meta.CameraMake;
   FCameraModel := Meta.CameraModel;
   FDateTimeOriginal := Meta.DateTimeOriginal;
-  FOrientation := Meta.Orientation;
+//  FOrientation := Meta.Orientation;
 
   if Meta.HasThumbnail and Assigned(Meta.Thumbnail) then
   begin
@@ -116,6 +119,7 @@ begin
   inherited;
 end;
 
+{
 procedure TImgItem.LoadMetaData;
 begin
   FHasExif := False;
@@ -204,6 +208,7 @@ begin
   end;
   FDateTimeOriginal := TFile.GetLastWriteTime(FFilePath);
 end;
+}
 
 function TImgItem.GetFormattedFileSize: string;
 const
@@ -234,7 +239,8 @@ begin
     Result := 0;
 end;
 
-function TImgItem.GetOrientation: TImgOrientation;
+{
+function TImgItem.GetOrientation: TOrientation;
 begin
   if FWidth > FHeight then
     Result := poLandscape
@@ -243,14 +249,18 @@ begin
   else
     Result := poSquare;
 end;
+}
 
 function TImgItem.GetOrientationText: string;
 begin
+  Result := 'Ori';
+{
   case Orientation of
     poLandscape: Result := 'Landscape';
     poPortrait:  Result := 'Portrait';
     poSquare:    Result := 'Square';
   end;
+}
 end;
 
 function TImgItem.GetFullDeviceName: string;

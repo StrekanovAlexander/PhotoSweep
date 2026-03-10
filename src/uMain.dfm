@@ -46,13 +46,15 @@ object fmMain: TfmMain
       AlignWithMargins = True
       Left = 106
       Top = 22
-      Width = 236
-      Height = 15
+      Width = 603
+      Height = 27
       Margins.Left = 16
       Margins.Top = 14
       Align = alClient
       Alignment = taCenter
       Caption = 'Select a source folder to browse the photos'#8230
+      ExplicitWidth = 236
+      ExplicitHeight = 15
     end
     object pnlTopLogo: TPanel
       Left = 12
@@ -361,8 +363,8 @@ object fmMain: TfmMain
     Top = 120
   end
   object imlThumbnails: TImageList
-    Height = 64
-    Width = 64
+    Height = 48
+    Width = 48
     Left = 725
     Top = 199
   end

@@ -47,6 +47,7 @@ type
     { Public declarations }
     function ResizeBitmapToWidth(Source: TBitmap; NewWidth: Integer): TBitmap; // tmp
     function CreateSquareThumbnail(Source: TBitmap; Size: Integer): TBitmap;
+    procedure FreeListView(LV: TListView); // tmp
   end;
 
 var
@@ -74,9 +75,10 @@ var
 begin
   pnlTools.Show;
 
+  FreeListView(lvwImgItems);
+
   lvwImgItems.Items.BeginUpdate;
   try
-    lvwImgItems.Items.Clear;
     Files := TDirectory.GetFiles('C:\source4', '*.jpg');
     Reader := TFileMetadataReader.Create;
 
@@ -101,11 +103,14 @@ begin
         if Img.HasThumbnail and Assigned(Img.Thumbnail) then
         begin
           Item.SubItems.Add('Thumb');
-          Thumb := CreateSquareThumbnail(Img.Thumbnail, 65);
+          Thumb := CreateSquareThumbnail(Img.Thumbnail, 48);
             Item.ImageIndex := imlThumbnails.Add(Thumb, nil);
         end
         else
-          Item.SubItems.Add('No thumb');
+          begin
+            Item.SubItems.Add('No thumb');
+            Item.ImageIndex := -1;
+          end;
       end
     );
 
@@ -142,7 +147,7 @@ begin
   Result.PixelFormat := pf24bit;
 
   // белый фон
-  Result.Canvas.Brush.Color := clWhite;
+  Result.Canvas.Brush.Color := clBlack;
   Result.Canvas.FillRect(Rect(0, 0, Size, Size));
 
   // вычисляем масштаб
@@ -155,10 +160,32 @@ begin
   X := (Size - NewW) div 2;
   Y := (Size - NewH) div 2;
 
+
+  //Result.Canvas.Brush.Color := clBlack;
+  //Result.Canvas.FillRect(Rect(0, 0, NewW, NewH));
+
+  SetStretchBltMode(Result.Canvas.Handle, HALFTONE);
+
   Result.Canvas.StretchDraw(
     Rect(X, Y, X + NewW, Y + NewH),
     Source
   );
+
+//  Result.Canvas.InterpolationMode := imHighQualityCubic;
+end;
+
+procedure TfmMain.FreeListView(LV: TListView);
+var
+  i: Integer;
+  Img: TImgItem;
+begin
+  for i := 0 to LV.Items.Count - 1 do
+  begin
+    Img := TImgItem(LV.Items[i].Data);
+    Img.Free;
+    LV.Items[i].Data := nil;
+  end;
+  LV.Items.Clear;
 end;
 
 end.
