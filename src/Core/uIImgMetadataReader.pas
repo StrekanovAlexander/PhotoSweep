@@ -10,6 +10,7 @@ type
     Height: Integer;
     HasExif: Boolean;
     CameraMake: string;
+    CameraModel: string;
     DateTimeOriginal: TDateTime;
     Orientation: TImgOrientation;
   end;

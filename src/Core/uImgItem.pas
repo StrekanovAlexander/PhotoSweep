@@ -70,6 +70,7 @@ begin
   FHeight := Meta.Height;
   FHasExif := Meta.HasExif;
   FCameraMake := Meta.CameraMake;
+  FCameraModel := Meta.CameraModel;
   FDateTimeOriginal := Meta.DateTimeOriginal;
   FOrientation := Meta.Orientation;
 {

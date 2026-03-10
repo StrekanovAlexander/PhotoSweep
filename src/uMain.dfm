@@ -154,9 +154,6 @@ object fmMain: TfmMain
       Caption = 'Test'
       TabOrder = 3
       OnClick = Button1Click
-      ExplicitLeft = 718
-      ExplicitTop = 8
-      ExplicitHeight = 44
     end
   end
   object stbMain: TStatusBar
@@ -193,16 +190,18 @@ object fmMain: TfmMain
         Checkboxes = True
         Columns = <
           item
-            AutoSize = True
             Caption = 'Name'
+            Width = 250
           end
           item
             Caption = 'Date'
             Width = 150
           end
           item
+            AutoSize = True
             Caption = 'Device'
-            Width = 150
+            WidthType = (
+              -87)
           end
           item
             Caption = 'Resolution'
@@ -232,7 +231,6 @@ object fmMain: TfmMain
         ParentDoubleBuffered = False
         TabOrder = 0
         ViewStyle = vsReport
-        ExplicitLeft = 8
       end
     end
     object pnlTools: TPanel

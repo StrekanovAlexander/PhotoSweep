@@ -18,7 +18,8 @@ uses
   CCR.Exif.IPTC in 'libs\CCRExif\CCR.Exif.IPTC.pas',
   CCR.Exif.TiffUtils in 'libs\CCRExif\CCR.Exif.TiffUtils.pas',
   CCR.Exif.XMPUtils in 'libs\CCRExif\CCR.Exif.XMPUtils.pas',
-  uIImgMetadataReader in 'src\Core\uIImgMetadataReader.pas';
+  uIImgMetadataReader in 'src\Core\uIImgMetadataReader.pas',
+  uImgMetadataReader in 'src\Core\uImgMetadataReader.pas';
 
 {$R *.res}
 
