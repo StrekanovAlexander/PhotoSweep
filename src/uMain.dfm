@@ -16,6 +16,7 @@ object fmMain: TfmMain
   Position = poScreenCenter
   StyleName = 'Carbon'
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object bvlTop: TBevel
     AlignWithMargins = True
@@ -46,13 +47,15 @@ object fmMain: TfmMain
       AlignWithMargins = True
       Left = 106
       Top = 22
-      Width = 236
-      Height = 15
+      Width = 603
+      Height = 27
       Margins.Left = 16
       Margins.Top = 14
       Align = alClient
       Alignment = taCenter
       Caption = 'Select a source folder to browse the photos'#8230
+      ExplicitWidth = 236
+      ExplicitHeight = 15
     end
     object pnlTopLogo: TPanel
       Left = 12

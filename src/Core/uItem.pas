@@ -1,18 +1,15 @@
-﻿unit uImgItem;
+﻿unit uItem;
 
 interface
 
 uses
   System.SysUtils, System.IOUtils,
-//  CCR.Exif,
   Vcl.Graphics,
-//  Vcl.Imaging.pngimage,
-//  Vcl.Imaging.GIFImg,
   uFileMetadata
   ;
 
 type
-  TImgItem = class
+  TItem = class
   private
     FFilePath: string;
     FFileName: string;
@@ -31,12 +28,6 @@ type
 
     FThumbnail: TBitmap;
 
-    {
-    procedure LoadMetaData;
-    procedure LoadJpegMetaData;
-    procedure LoadPngMetaData;
-    procedure LoadGifMetaData;
-    }
     // Other
     function GetFormattedFileSize: string;
     function GetResolution: string;
@@ -46,7 +37,7 @@ type
     function GetOrientationText: string;
   public
     constructor Create(const AFilePath: string; const Meta: TFileMetadata);
-    destructor Destroy;
+    destructor Destroy; override;
     property FilePath: string read FFilePath;
     property FileName: string read FFileName;
     property Extension: string read FExtension;
@@ -73,7 +64,7 @@ type
 
 implementation
 
-constructor TImgItem.Create(const AFilePath: string; const Meta: TFileMetadata);
+constructor TItem.Create(const AFilePath: string; const Meta: TFileMetadata);
 begin
   FFilePath := AFilePath;
   FFileName := ExtractFileName(FFilePath);
@@ -101,116 +92,15 @@ begin
     FHasThumbnail := False;
     FThumbnail := nil;
   end;
-{
-  FFilePath := AFilePath;
-  FFileName := ExtractFileName(FFilePath);
-  FExtension := LowerCase(ExtractFileExt(FFilePath));
-  if FileExists(FFilePath) then
-    FFileSize := TFile.GetSize(FFilePath)
-  else
-    FFileSize := 0;
-  LoadMetaData;
-}
 end;
 
-destructor TImgItem.Destroy;
+destructor TItem.Destroy;
 begin
   FThumbnail.Free;
   inherited;
 end;
 
-{
-procedure TImgItem.LoadMetaData;
-begin
-  FHasExif := False;
-  FCameraMake := '';
-  FCameraModel := '';
-  FWidth := 0;
-  FHeight := 0;
-  FDateTimeOriginal := 0;
-
-  if (FExtension = '.jpg') or (FExtension = '.jpeg') then
-  begin
-    LoadJpegMetaData;
-  end
-  else if FExtension = '.png' then
-  begin
-    LoadPngMetadata;
-  end
-  else if FExtension = '.gif' then
-  begin
-    LoadGifMetadata;
-  end;
-end;
-
-procedure TImgItem.LoadJpegMetadata;
-var
-  Jpeg: TJpegImageEx;
-begin
-  Jpeg := TJpegImageEx.Create;
-  try
-    Jpeg.LoadFromFile(FFilePath);
-    FWidth := Jpeg.Width;
-    FHeight := Jpeg.Height;
-
-    if Assigned(Jpeg.ExifData) then
-    begin
-      FHasExif := True;
-      FCameraMake := Jpeg.ExifData.CameraMake;
-      FCameraModel := Jpeg.ExifData.CameraModel;
-
-      try
-      if Jpeg.ExifData.DateTimeOriginal > 0 then
-        FDateTimeOriginal := Jpeg.ExifData.DateTimeOriginal
-      else if Jpeg.ExifData.DateTimeDigitized > 0 then
-        FDateTimeOriginal := Jpeg.ExifData.DateTimeDigitized
-      else if Jpeg.ExifData.DateTime > 0 then
-        FDateTimeOriginal := Jpeg.ExifData.DateTime;
-      except
-        FDateTimeOriginal := 0;
-      end;
-    end;
-
-    if FDateTimeOriginal = 0 then
-      FDateTimeOriginal := TFile.GetLastWriteTime(FFilePath);
-
-  finally
-    Jpeg.Free;
-  end;
-end;
-
-procedure TImgItem.LoadPngMetadata;
-var
-  Png: TPngImage;
-begin
-  Png := TPngImage.Create;
-  try
-    Png.LoadFromFile(FFilePath);
-    FWidth := Png.Width;
-    FHeight := Png.Height;
-  finally
-    Png.Free;
-  end;
-  FDateTimeOriginal := TFile.GetLastWriteTime(FFilePath);
-end;
-
-procedure TImgItem.LoadGifMetadata;
-var
-  Gif: TGIFImage;
-begin
-  Gif := TGIFImage.Create;
-  try
-    Gif.LoadFromFile(FFilePath);
-    FWidth := Gif.Width;
-    FHeight := Gif.Height;
-  finally
-    Gif.Free;
-  end;
-  FDateTimeOriginal := TFile.GetLastWriteTime(FFilePath);
-end;
-}
-
-function TImgItem.GetFormattedFileSize: string;
+function TItem.GetFormattedFileSize: string;
 const
   KB = 1024;
   MB = KB * 1024;
@@ -223,7 +113,7 @@ begin
     Result := Format('%d B', [FFileSize]);
 end;
 
-function TImgItem.GetResolution: string;
+function TItem.GetResolution: string;
 begin
   if (FWidth > 0) and (FHeight > 0) then
     Result := Format('%d×%d', [FWidth, FHeight])
@@ -231,7 +121,7 @@ begin
     Result := '';
 end;
 
-function TImgItem.GetMegaPixels: Double;
+function TItem.GetMegaPixels: Double;
 begin
   if (FWidth > 0) and (FHeight > 0) then
     Result := (FWidth * FHeight) / 1000000
@@ -239,19 +129,7 @@ begin
     Result := 0;
 end;
 
-{
-function TImgItem.GetOrientation: TOrientation;
-begin
-  if FWidth > FHeight then
-    Result := poLandscape
-  else if FHeight > FWidth then
-    Result := poPortrait
-  else
-    Result := poSquare;
-end;
-}
-
-function TImgItem.GetOrientationText: string;
+function TItem.GetOrientationText: string;
 begin
   Result := 'Ori';
 {
@@ -263,7 +141,7 @@ begin
 }
 end;
 
-function TImgItem.GetFullDeviceName: string;
+function TItem.GetFullDeviceName: string;
 begin
   Result := '';
   if (CameraMake <> '') and (CameraModel <> '') then

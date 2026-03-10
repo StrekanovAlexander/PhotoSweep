@@ -9,7 +9,7 @@ uses
   uToolsPanelController in 'src\Controllers\uToolsPanelController.pas',
   ufrSortTools in 'src\UI\Frames\ufrSortTools.pas' {frSortTools: TFrame},
   ufrDuplicateTools in 'src\UI\Frames\ufrDuplicateTools.pas' {frDuplicateTools: TFrame},
-  uImgItem in 'src\Core\uImgItem.pas',
+  uItem in 'src\Core\uItem.pas',
   CCR.Exif in 'libs\CCRExif\CCR.Exif.pas',
   CCR.Exif.BaseUtils in 'libs\CCRExif\CCR.Exif.BaseUtils.pas',
   CCR.Exif.StreamHelper in 'libs\CCRExif\CCR.Exif.StreamHelper.pas',
@@ -21,7 +21,9 @@ uses
   uIFileMetadataReader in 'src\Core\uIFileMetadataReader.pas',
   uFileMetadataReader in 'src\Core\uFileMetadataReader.pas',
   uFileScanThread in 'src\Core\uFileScanThread.pas',
-  uFileMetadata in 'src\Core\uFileMetadata.pas';
+  uFileMetadata in 'src\Core\uFileMetadata.pas',
+  uItemsManager in 'src\Core\uItemsManager.pas',
+  uListViewController in 'src\Controllers\uListViewController.pas';
 
 {$R *.res}
 

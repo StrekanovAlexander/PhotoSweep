@@ -7,12 +7,15 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, SVGIconImage, Vcl.StdCtrls,
   System.ImageList, Vcl.ImgList, SVGIconImageListBase, SVGIconImageList,
   Vcl.Buttons, Vcl.ComCtrls, System.IOUtils, System.Types,
-  Vcl.Imaging.jpeg, System.Math, // temp
+  Vcl.Imaging.jpeg,
   uToolsPanelController,
-  uImgItem,
+  uListViewController,
+  uItem,
   uFileScanThread,
   uFileMetadata,
-  uFileMetadataReader
+  uIFileMetadataReader,
+  uFileMetadataReader,
+  uItemsManager
 ;
 
 type
@@ -41,12 +44,14 @@ type
     imlThumbnails: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FToolsController: TToolsPanelController;
+    FListViewController: TListViewController;
+    FItemsManager: TItemsManager;
+    FReader: IFileMetadataReader;
   public
     { Public declarations }
-    function CreateSquareThumbnail(Source: TBitmap; Size: Integer): TBitmap;
-    procedure FreeListView(LV: TListView); // tmp
   end;
 
 var
@@ -64,18 +69,50 @@ begin
     btnSort,
     btnDuplicates
   );
+
+  FListViewController := TListViewController.Create(lvwImgItems, imlThumbnails);
+  FItemsManager := TItemsManager.Create;
+  FReader := TFileMetadataReader.Create;
+end;
+
+procedure TfmMain.FormDestroy(Sender: TObject);
+begin
+  FListViewController.Free;
+  FItemsManager.Free;
+  FToolsController.Free;
+//  FReader.Free;
 end;
 
 procedure TfmMain.Button1Click(Sender: TObject);
 var
   Files: TStringDynArray;
-  Reader: TFileMetadataReader;
+//  Reader: TFileMetadataReader;
   Thumb: TBitmap;
 begin
+
   pnlTools.Show;
+  FListViewController.Clear;
+  FItemsManager.Clear;
 
+  Files := TDirectory.GetFiles('C:\source4', '*.jpg');
+//  Reader := TFileMetadataReader.Create;
+
+  TFileScanThread.Create(Files, FReader,
+    procedure(Meta: TFileMetadata)
+    begin
+      FItemsManager.AddItem(Meta);
+    end,
+    procedure
+    begin
+      FListViewController.Build(FItemsManager);
+    end
+  );
+end;
+
+{
+  without classes...
+  pnlTools.Show;
   FreeListView(lvwImgItems);
-
   lvwImgItems.Items.BeginUpdate;
   try
     Files := TDirectory.GetFiles('C:\source4', '*.jpg');
@@ -84,10 +121,10 @@ begin
     TFileScanThread.Create(Files, Reader,
       procedure(Meta: TFileMetadata)
       var
-        Img: TImgItem;
+        Img: TItem;
         Item: TListItem;
       begin
-        Img := TImgItem.Create(Meta.FilePath, Meta);
+        Img := TItem.Create(Meta.FilePath, Meta);
         Item := lvwImgItems.Items.Add;
         Item.Caption := Img.FileName;
         Item.SubItems.Add(DateToStr(Img.DateTimeOriginal));
@@ -116,58 +153,6 @@ begin
   finally
     lvwImgItems.Items.EndUpdate;
   end;
-end;
-
-function TfmMain.CreateSquareThumbnail(Source: TBitmap; Size: Integer): TBitmap;
-var
-  Scale: Double;
-  NewW, NewH: Integer;
-  X, Y: Integer;
-begin
-  Result := TBitmap.Create;
-  Result.SetSize(Size, Size);
-  Result.PixelFormat := pf24bit;
-
-  // белый фон
-  Result.Canvas.Brush.Color := clBlack;
-  Result.Canvas.FillRect(Rect(0, 0, Size, Size));
-
-  // вычисляем масштаб
-  Scale := Min(Size / Source.Width, Size / Source.Height);
-
-  NewW := Round(Source.Width * Scale);
-  NewH := Round(Source.Height * Scale);
-
-  // центрируем
-  X := (Size - NewW) div 2;
-  Y := (Size - NewH) div 2;
-
-
-  //Result.Canvas.Brush.Color := clBlack;
-  //Result.Canvas.FillRect(Rect(0, 0, NewW, NewH));
-
-  SetStretchBltMode(Result.Canvas.Handle, HALFTONE);
-
-  Result.Canvas.StretchDraw(
-    Rect(X, Y, X + NewW, Y + NewH),
-    Source
-  );
-
-//  Result.Canvas.InterpolationMode := imHighQualityCubic;
-end;
-
-procedure TfmMain.FreeListView(LV: TListView);
-var
-  i: Integer;
-  Img: TImgItem;
-begin
-  for i := 0 to LV.Items.Count - 1 do
-  begin
-    Img := TImgItem(LV.Items[i].Data);
-    Img.Free;
-    LV.Items[i].Data := nil;
-  end;
-  LV.Items.Clear;
-end;
+}
 
 end.

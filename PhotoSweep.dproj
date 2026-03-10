@@ -143,7 +143,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Core\uImgItem.pas"/>
+        <DCCReference Include="src\Core\uItem.pas"/>
         <DCCReference Include="libs\CCRExif\CCR.Exif.pas"/>
         <DCCReference Include="libs\CCRExif\CCR.Exif.BaseUtils.pas"/>
         <DCCReference Include="libs\CCRExif\CCR.Exif.StreamHelper.pas"/>
@@ -156,6 +156,8 @@
         <DCCReference Include="src\Core\uFileMetadataReader.pas"/>
         <DCCReference Include="src\Core\uFileScanThread.pas"/>
         <DCCReference Include="src\Core\uFileMetadata.pas"/>
+        <DCCReference Include="src\Core\uItemsManager.pas"/>
+        <DCCReference Include="src\Controllers\uListViewController.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
