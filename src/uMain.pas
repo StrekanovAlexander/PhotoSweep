@@ -45,7 +45,6 @@ type
     FToolsController: TToolsPanelController;
   public
     { Public declarations }
-    function ResizeBitmapToWidth(Source: TBitmap; NewWidth: Integer): TBitmap; // tmp
     function CreateSquareThumbnail(Source: TBitmap; Size: Integer): TBitmap;
     procedure FreeListView(LV: TListView); // tmp
   end;
@@ -117,23 +116,6 @@ begin
   finally
     lvwImgItems.Items.EndUpdate;
   end;
-end;
-
-function TfmMain.ResizeBitmapToWidth(Source: TBitmap; NewWidth: Integer): TBitmap;
-var
-  NewHeight: Integer;
-begin
-  Result := TBitmap.Create;
-
-  NewHeight := Round(Source.Height * (NewWidth / Source.Width));
-
-  Result.SetSize(NewWidth, NewHeight);
-  Result.PixelFormat := pf24bit;
-
-  Result.Canvas.StretchDraw(
-    Rect(0, 0, NewWidth, NewHeight),
-    Source
-  );
 end;
 
 function TfmMain.CreateSquareThumbnail(Source: TBitmap; Size: Integer): TBitmap;
