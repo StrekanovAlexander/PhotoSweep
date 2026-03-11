@@ -6,8 +6,9 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, SVGIconImage, Vcl.StdCtrls,
   System.ImageList, Vcl.ImgList, SVGIconImageListBase, SVGIconImageList,
-  Vcl.Buttons, Vcl.ComCtrls, System.IOUtils, System.Types,
-  Vcl.Imaging.jpeg,
+  Vcl.Buttons, Vcl.ComCtrls,
+  System.IOUtils,
+  System.Types,
   uToolsPanelController,
   uListViewController,
   uItem,
@@ -15,7 +16,8 @@ uses
   uFileMetadata,
   uIFileMetadataReader,
   uFileMetadataReader,
-  uItemsManager
+  uItemsManager,
+  uFileUtils
 ;
 
 type
@@ -80,22 +82,17 @@ begin
   FListViewController.Free;
   FItemsManager.Free;
   FToolsController.Free;
-//  FReader.Free;
 end;
 
 procedure TfmMain.Button1Click(Sender: TObject);
 var
   Files: TStringDynArray;
-//  Reader: TFileMetadataReader;
-  Thumb: TBitmap;
 begin
-
   pnlTools.Show;
   FListViewController.Clear;
   FItemsManager.Clear;
 
-  Files := TDirectory.GetFiles('C:\source4', '*.jpg');
-//  Reader := TFileMetadataReader.Create;
+  Files := GetItemFiles('C:\source4');
 
   TFileScanThread.Create(Files, FReader,
     procedure(Meta: TFileMetadata)

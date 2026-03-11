@@ -158,6 +158,9 @@
         <DCCReference Include="src\Core\uFileMetadata.pas"/>
         <DCCReference Include="src\Core\uItemsManager.pas"/>
         <DCCReference Include="src\Controllers\uListViewController.pas"/>
+        <DCCReference Include="src\Model\uAppConsts.pas"/>
+        <DCCReference Include="src\Utils\uFileUtils.pas"/>
+        <DCCReference Include="src\Utils\uGraphicUtils.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

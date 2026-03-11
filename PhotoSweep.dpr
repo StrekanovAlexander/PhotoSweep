@@ -23,7 +23,10 @@ uses
   uFileScanThread in 'src\Core\uFileScanThread.pas',
   uFileMetadata in 'src\Core\uFileMetadata.pas',
   uItemsManager in 'src\Core\uItemsManager.pas',
-  uListViewController in 'src\Controllers\uListViewController.pas';
+  uListViewController in 'src\Controllers\uListViewController.pas',
+  uAppConsts in 'src\Model\uAppConsts.pas',
+  uFileUtils in 'src\Utils\uFileUtils.pas',
+  uGraphicUtils in 'src\Utils\uGraphicUtils.pas';
 
 {$R *.res}
 

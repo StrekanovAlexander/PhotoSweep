@@ -3,15 +3,14 @@ unit uListViewController;
 interface
 
 uses
-  Winapi.Windows,
-  System.Math,
   System.SysUtils,
-  System.Types,
   Vcl.Graphics,
   Vcl.Controls,
   Vcl.ComCtrls,
+  uAppConsts,
   uItem,
-  uItemsManager
+  uItemsManager,
+  uGraphicUtils
 ;
 
 type
@@ -25,7 +24,6 @@ type
     procedure Clear;
     procedure Build(AItemsManager: TItemsManager);
     procedure AddItem(AItem: TItem);
-    function SetThumbnail(Source: TBitmap; Size: Integer): TBitmap;
   end;
 
 implementation
@@ -67,7 +65,7 @@ begin
   if AItem.HasThumbnail and Assigned(AItem.Thumbnail) then
   begin
     ListItem.SubItems.Add('Thumb');
-    Thumb := SetThumbnail(AItem.Thumbnail, 48);
+    Thumb := SetBitmapThumbnail(AItem.Thumbnail, THUMBNAIL_SIZE);
     ListItem.ImageIndex := FImageList.Add(Thumb, nil);
   end
   else
@@ -77,35 +75,6 @@ begin
   end;
 
   ListItem.Data := AItem;
-end;
-
-function TListViewController.SetThumbnail(Source: TBitmap; Size: Integer): TBitmap;
-var
-  Scale: Double;
-  NewW, NewH: Integer;
-  X, Y: Integer;
-begin
-  Result := TBitmap.Create;
-  Result.SetSize(Size, Size);
-  Result.PixelFormat := pf24bit;
-
-  Result.Canvas.Brush.Color := clBlack;
-  Result.Canvas.FillRect(Rect(0, 0, Size, Size));
-
-  Scale := Min(Size / Source.Width, Size / Source.Height);
-
-  NewW := Round(Source.Width * Scale);
-  NewH := Round(Source.Height * Scale);
-
-  X := (Size - NewW) div 2;
-  Y := (Size - NewH) div 2;
-
-  SetStretchBltMode(Result.Canvas.Handle, HALFTONE);
-
-  Result.Canvas.StretchDraw(
-    Rect(X, Y, X + NewW, Y + NewH),
-    Source
-  );
 end;
 
 procedure TListViewController.Build(AItemsManager: TItemsManager);
