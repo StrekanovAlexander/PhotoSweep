@@ -9,7 +9,6 @@ uses
   Vcl.Buttons, Vcl.ComCtrls,
   System.IOUtils,
   System.Types,
-  uToolsPanelController,
   uListViewController,
   uItem,
   uFileScanThread,
@@ -25,30 +24,44 @@ type
 
   TfmMain = class(TForm)
     pnlTop: TPanel;
-    bvlTop: TBevel;
     pnlTopLogo: TPanel;
     svgLogo: TSVGIconImage;
     lblLogo: TLabel;
-    btnAbout: TBitBtn;
     svgBtnList: TSVGIconImageList;
-    lblSource: TLabel;
-    btnSource: TBitBtn;
     stbMain: TStatusBar;
-    MainPanel: TPanel;
-    pnlFiles: TPanel;
-    pnlTools: TPanel;
-    pnlModeBtns: TPanel;
-    btnSort: TBitBtn;
-    btnDuplicates: TBitBtn;
-    lvwImgItems: TListView;
-    pnlToolsHost: TPanel;
-    Button1: TButton;
     imlThumbnails: TImageList;
+    bvlTop: TBevel;
+    btnAbout: TBitBtn;
+    pnlSource: TPanel;
+    btnSource: TBitBtn;
+    lblSource: TLabel;
+    pnlBottom: TPanel;
+    pnlButtons: TPanel;
+    btnMove: TBitBtn;
+    btnCopy: TBitBtn;
+    btnDupl: TBitBtn;
+    pnlTarget: TPanel;
+    Label1: TLabel;
+    btnTarget: TBitBtn;
+    pnlTools2: TPanel;
+    bvlTools: TBevel;
+    lvwImgItems: TListView;
+    Panel1: TPanel;
+    Label2: TLabel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
+    CheckBox4: TCheckBox;
+    CheckBox5: TCheckBox;
+    CheckBox6: TCheckBox;
+    CheckBox7: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnSourceClick(Sender: TObject);
   private
-    FToolsController: TToolsPanelController;
     FListViewController: TListViewController;
     FItemsManager: TItemsManager;
     FReader: IFileMetadataReader;
@@ -65,13 +78,6 @@ implementation
 
 procedure TfmMain.FormCreate(Sender: TObject);
 begin
-  FToolsController := TToolsPanelController.Create(
-    Self,
-    pnlToolsHost,
-    btnSort,
-    btnDuplicates
-  );
-
   FListViewController := TListViewController.Create(lvwImgItems, imlThumbnails);
   FItemsManager := TItemsManager.Create;
   FReader := TFileMetadataReader.Create;
@@ -81,18 +87,18 @@ procedure TfmMain.FormDestroy(Sender: TObject);
 begin
   FListViewController.Free;
   FItemsManager.Free;
-  FToolsController.Free;
 end;
 
-procedure TfmMain.Button1Click(Sender: TObject);
+procedure TfmMain.btnSourceClick(Sender: TObject);
 var
   Files: TStringDynArray;
 begin
-  pnlTools.Show;
   FListViewController.Clear;
   FItemsManager.Clear;
 
   Files := ReadFolder('C:\source4');
+
+  pnlBottom.Enabled := True;
 
   TFileScanThread.Create(Files, FReader,
     procedure(Meta: TFileMetadata)
@@ -104,6 +110,11 @@ begin
       FListViewController.Build(FItemsManager);
     end
   );
+end;
+
+procedure TfmMain.Button1Click(Sender: TObject);
+begin
+
 end;
 
 {

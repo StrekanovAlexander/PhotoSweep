@@ -1,13 +1,15 @@
 object fmMain: TfmMain
   Left = 0
   Top = 0
-  Margins.Left = 16
+  Margins.Left = 0
   Margins.Top = 0
   Margins.Right = 0
+  Margins.Bottom = 0
   Caption = 'PhotoSweep'
   ClientHeight = 611
   ClientWidth = 984
   Color = clBtnFace
+  Constraints.MinWidth = 1000
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
@@ -24,12 +26,7 @@ object fmMain: TfmMain
     Top = 63
     Width = 978
     Height = 1
-    Margins.Bottom = 8
     Align = alTop
-    Shape = bsBottomLine
-    ExplicitLeft = 0
-    ExplicitTop = 60
-    ExplicitWidth = 624
   end
   object pnlTop: TPanel
     Left = 0
@@ -43,339 +40,529 @@ object fmMain: TfmMain
     Padding.Right = 12
     Padding.Bottom = 8
     TabOrder = 0
-    object lblSource: TLabel
-      AlignWithMargins = True
-      Left = 106
-      Top = 22
-      Width = 603
-      Height = 27
-      Margins.Left = 16
-      Margins.Top = 14
-      Align = alClient
-      Alignment = taCenter
-      Caption = 'Select a source folder to browse the photos'#8230
-      ExplicitWidth = 236
-      ExplicitHeight = 15
-    end
     object pnlTopLogo: TPanel
       Left = 12
       Top = 8
-      Width = 78
+      Width = 109
       Height = 44
       Align = alLeft
-      AutoSize = True
       BevelOuter = bvNone
+      Padding.Left = 10
+      Padding.Right = 10
       ParentBackground = False
       TabOrder = 0
       object svgLogo: TSVGIconImage
         AlignWithMargins = True
-        Left = 0
+        Left = 10
         Top = 4
-        Width = 72
-        Height = 22
+        Width = 83
+        Height = 24
         Margins.Left = 0
         Margins.Top = 4
         Margins.Right = 6
         Margins.Bottom = 0
         AutoSize = False
         SVGText = 
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0' +
-          ' 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">' +
-          #13#10'  <path stroke-linecap="round" stroke-linejoin="round" d="M6.8' +
-          '27 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C' +
-          '2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15' +
-          'A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47' +
-          '.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.' +
-          '316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.' +
-          '192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />'#13#10'  <path stroke-lin' +
-          'ecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 ' +
-          '1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />'#13#10'<' +
-          '/svg>'#13#10
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M14.12 4l1.83 2H20v12H4V6h4.05l1.83-2h4.24' +
+          'M15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 ' +
+          '2-2V6c0-1.1-.9-2-2-2h-3.17L15 2zm-3 7c1.65 0 3 1.35 3 3s-1.35 3-' +
+          '3 3-3-1.35-3-3 1.35-3 3-3m0-2c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.' +
+          '24 5-5-2.24-5-5-5z"/></svg>'
         FixedColor = clLightgray
         Align = alTop
       end
       object lblLogo: TLabel
         AlignWithMargins = True
-        Left = 3
-        Top = 27
-        Width = 72
-        Height = 15
+        Left = 13
+        Top = 28
+        Width = 83
+        Height = 14
         Margins.Top = 0
         Margins.Bottom = 2
         Align = alBottom
+        Alignment = taCenter
         Caption = 'PhotoSweep'
         Font.Charset = RUSSIAN_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Roboto'
         Font.Style = []
         ParentFont = False
-        ExplicitTop = 30
+        ExplicitLeft = 10
+        ExplicitTop = 26
       end
     end
     object btnAbout: TBitBtn
       AlignWithMargins = True
-      Left = 887
+      Left = 879
       Top = 16
-      Width = 85
-      Height = 28
+      Width = 90
+      Height = 27
       Margins.Top = 8
-      Margins.Right = 0
-      Margins.Bottom = 8
+      Margins.Bottom = 9
       Align = alRight
       Caption = 'About'
-      ImageIndex = 0
-      ImageName = 'information-circle'
-      Images = svgBtnList
-      TabOrder = 2
-    end
-    object btnSource: TBitBtn
-      AlignWithMargins = True
-      Left = 796
-      Top = 16
-      Width = 85
-      Height = 28
-      Margins.Top = 8
-      Margins.Bottom = 8
-      Align = alRight
-      Caption = 'Browse...'
-      ImageIndex = 1
-      ImageName = 'folder-open'
+      ImageIndex = 4
+      ImageName = 'about'
       Images = svgBtnList
       TabOrder = 1
-    end
-    object Button1: TButton
-      AlignWithMargins = True
-      Left = 715
-      Top = 16
-      Width = 75
-      Height = 28
-      Margins.Top = 8
-      Margins.Bottom = 8
-      Align = alRight
-      Caption = 'Test'
-      TabOrder = 3
-      OnClick = Button1Click
+      ExplicitLeft = 854
+      ExplicitTop = 12
+      ExplicitHeight = 38
     end
   end
   object stbMain: TStatusBar
-    Left = 0
-    Top = 592
-    Width = 984
+    AlignWithMargins = True
+    Left = 3
+    Top = 589
+    Width = 978
     Height = 19
-    Enabled = False
     Panels = <>
+    ExplicitLeft = -2
   end
-  object MainPanel: TPanel
-    Left = 0
-    Top = 72
-    Width = 984
-    Height = 520
-    Align = alClient
+  object pnlSource: TPanel
+    AlignWithMargins = True
+    Left = 3
+    Top = 70
+    Width = 978
+    Height = 33
+    Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    object pnlFiles: TPanel
+    ExplicitLeft = 0
+    ExplicitTop = 67
+    ExplicitWidth = 984
+    object lblSource: TLabel
+      AlignWithMargins = True
+      Left = 99
+      Top = 8
+      Width = 148
+      Height = 22
+      Margins.Top = 8
+      Align = alLeft
+      Caption = 'Select a source folder path...'
+      ExplicitHeight = 15
+    end
+    object btnSource: TBitBtn
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 692
-      Height = 514
-      Align = alClient
+      Width = 90
+      Height = 27
+      Align = alLeft
+      Caption = 'Source'
+      Default = True
+      ImageIndex = 0
+      ImageName = 'folder-open'
+      Images = svgBtnList
+      TabOrder = 0
+      OnClick = btnSourceClick
+    end
+  end
+  object pnlBottom: TPanel
+    AlignWithMargins = True
+    Left = 3
+    Top = 441
+    Width = 978
+    Height = 142
+    Align = alBottom
+    BevelOuter = bvNone
+    Enabled = False
+    TabOrder = 3
+    object bvlTools: TBevel
+      AlignWithMargins = True
+      Left = 3
+      Top = 39
+      Width = 972
+      Height = 1
+      Align = alTop
+      ExplicitLeft = 1
+      ExplicitTop = 34
+      ExplicitWidth = 976
+    end
+    object pnlButtons: TPanel
+      AlignWithMargins = True
+      Left = 0
+      Top = 0
+      Width = 978
+      Height = 33
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      object lvwImgItems: TListView
-        Left = 0
-        Top = 0
-        Width = 692
-        Height = 514
-        Align = alClient
-        Checkboxes = True
-        Columns = <
-          item
-            AutoSize = True
-            Caption = 'File Name'
-            WidthType = (
-              -132)
-          end
-          item
-            Caption = 'Date Taken'
-            Width = 150
-          end
-          item
-            Caption = 'Camera'
-            Width = 200
-          end
-          item
-            Alignment = taCenter
-            Caption = 'Resolution'
-            Width = 100
-          end
-          item
-            Alignment = taCenter
-            Caption = 'MP'
-            Width = 70
-          end
-          item
-            Alignment = taRightJustify
-            Caption = 'Size'
-            Width = 75
-          end
-          item
-            Alignment = taCenter
-            Caption = 'Extension'
-            Width = 75
-          end
-          item
-            Caption = 'Orientation'
-            Width = 75
-          end
-          item
-            Alignment = taCenter
-            Caption = 'Has EXIF'
-            Width = 75
-          end>
-        DoubleBuffered = True
-        FlatScrollBars = True
-        ReadOnly = True
-        RowSelect = True
-        ParentDoubleBuffered = False
-        SmallImages = imlThumbnails
-        TabOrder = 0
-        ViewStyle = vsReport
-      end
-    end
-    object pnlTools: TPanel
-      AlignWithMargins = True
-      Left = 706
-      Top = 3
-      Width = 275
-      Height = 514
-      Margins.Left = 8
-      Align = alRight
-      BevelOuter = bvNone
-      ParentBackground = False
-      TabOrder = 1
-      Visible = False
-      object pnlModeBtns: TPanel
-        Left = 0
-        Top = 0
-        Width = 275
-        Height = 31
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-        object btnSort: TBitBtn
-          AlignWithMargins = True
-          Left = 0
-          Top = 0
-          Width = 133
-          Height = 28
-          Margins.Left = 0
-          Margins.Top = 0
-          Align = alLeft
-          Caption = 'Sort'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Style = []
-          ImageIndex = 2
-          ImageName = 'arrows-up-down'
-          Images = svgBtnList
-          ParentFont = False
-          TabOrder = 0
-        end
-        object btnDuplicates: TBitBtn
-          AlignWithMargins = True
-          Left = 139
-          Top = 0
-          Width = 133
-          Height = 28
-          Margins.Left = 0
-          Margins.Top = 0
-          Align = alRight
-          Caption = 'Duplicates'
-          ImageIndex = 3
-          ImageName = 'document-duplicate'
-          Images = svgBtnList
-          TabOrder = 1
-        end
-      end
-      object pnlToolsHost: TPanel
+      ExplicitTop = 495
+      ExplicitWidth = 984
+      object btnMove: TBitBtn
         AlignWithMargins = True
         Left = 3
-        Top = 36
-        Width = 269
-        Height = 475
-        Margins.Top = 5
-        Align = alClient
-        BevelOuter = bvNone
-        Caption = 'imlThumbnails'
+        Top = 4
+        Width = 90
+        Height = 27
+        Margins.Top = 4
+        Margins.Bottom = 2
+        Align = alLeft
+        Caption = 'Move'
+        ImageIndex = 1
+        ImageName = 'move'
+        Images = svgBtnList
+        TabOrder = 0
+      end
+      object btnCopy: TBitBtn
+        AlignWithMargins = True
+        Left = 99
+        Top = 4
+        Width = 90
+        Height = 27
+        Margins.Top = 4
+        Margins.Bottom = 2
+        Align = alLeft
+        Caption = 'Copy'
+        ImageIndex = 2
+        ImageName = 'copy'
+        Images = svgBtnList
         TabOrder = 1
       end
+      object btnDupl: TBitBtn
+        AlignWithMargins = True
+        Left = 885
+        Top = 4
+        Width = 90
+        Height = 27
+        Margins.Top = 4
+        Margins.Bottom = 2
+        Align = alRight
+        Caption = 'Duplicates'
+        ImageIndex = 3
+        ImageName = 'duplicates'
+        Images = svgBtnList
+        TabOrder = 2
+        ExplicitLeft = 195
+      end
     end
+    object pnlTools2: TPanel
+      Left = 0
+      Top = 43
+      Width = 978
+      Height = 99
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 1
+      ExplicitLeft = 1
+      ExplicitTop = 72
+      ExplicitWidth = 976
+      ExplicitHeight = 102
+      object Panel1: TPanel
+        Left = 0
+        Top = 0
+        Width = 978
+        Height = 33
+        Align = alTop
+        BevelOuter = bvNone
+        Padding.Top = 3
+        TabOrder = 0
+        object Label2: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 6
+          Width = 73
+          Height = 24
+          Align = alLeft
+          Caption = 'Total: 125 files'
+          ExplicitLeft = 48
+          ExplicitTop = 8
+          ExplicitHeight = 15
+        end
+      end
+      object Panel2: TPanel
+        Left = 0
+        Top = 33
+        Width = 978
+        Height = 33
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 1
+        ExplicitTop = 32
+        object CheckBox1: TCheckBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 97
+          Height = 27
+          Align = alLeft
+          Caption = 'JPG'
+          TabOrder = 0
+          ExplicitLeft = 24
+          ExplicitTop = 8
+          ExplicitHeight = 17
+        end
+        object CheckBox2: TCheckBox
+          AlignWithMargins = True
+          Left = 106
+          Top = 3
+          Width = 97
+          Height = 27
+          Align = alLeft
+          Caption = 'PNG'
+          TabOrder = 1
+          ExplicitLeft = 96
+          ExplicitTop = 8
+          ExplicitHeight = 17
+        end
+        object CheckBox3: TCheckBox
+          AlignWithMargins = True
+          Left = 209
+          Top = 3
+          Width = 97
+          Height = 27
+          Align = alLeft
+          Caption = 'GIF'
+          TabOrder = 2
+          ExplicitLeft = 192
+          ExplicitTop = 8
+          ExplicitHeight = 17
+        end
+        object CheckBox7: TCheckBox
+          AlignWithMargins = True
+          Left = 312
+          Top = 3
+          Width = 97
+          Height = 27
+          Align = alLeft
+          Caption = 'Has EXIF'
+          TabOrder = 3
+          ExplicitLeft = 336
+          ExplicitTop = 8
+          ExplicitHeight = 17
+        end
+      end
+      object Panel3: TPanel
+        Left = 0
+        Top = 66
+        Width = 978
+        Height = 32
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 2
+        ExplicitTop = 64
+        object CheckBox4: TCheckBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 97
+          Height = 26
+          Align = alLeft
+          Caption = 'Landscape'
+          TabOrder = 0
+          ExplicitLeft = 32
+          ExplicitTop = 8
+          ExplicitHeight = 17
+        end
+        object CheckBox5: TCheckBox
+          AlignWithMargins = True
+          Left = 106
+          Top = 3
+          Width = 97
+          Height = 26
+          Align = alLeft
+          Caption = 'Portrait'
+          TabOrder = 1
+          ExplicitLeft = 144
+          ExplicitTop = 8
+          ExplicitHeight = 17
+        end
+        object CheckBox6: TCheckBox
+          AlignWithMargins = True
+          Left = 209
+          Top = 3
+          Width = 97
+          Height = 26
+          Align = alLeft
+          Caption = 'Square'
+          TabOrder = 2
+          ExplicitLeft = 224
+          ExplicitTop = 8
+          ExplicitHeight = 17
+        end
+      end
+    end
+  end
+  object pnlTarget: TPanel
+    AlignWithMargins = True
+    Left = 3
+    Top = 405
+    Width = 978
+    Height = 33
+    Margins.Bottom = 0
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 4
+    ExplicitLeft = -8
+    ExplicitTop = 383
+    ExplicitWidth = 984
+    object Label1: TLabel
+      AlignWithMargins = True
+      Left = 99
+      Top = 8
+      Width = 144
+      Height = 22
+      Margins.Top = 8
+      Align = alLeft
+      Caption = 'Select a target folder path...'
+      ExplicitHeight = 15
+    end
+    object btnTarget: TBitBtn
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 90
+      Height = 27
+      Align = alLeft
+      Caption = 'Target'
+      ImageIndex = 0
+      ImageName = 'folder-open'
+      Images = svgBtnList
+      TabOrder = 0
+    end
+  end
+  object lvwImgItems: TListView
+    AlignWithMargins = True
+    Left = 6
+    Top = 109
+    Width = 972
+    Height = 290
+    Margins.Left = 6
+    Margins.Right = 6
+    Align = alClient
+    Checkboxes = True
+    Columns = <
+      item
+        Caption = 'File Name'
+        Width = 250
+      end
+      item
+        Caption = 'Date Taken'
+        Width = 150
+      end
+      item
+        Caption = 'Camera'
+        Width = 200
+      end
+      item
+        Alignment = taCenter
+        Caption = 'Resolution'
+        Width = 100
+      end
+      item
+        Alignment = taCenter
+        Caption = 'MP'
+        Width = 100
+      end
+      item
+        Alignment = taRightJustify
+        Caption = 'Size'
+        Width = 100
+      end
+      item
+        Alignment = taCenter
+        Caption = 'Extension'
+        Width = 100
+      end
+      item
+        Caption = 'Orientation'
+        Width = 100
+      end
+      item
+        AutoSize = True
+        Caption = 'Has EXIF'
+        WidthType = (
+          -132)
+      end>
+    DoubleBuffered = True
+    FlatScrollBars = True
+    ReadOnly = True
+    RowSelect = True
+    ParentDoubleBuffered = False
+    SmallImages = imlThumbnails
+    TabOrder = 5
+    ViewStyle = vsReport
+    ExplicitLeft = 8
+    ExplicitWidth = 978
   end
   object svgBtnList: TSVGIconImageList
     SVGIconItems = <
       item
-        IconName = 'information-circle'
-        SVGText = 
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0' +
-          ' 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">' +
-          #13#10'  <path stroke-linecap="round" stroke-linejoin="round" d="m11.' +
-          '25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0' +
-          ' 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.7' +
-          '5h.008v.008H12V8.25Z" />'#13#10'</svg>'#13#10
-        FixedColor = clLightgray
-      end
-      item
         IconName = 'folder-open'
         SVGText = 
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0' +
-          ' 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">' +
-          #13#10'  <path stroke-linecap="round" stroke-linejoin="round" d="M3.7' +
-          '5 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.0' +
-          '26m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.' +
-          '227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0' +
-          ' 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 ' +
-          '0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 ' +
-          '20.25 9v.776" />'#13#10'</svg>'#13#10
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c' +
+          '0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10' +
+          'z"/></svg>'
         FixedColor = clLightgray
       end
       item
-        IconName = 'arrows-up-down'
+        IconName = 'move'
         SVGText = 
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0' +
-          ' 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">' +
-          #13#10'  <path stroke-linecap="round" stroke-linejoin="round" d="M3 7' +
-          '.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.' +
-          '5V7.5" />'#13#10'</svg>'#13#10
+          '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0' +
+          ' 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#' +
+          '1f1f1f"><rect fill="none" height="24" width="24"/><path d="M18,2' +
+          'H9C7.9,2,7,2.9,7,4v12c0,1.1,0.9,2,2,2h9c1.1,0,2-0.9,2-2V4C20,2.9' +
+          ',19.1,2,18,2z M18,16H9V4h9V16z M3,15v-2h2v2H3z M3,9.5h2v2H3V9.5z' +
+          ' M10,20h2v2h-2V20z M3,18.5v-2h2v2H3z M5,22c-1.1,0-2-0.9-2-2h2V22' +
+          'z M8.5,22h-2v-2h2V22z M13.5,22L13.5,22l0-2h2 v0C15.5,21.1,14.6,2' +
+          '2,13.5,22z M5,6L5,6l0,2H3v0C3,6.9,3.9,6,5,6z"/></svg>'
         FixedColor = clLightgray
       end
       item
-        IconName = 'document-duplicate'
+        IconName = 'copy'
         SVGText = 
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0' +
-          ' 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">' +
-          #13#10'  <path stroke-linecap="round" stroke-linejoin="round" d="M15.' +
-          '75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0' +
-          ' 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.' +
-          '06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V' +
-          '11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.37' +
-          '5c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125' +
-          ' 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375' +
-          '-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0' +
-          '-3.375-3.375H9.75" />'#13#10'</svg>'#13#10
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8' +
+          'c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2' +
+          '-2-2zm0 16H8V7h11v14z"/></svg>'
+        FixedColor = clLightgray
+      end
+      item
+        IconName = 'duplicates'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M20 4v12H8V4h12m0-2H8c-1.1 0-2 .9-2 2v12c0' +
+          ' 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 9.67l1.69 ' +
+          '2.26 2.48-3.1L19 15H9zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg' +
+          '>'
+        FixedColor = clLightgray
+      end
+      item
+        IconName = 'about'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0' +
+          ' 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#' +
+          '1f1f1f"><g><rect fill="none" height="24" width="24"/><path d="M1' +
+          '3.25,16.74c0,0.69-0.53,1.26-1.25,1.26c-0.7,0-1.26-0.56-1.26-1.26' +
+          'c0-0.71,0.56-1.25,1.26-1.25 C12.71,15.49,13.25,16.04,13.25,16.74' +
+          'z M11.99,6c-1.77,0-2.98,1.15-3.43,2.49l1.64,0.69c0.22-0.67,0.74-' +
+          '1.48,1.8-1.48 c1.62,0,1.94,1.52,1.37,2.33c-0.54,0.77-1.47,1.29-1' +
+          '.96,2.16c-0.39,0.69-0.31,1.49-0.31,1.98h1.82c0-0.93,0.07-1.12,0.' +
+          '22-1.41 c0.39-0.72,1.11-1.06,1.87-2.17c0.68-1,0.42-2.36-0.02-3.0' +
+          '8C14.48,6.67,13.47,6,11.99,6z M19,5H5v14h14V5 M19,3c1.1,0,2,0.9,' +
+          '2,2v14 c0,1.1-0.9,2-2,2H5c-1.1,0-2-0.9-2-2V5c0-1.1,0.9-2,2-2H19L' +
+          '19,3z"/></g></svg>'
         FixedColor = clLightgray
       end>
     Scaled = True
-    Left = 720
-    Top = 120
+    Left = 48
+    Top = 168
   end
   object imlThumbnails: TImageList
     Height = 48
     Width = 48
-    Left = 725
-    Top = 199
+    Left = 45
+    Top = 239
   end
 end
