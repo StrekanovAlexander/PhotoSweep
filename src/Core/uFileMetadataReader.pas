@@ -48,6 +48,7 @@ end;
 function TFileMetadataReader.ReadJpegMetadata(const FileName: string): TFileMetadata;
 var
   Exif: TExifData;
+  Bitmap: TBitmap;
 begin
   Result := TFileMetadata.Create;
   Exif := TExifData.Create;
@@ -65,17 +66,26 @@ begin
 
     if Exif.HasThumbnail and Assigned(Exif.Thumbnail) then
     begin
-      Result.HasThumbnail := True;
-      Result.Thumbnail := TBitmap.Create;
-      Result.Thumbnail.PixelFormat := pf24bit;
-      Result.Thumbnail.SetSize(Exif.Thumbnail.Width, Exif.Thumbnail.Height);
-      Result.Thumbnail.Canvas.Draw(0, 0, Exif.Thumbnail);
+      Bitmap := TBitmap.Create;
+      Bitmap.PixelFormat := pf24bit;
+      Bitmap.SetSize(Exif.Thumbnail.Width, Exif.Thumbnail.Height);
+      Bitmap.Canvas.Draw(0, 0, Exif.Thumbnail);
+      try
+        Result.Thumbnail := ResizeBitmapThumbnail(Bitmap, THUMBNAIL_SIZE);
+      finally
+        Bitmap.Free;
+      end;
     end
     else
     begin
-      Result.HasThumbnail := False;
-      Result.Thumbnail := nil;
+      Bitmap := CreateBitmapFromJpeg(FileName);
+      try
+        Result.Thumbnail := ResizeBitmapThumbnail(Bitmap, THUMBNAIL_SIZE);
+      finally
+        Bitmap.Free;
+      end;
     end;
+    Result.HasThumbnail := True;
   finally
     Exif.Free;
   end;
@@ -93,7 +103,7 @@ begin
     Result.Height := Pic.Height;
     Result.HasExif := False;
     Result.HasThumbnail := True;
-    Result.Thumbnail := SetPicThumbnail(Pic, THUMBNAIL_SIZE);
+    Result.Thumbnail := ResizePicThumbnail(Pic, THUMBNAIL_SIZE);
   finally
     Pic.Free;
   end;
@@ -113,7 +123,7 @@ begin
     Bitmap := TBitmap.Create;
     try
       Bitmap.Assign(Gif.Images[0].Bitmap);
-      Result.Thumbnail := SetBitmapThumbnail(Bitmap, THUMBNAIL_SIZE);
+      Result.Thumbnail := ResizeBitmapThumbnail(Bitmap, THUMBNAIL_SIZE);
     finally
       Bitmap.Free;
     end;

@@ -10,7 +10,7 @@ uses
   System.Generics.Collections,
   uAppConsts;
 
-function GetItemFiles(const Folder: string): TStringDynArray;
+function ReadFolder(const Folder: string): TStringDynArray;
 
 implementation
 
@@ -22,7 +22,7 @@ begin
   Result := MatchText(Ext, SUPPORTED_EXTS);
 end;
 
-function GetItemFiles(const Folder: string): TStringDynArray;
+function ReadFolder(const Folder: string): TStringDynArray;
 var
   Files: TStringDynArray;
   List: TList<string>;

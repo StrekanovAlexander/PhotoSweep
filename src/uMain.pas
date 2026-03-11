@@ -92,7 +92,7 @@ begin
   FListViewController.Clear;
   FItemsManager.Clear;
 
-  Files := GetItemFiles('C:\source4');
+  Files := ReadFolder('C:\source4');
 
   TFileScanThread.Create(Files, FReader,
     procedure(Meta: TFileMetadata)

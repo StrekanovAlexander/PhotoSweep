@@ -9,8 +9,7 @@ uses
   Vcl.ComCtrls,
   uAppConsts,
   uItem,
-  uItemsManager,
-  uGraphicUtils
+  uItemsManager
 ;
 
 type
@@ -65,7 +64,7 @@ begin
   if AItem.HasThumbnail and Assigned(AItem.Thumbnail) then
   begin
     ListItem.SubItems.Add('Thumb');
-    Thumb := SetBitmapThumbnail(AItem.Thumbnail, THUMBNAIL_SIZE);
+    Thumb := AItem.Thumbnail;
     ListItem.ImageIndex := FImageList.Add(Thumb, nil);
   end
   else

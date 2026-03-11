@@ -6,15 +6,17 @@ uses
   Winapi.Windows,
   System.Math,
   System.Types,
-  Vcl.Graphics
+  Vcl.Graphics,
+  Vcl.Imaging.jpeg
 ;
 
-function SetBitmapThumbnail(Source: TBitmap; Size: Integer): TBitmap;
-function SetPicThumbnail(Source: TPicture; Size: Integer): TBitmap;
+function ResizeBitmapThumbnail(Source: TBitmap; Size: Integer): TBitmap;
+function ResizePicThumbnail(Source: TPicture; Size: Integer): TBitmap;
+function CreateBitmapFromJpeg(const FileName: string): TBitmap;
 
 implementation
 
-function SetBitmapThumbnail(Source: TBitmap; Size: Integer): TBitmap;
+function ResizeBitmapThumbnail(Source: TBitmap; Size: Integer): TBitmap;
 var
   Scale: Double;
   NewW, NewH: Integer;
@@ -43,7 +45,7 @@ begin
   );
 end;
 
-function SetPicThumbnail(Source: TPicture; Size: Integer): TBitmap;
+function ResizePicThumbnail(Source: TPicture; Size: Integer): TBitmap;
 var
   Scale: Double;
   NewW, NewH: Integer;
@@ -70,6 +72,22 @@ begin
     Rect(X, Y, X + NewW, Y + NewH),
     Source.Graphic
   );
+end;
+
+function CreateBitmapFromJpeg(const FileName: string): TBitmap;
+var
+  Jpg: TJPEGImage;
+begin
+  Result := TBitmap.Create;
+  Jpg := TJPEGImage.Create;
+  try
+    Jpg.LoadFromFile(FileName);
+    Result.PixelFormat := pf24bit;
+    Result.SetSize(Jpg.Width, Jpg.Height);
+    Result.Canvas.Draw(0, 0, Jpg);
+  finally
+    Jpg.Free;
+  end;
 end;
 
 end.
