@@ -17,6 +17,13 @@ type
   private
     FListView: TListView;
     FImageList: TImageList;
+    FSortColumn: Integer;
+    FSortAscending: Boolean;
+
+    procedure ColumnClick(Sender: TObject; Column: TListColumn);
+    procedure CompareItems(Sender: TObject; Item1, Item2: TListItem;
+      Data: Integer; var Compare: Integer);
+
   public
     constructor Create(AListView: TListView; AImageList: TImageList);
 
@@ -31,6 +38,11 @@ constructor TListViewController.Create(AListView: TListView; AImageList: TImageL
 begin
   FListView := AListView;
   FImageList := AImageList;
+
+  FSortColumn := -1;
+  FSortAscending := True;
+  FListView.OnColumnClick := ColumnClick;
+  FListView.OnCompare := CompareItems;
 end;
 
 procedure TListViewController.Clear;
@@ -63,7 +75,7 @@ begin
   end;
 
   ListItem.Caption := AItem.FileName;
-  ListItem.SubItems.Add(DateToStr(AItem.DateTimeOriginal));
+  ListItem.SubItems.Add(DateTimeToStr(AItem.DateTimeOriginal));
   ListItem.SubItems.Add(AItem.FullDeviceName);
   ListItem.SubItems.Add(AItem.Resolution);
   ListItem.SubItems.Add(FloatToStr(AItem.MegaPixels));
@@ -89,6 +101,43 @@ begin
   finally
     FListView.Items.EndUpdate;
   end;
+end;
+
+procedure TListViewController.ColumnClick(Sender: TObject; Column: TListColumn);
+begin
+  if FSortColumn = Column.Index then
+    FSortAscending := not FSortAscending
+  else
+  begin
+    FSortColumn := Column.Index;
+    FSortAscending := True;
+  end;
+  FListView.AlphaSort;
+end;
+
+procedure TListViewController.CompareItems(
+  Sender: TObject;
+  Item1, Item2: TListItem;
+  Data: Integer;
+  var Compare: Integer);
+var
+  S1, S2: string;
+begin
+  if FSortColumn = 0 then
+  begin
+    S1 := Item1.Caption;
+    S2 := Item2.Caption;
+  end
+  else
+  begin
+    S1 := Item1.SubItems[FSortColumn - 1];
+    S2 := Item2.SubItems[FSortColumn - 1];
+  end;
+
+  Compare := CompareText(S1, S2);
+
+  if not FSortAscending then
+    Compare := -Compare;
 end;
 
 

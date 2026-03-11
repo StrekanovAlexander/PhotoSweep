@@ -4,6 +4,7 @@ interface
 
 uses
   System.Classes,
+  System.IOUtils,
   System.SysUtils,
   Vcl.Dialogs,
   Vcl.Graphics,
@@ -115,6 +116,7 @@ begin
   end;
   Result.HasExif := False;
   Result.HasThumbnail := True;
+  Result.DateTimeOriginal := TFile.GetLastWriteTime(FileName);
 end;
 
 function TFileMetadataReader.ReadGifMetadata(const FileName: string): TFileMetadata;
@@ -132,6 +134,7 @@ begin
   end;
   Result.HasExif := False;
   Result.HasThumbnail := True;
+  Result.DateTimeOriginal := TFile.GetLastWriteTime(FileName);
 end;
 
 end.

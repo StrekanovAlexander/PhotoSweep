@@ -65,6 +65,7 @@ object fmMain: TfmMain
       Align = alLeft
       AutoSize = True
       BevelOuter = bvNone
+      ParentBackground = False
       TabOrder = 0
       object svgLogo: TSVGIconImage
         AlignWithMargins = True
@@ -193,6 +194,8 @@ object fmMain: TfmMain
           item
             AutoSize = True
             Caption = 'File Name'
+            WidthType = (
+              -132)
           end
           item
             Caption = 'Date Taken'
@@ -203,6 +206,7 @@ object fmMain: TfmMain
             Width = 200
           end
           item
+            Alignment = taCenter
             Caption = 'Resolution'
             Width = 100
           end
@@ -231,6 +235,7 @@ object fmMain: TfmMain
             Width = 75
           end>
         DoubleBuffered = True
+        FlatScrollBars = True
         ReadOnly = True
         RowSelect = True
         ParentDoubleBuffered = False
