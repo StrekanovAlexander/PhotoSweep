@@ -18,7 +18,7 @@ uses
   CCR.Exif.IPTC in 'libs\CCRExif\CCR.Exif.IPTC.pas',
   CCR.Exif.TiffUtils in 'libs\CCRExif\CCR.Exif.TiffUtils.pas',
   CCR.Exif.XMPUtils in 'libs\CCRExif\CCR.Exif.XMPUtils.pas',
-  uIFileMetadataReader in 'src\Core\uIFileMetadataReader.pas',
+  uIFileMetadataReader in 'src\Core\Interfaces\uIFileMetadataReader.pas',
   uFileMetadataReader in 'src\Core\uFileMetadataReader.pas',
   uFileScanThread in 'src\Core\uFileScanThread.pas',
   uFileMetadata in 'src\Core\uFileMetadata.pas',

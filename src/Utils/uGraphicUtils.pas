@@ -3,7 +3,7 @@ unit uGraphicUtils;
 interface
 
 uses
-   Winapi.Windows,
+  Winapi.Windows,
   System.Math,
   System.Types,
   Vcl.Graphics,

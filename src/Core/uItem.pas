@@ -24,16 +24,13 @@ type
     FCameraModel: string;
     FWidth: Integer;
     FHeight: Integer;
-//  FOrientation: TOrientation;
-
+    FOrientation: TOrientation;
     FThumbnail: TBitmap;
 
-    // Other
     function GetFormattedFileSize: string;
     function GetResolution: string;
     function GetMegaPixels: Double;
     function GetFullDeviceName: string;
-//    function GetOrientation: TOrientation;
     function GetOrientationText: string;
   public
     constructor Create(const AFilePath: string; const Meta: TFileMetadata);
@@ -44,7 +41,6 @@ type
     property FileSize: Int64 read FFileSize;
     property FormattedFileSize: string read GetFormattedFileSize;
 
-    // Exif
     property HasExif: Boolean read FHasExif;
     property HasThumbnail: Boolean read FHasThumbnail;
 
@@ -56,7 +52,6 @@ type
     property Height: Integer read FHeight;
     property Resolution: string read GetResolution;
     property MegaPixels: Double read GetMegaPixels;
-//    property Orientation: TOrientation read GetOrientation;
     property OrientationText: string read GetOrientationText;
 
     property Thumbnail: TBitmap read FThumbnail;
@@ -73,13 +68,12 @@ begin
 
   FWidth := Meta.Width;
   FHeight := Meta.Height;
-
   FHasExif := Meta.HasExif;
 
   FCameraMake := Meta.CameraMake;
   FCameraModel := Meta.CameraModel;
   FDateTimeOriginal := Meta.DateTimeOriginal;
-//  FOrientation := Meta.Orientation;
+  FOrientation := Meta.Orientation;
 
   if Meta.HasThumbnail and Assigned(Meta.Thumbnail) then
   begin
@@ -131,14 +125,11 @@ end;
 
 function TItem.GetOrientationText: string;
 begin
-  Result := 'Ori';
-{
-  case Orientation of
+  case FOrientation of
     poLandscape: Result := 'Landscape';
     poPortrait:  Result := 'Portrait';
     poSquare:    Result := 'Square';
   end;
-}
 end;
 
 function TItem.GetFullDeviceName: string;

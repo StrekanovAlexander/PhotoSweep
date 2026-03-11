@@ -51,28 +51,29 @@ var
   Thumb: TBitmap;
 begin
   ListItem := FListView.Items.Add;
-  ListItem.Caption := AItem.FileName;
-  ListItem.SubItems.Add(DateToStr(AItem.DateTimeOriginal));
-  ListItem.SubItems.Add(AItem.FullDeviceName);
-  ListItem.SubItems.Add(AItem.Resolution);
-  ListItem.SubItems.Add(FloatToStr(AItem.MegaPixels));
-  if AItem.HasExif then
-    ListItem.SubItems.Add('Yes')
-  else
-    ListItem.SubItems.Add('No');
 
   if AItem.HasThumbnail and Assigned(AItem.Thumbnail) then
   begin
-    ListItem.SubItems.Add('Thumb');
     Thumb := AItem.Thumbnail;
     ListItem.ImageIndex := FImageList.Add(Thumb, nil);
   end
   else
   begin
-    ListItem.SubItems.Add('No thumb');
     ListItem.ImageIndex := -1;
   end;
 
+  ListItem.Caption := AItem.FileName;
+  ListItem.SubItems.Add(DateToStr(AItem.DateTimeOriginal));
+  ListItem.SubItems.Add(AItem.FullDeviceName);
+  ListItem.SubItems.Add(AItem.Resolution);
+  ListItem.SubItems.Add(FloatToStr(AItem.MegaPixels));
+  ListItem.SubItems.Add(AItem.FormattedFileSize);
+  ListItem.SubItems.Add(AItem.Extension);
+  ListItem.SubItems.Add(AItem.OrientationText);
+  if AItem.HasExif then
+    ListItem.SubItems.Add('Yes')
+  else
+    ListItem.SubItems.Add('No');
   ListItem.Data := AItem;
 end;
 

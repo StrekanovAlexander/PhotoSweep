@@ -40,9 +40,7 @@ function TFileMetadataReader.Read(const FileName: string): TFileMetadata;
 var
   Ext: string;
 begin
-  Result := Default(TFileMetadata);
   Ext := LowerCase(ExtractFileExt(FileName));
-
   if (Ext = '.jpg') or (Ext = '.jpeg') then
     Result := ReadJpegMetadata(FileName)
   else if Ext = '.png' then
@@ -62,11 +60,12 @@ begin
   Exif := TExifData.Create;
   try
     Exif.LoadFromGraphic(FileName);
-    Result.Width := Exif.ExifImageWidth;
-    Result.Height := Exif.ExifImageHeight;
+
     if HasExif(Exif) then
     begin
       Result.HasExif := True;
+      Result.Width := Exif.ExifImageWidth;
+      Result.Height := Exif.ExifImageHeight;
       Result.CameraMake := Exif.CameraMake;
       Result.CameraModel := Exif.CameraModel;
       Result.DateTimeOriginal := Exif.DateTimeOriginal;
@@ -87,6 +86,8 @@ begin
     else
     begin
       Bitmap := CreateBitmapFromJpeg(FileName);
+      Result.Width := Bitmap.Width;
+      Result.Height := Bitmap.Height;
       try
         Result.Thumbnail := ResizeThumbnail(Bitmap, THUMBNAIL_SIZE);
       finally
@@ -105,6 +106,8 @@ var
 begin
   Result := TFileMetadata.Create;
   Bitmap := CreateBitmapFromPng(FileName);
+  Result.Width := Bitmap.Width;
+  Result.Height := Bitmap.Height;
   try
     Result.Thumbnail := ResizeThumbnail(Bitmap, THUMBNAIL_SIZE);
   finally
@@ -120,6 +123,8 @@ var
 begin
   Result := TFileMetadata.Create;
   Bitmap := CreateBitmapFromGif(FileName);
+  Result.Width := Bitmap.Width;
+  Result.Height := Bitmap.Height;
   try
     Result.Thumbnail := ResizeThumbnail(Bitmap, THUMBNAIL_SIZE);
   finally

@@ -191,18 +191,16 @@ object fmMain: TfmMain
         Checkboxes = True
         Columns = <
           item
-            Caption = 'Name'
-            Width = 250
+            AutoSize = True
+            Caption = 'File Name'
           end
           item
-            Caption = 'Date'
+            Caption = 'Date Taken'
             Width = 150
           end
           item
-            AutoSize = True
-            Caption = 'Device'
-            WidthType = (
-              -87)
+            Caption = 'Camera'
+            Width = 200
           end
           item
             Caption = 'Resolution'
@@ -211,14 +209,20 @@ object fmMain: TfmMain
           item
             Alignment = taCenter
             Caption = 'MP'
-          end
-          item
-            Caption = 'Orientation'
-            Width = 75
+            Width = 70
           end
           item
             Alignment = taRightJustify
             Caption = 'Size'
+            Width = 75
+          end
+          item
+            Alignment = taCenter
+            Caption = 'Extension'
+            Width = 75
+          end
+          item
+            Caption = 'Orientation'
             Width = 75
           end
           item
