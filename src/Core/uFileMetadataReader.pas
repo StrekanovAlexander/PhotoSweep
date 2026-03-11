@@ -7,7 +7,6 @@ uses
   System.SysUtils,
   Vcl.Dialogs,
   Vcl.Graphics,
-  Vcl.Imaging.GIFImg,
   Vcl.Imaging.jpeg,
   CCR.Exif,
   uFileMetadata,
@@ -21,12 +20,21 @@ type
     function ReadJpegMetadata(const FileName: string): TFileMetadata;
     function ReadPngMetadata(const FileName: string): TFileMetadata;
     function ReadGifMetadata(const FileName: string): TFileMetadata;
+
     function HasExif(const Exif: TExifData): Boolean;
   public
     function Read(const FileName: string): TFileMetadata;
   end;
 
 implementation
+
+function TFileMetadataReader.HasExif(const Exif: TExifData): Boolean;
+begin
+  Result := (Exif.CameraMake <> '')
+    or (Exif.CameraModel <> '')
+    or (Exif.DateTimeOriginal > 0)
+    or (Exif.DateTimeDigitized > 0);
+end;
 
 function TFileMetadataReader.Read(const FileName: string): TFileMetadata;
 var
@@ -71,7 +79,7 @@ begin
       Bitmap.SetSize(Exif.Thumbnail.Width, Exif.Thumbnail.Height);
       Bitmap.Canvas.Draw(0, 0, Exif.Thumbnail);
       try
-        Result.Thumbnail := ResizeBitmapThumbnail(Bitmap, THUMBNAIL_SIZE);
+        Result.Thumbnail := ResizeThumbnail(Bitmap, THUMBNAIL_SIZE);
       finally
         Bitmap.Free;
       end;
@@ -80,7 +88,7 @@ begin
     begin
       Bitmap := CreateBitmapFromJpeg(FileName);
       try
-        Result.Thumbnail := ResizeBitmapThumbnail(Bitmap, THUMBNAIL_SIZE);
+        Result.Thumbnail := ResizeThumbnail(Bitmap, THUMBNAIL_SIZE);
       finally
         Bitmap.Free;
       end;
@@ -93,53 +101,32 @@ end;
 
 function TFileMetadataReader.ReadPngMetadata(const FileName: string): TFileMetadata;
 var
-  Pic: TPicture;
-begin
-  Result := TFileMetadata.Create;
-  Pic := TPicture.Create;
-  try
-    Pic.LoadFromFile(FileName);
-    Result.Width := Pic.Width;
-    Result.Height := Pic.Height;
-    Result.HasExif := False;
-    Result.HasThumbnail := True;
-    Result.Thumbnail := ResizePicThumbnail(Pic, THUMBNAIL_SIZE);
-  finally
-    Pic.Free;
-  end;
-end;
-
-function TFileMetadataReader.ReadGifMetadata(const FileName: string): TFileMetadata;
-var
-  Gif: TGIFImage;
   Bitmap: TBitmap;
 begin
   Result := TFileMetadata.Create;
-  Gif := TGIFImage.Create;
+  Bitmap := CreateBitmapFromPng(FileName);
   try
-    Gif.LoadFromFile(FileName);
-    Result.Width := Gif.Width;
-    Result.Height := Gif.Height;
-    Bitmap := TBitmap.Create;
-    try
-      Bitmap.Assign(Gif.Images[0].Bitmap);
-      Result.Thumbnail := ResizeBitmapThumbnail(Bitmap, THUMBNAIL_SIZE);
-    finally
-      Bitmap.Free;
-    end;
+    Result.Thumbnail := ResizeThumbnail(Bitmap, THUMBNAIL_SIZE);
   finally
-    Gif.Free;
+    Bitmap.Free;
   end;
   Result.HasExif := False;
   Result.HasThumbnail := True;
 end;
 
-function TFileMetadataReader.HasExif(const Exif: TExifData): Boolean;
+function TFileMetadataReader.ReadGifMetadata(const FileName: string): TFileMetadata;
+var
+  Bitmap: TBitmap;
 begin
-  Result := (Exif.CameraMake <> '')
-    or (Exif.CameraModel <> '')
-    or (Exif.DateTimeOriginal > 0)
-    or (Exif.DateTimeDigitized > 0);
+  Result := TFileMetadata.Create;
+  Bitmap := CreateBitmapFromGif(FileName);
+  try
+    Result.Thumbnail := ResizeThumbnail(Bitmap, THUMBNAIL_SIZE);
+  finally
+    Bitmap.Free;
+  end;
+  Result.HasExif := False;
+  Result.HasThumbnail := True;
 end;
 
 end.
