@@ -4,6 +4,7 @@ interface
 
 uses
   System.SysUtils,
+  Vcl.Buttons,
   Vcl.ComCtrls,
   Vcl.StdCtrls
 ;
@@ -11,44 +12,74 @@ uses
 type TSelectionController = class
   private
     FCheckBox: TCheckBox;
+    FDeselectAllCheckBox: TCheckBox;
+
+    FSelectBtn: TBitBtn;
+    FDeselectBtn: TBitBtn;
+
     FListView: TListView;
     FStatusBar: TStatusBar;
 
-    procedure CheckBoxClick(Sender: TObject);
-    procedure SetCheckBoxes(ABoolValue: Boolean);
+    procedure SelectAll(Sender: TObject);
+    procedure DeselectAll(Sender: TObject);
+    procedure MarkItems(ABool: Boolean);
     procedure UpdateStatusBar;
   public
-    constructor Create(ACheckBox: TCheckBox; AListView: TListView; AStatusBar: TStatusBar);
+    constructor Create(
+      ASelectBtn, ADeselectBtn: TBitBtn;
+      AListView: TListView; AStatusBar: TStatusBar);
 end;
 
 implementation
 
-constructor TSelectionController.Create(ACheckBox: TCheckBox; AListView: TListView; AStatusBar: TStatusBar);
+constructor TSelectionController.Create(
+  ASelectBtn, ADeselectBtn: TBitBtn;
+  AListView: TListView; AStatusBar: TStatusBar);
 begin
-  FCheckBox := ACheckBox;
+  FSelectBtn := ASelectBtn;
+  FDeselectBtn := ADeselectBtn;
   FListView := AListView;
   FStatusBar := AStatusBar;
-  FCheckBox.OnClick := CheckBoxClick;
+
+  FSelectBtn.OnClick := SelectAll;
+  FDeselectBtn.OnClick := DeselectAll;
 end;
 
-procedure TSelectionController.CheckBoxClick(Sender: TObject);
+procedure TSelectionController.SelectAll;
+//var
+//  Item: TListItem;
 begin
-  if FCheckBox.Checked then
-    SetCheckBoxes(True)
-  else
-    SetCheckBoxes(False);
+  MarkItems(True);
+//  FListView.Items.BeginUpdate;
+//  for Item in FListView.Items do
+//    Item.Checked := True;
+//  FListView.Items.EndUpdate;
+//  UpdateStatusBar;
 end;
 
-procedure TSelectionController.SetCheckBoxes(ABoolValue: Boolean);
+procedure TSelectionController.DeselectAll;
+//var
+//  Item: TListItem;
+begin
+  MarkItems(False);
+//  FListView.Items.BeginUpdate;
+//  for Item in FListView.Items do
+//    Item.Checked := False;
+//  FListView.Items.EndUpdate;
+//  UpdateStatusBar;
+end;
+
+procedure TSelectionController.MarkItems(ABool: Boolean);
 var
   Item: TListItem;
 begin
   FListView.Items.BeginUpdate;
   for Item in FListView.Items do
-    Item.Checked := ABoolValue;
+    Item.Checked := ABool;
   FListView.Items.EndUpdate;
   UpdateStatusBar;
 end;
+
 
 procedure TSelectionController.UpdateStatusBar;
 var

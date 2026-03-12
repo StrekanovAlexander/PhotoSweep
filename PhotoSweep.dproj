@@ -151,6 +151,7 @@
         <DCCReference Include="src\Utils\uFileUtils.pas"/>
         <DCCReference Include="src\Utils\uGraphicUtils.pas"/>
         <DCCReference Include="src\Controllers\uSelectionController.pas"/>
+        <DCCReference Include="src\Core\Interfaces\uIFilter.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

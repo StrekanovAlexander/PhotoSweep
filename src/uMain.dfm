@@ -136,7 +136,7 @@ object fmMain: TfmMain
     TabOrder = 2
     object lblSource: TLabel
       AlignWithMargins = True
-      Left = 99
+      Left = 104
       Top = 8
       Width = 148
       Height = 22
@@ -149,7 +149,7 @@ object fmMain: TfmMain
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 90
+      Width = 95
       Height = 27
       Align = alLeft
       Caption = 'Source'
@@ -198,7 +198,7 @@ object fmMain: TfmMain
         AlignWithMargins = True
         Left = 3
         Top = 4
-        Width = 90
+        Width = 95
         Height = 27
         Margins.Top = 4
         Margins.Bottom = 2
@@ -211,11 +211,10 @@ object fmMain: TfmMain
       end
       object btnCopy: TBitBtn
         AlignWithMargins = True
-        Left = 102
+        Left = 104
         Top = 4
-        Width = 90
+        Width = 95
         Height = 27
-        Margins.Left = 6
         Margins.Top = 4
         Margins.Bottom = 2
         Align = alLeft
@@ -224,12 +223,13 @@ object fmMain: TfmMain
         ImageName = 'copy'
         Images = svgBtnList
         TabOrder = 1
+        ExplicitLeft = 107
       end
       object btnDupl: TBitBtn
         AlignWithMargins = True
-        Left = 198
+        Left = 205
         Top = 4
-        Width = 90
+        Width = 95
         Height = 27
         Margins.Top = 4
         Margins.Bottom = 2
@@ -239,6 +239,7 @@ object fmMain: TfmMain
         ImageName = 'duplicates'
         Images = svgBtnList
         TabOrder = 2
+        ExplicitLeft = 208
       end
       object btnPreview: TBitBtn
         AlignWithMargins = True
@@ -271,17 +272,40 @@ object fmMain: TfmMain
         Height = 33
         Align = alTop
         BevelOuter = bvNone
-        Padding.Top = 3
         TabOrder = 0
-        object chkSelectAll: TCheckBox
+        object btnSelectAll: TBitBtn
           AlignWithMargins = True
           Left = 3
-          Top = 6
-          Width = 97
-          Height = 24
+          Top = 4
+          Width = 95
+          Height = 27
+          Margins.Top = 4
+          Margins.Bottom = 2
           Align = alLeft
           Caption = 'Select All'
+          ImageIndex = 6
+          ImageName = 'checkbox'
+          Images = svgBtnList
           TabOrder = 0
+          ExplicitTop = 7
+          ExplicitHeight = 24
+        end
+        object btnDeselectAll: TBitBtn
+          AlignWithMargins = True
+          Left = 104
+          Top = 4
+          Width = 95
+          Height = 27
+          Margins.Top = 4
+          Margins.Bottom = 2
+          Align = alLeft
+          Caption = 'Deselect All'
+          ImageIndex = 7
+          ImageName = 'checkbox-blank'
+          Images = svgBtnList
+          TabOrder = 1
+          ExplicitTop = 7
+          ExplicitHeight = 24
         end
       end
       object Panel2: TPanel
@@ -386,7 +410,7 @@ object fmMain: TfmMain
     TabOrder = 4
     object Label1: TLabel
       AlignWithMargins = True
-      Left = 99
+      Left = 104
       Top = 8
       Width = 144
       Height = 22
@@ -399,7 +423,7 @@ object fmMain: TfmMain
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 90
+      Width = 95
       Height = 27
       Align = alLeft
       Caption = 'Target'
@@ -545,10 +569,29 @@ object fmMain: TfmMain
           '6 0h2v2H9V3zM5 3h2v2H5V3zm-4 8v8c0 1.1.9 2 2 2h12V11H1zm2 8l2.5-' +
           '3.21 1.79 2.15 2.5-3.22L13 19H3z"/></svg>'
         FixedColor = clLightgray
+      end
+      item
+        IconName = 'checkbox'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h1' +
+          '4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM17.99 9l-1.41' +
+          '-1.42-6.59 6.59-2.58-2.57-1.42 1.41 4 3.99z"/></svg>'
+        FixedColor = clLightgray
+      end
+      item
+        IconName = 'checkbox-blank'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0' +
+          ' 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>'
+        FixedColor = clLightgray
       end>
     Scaled = True
-    Left = 56
-    Top = 264
+    Left = 928
+    Top = 496
   end
   object imlThumbnails: TImageList
     Height = 48

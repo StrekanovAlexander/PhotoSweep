@@ -24,7 +24,8 @@ uses
   uAppConsts in 'src\Model\uAppConsts.pas',
   uFileUtils in 'src\Utils\uFileUtils.pas',
   uGraphicUtils in 'src\Utils\uGraphicUtils.pas',
-  uSelectionController in 'src\Controllers\uSelectionController.pas';
+  uSelectionController in 'src\Controllers\uSelectionController.pas',
+  uIFilter in 'src\Core\Interfaces\uIFilter.pas';
 
 {$R *.res}
 

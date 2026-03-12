@@ -57,7 +57,8 @@ type
     CheckBox6: TCheckBox;
     CheckBox7: TCheckBox;
     btnPreview: TBitBtn;
-    chkSelectAll: TCheckBox;
+    btnSelectAll: TBitBtn;
+    btnDeselectAll: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnSourceClick(Sender: TObject);
@@ -80,7 +81,9 @@ implementation
 procedure TfmMain.FormCreate(Sender: TObject);
 begin
   FListViewController := TListViewController.Create(lvwItems, stbMain, imlThumbnails);
-  FSelectionController := TSelectionController.Create(chkSelectAll, lvwItems, stbMain);
+  FSelectionController := TSelectionController.Create(
+    btnSelectAll, btnDeselectAll, lvwItems, stbMain
+  );
   FItemsManager := TItemsManager.Create;
   FReader := TFileMetadataReader.Create;
 end;
