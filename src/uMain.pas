@@ -9,7 +9,7 @@ uses
   Vcl.Buttons, Vcl.ComCtrls,
   System.IOUtils,
   System.Types,
-  uListViewController,
+  uListViewController, uSelectionController,
   uItem,
   uFileScanThread,
   uFileMetadata,
@@ -45,9 +45,8 @@ type
     btnTarget: TBitBtn;
     pnlTools2: TPanel;
     bvlTools: TBevel;
-    lvwImgItems: TListView;
+    lvwItems: TListView;
     Panel1: TPanel;
-    Label2: TLabel;
     Panel2: TPanel;
     Panel3: TPanel;
     CheckBox1: TCheckBox;
@@ -57,12 +56,14 @@ type
     CheckBox5: TCheckBox;
     CheckBox6: TCheckBox;
     CheckBox7: TCheckBox;
+    btnPreview: TBitBtn;
+    chkSelectAll: TCheckBox;
     procedure FormCreate(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnSourceClick(Sender: TObject);
   private
     FListViewController: TListViewController;
+    FSelectionController: TSelectionController;
     FItemsManager: TItemsManager;
     FReader: IFileMetadataReader;
   public
@@ -78,13 +79,15 @@ implementation
 
 procedure TfmMain.FormCreate(Sender: TObject);
 begin
-  FListViewController := TListViewController.Create(lvwImgItems, imlThumbnails);
+  FListViewController := TListViewController.Create(lvwItems, stbMain, imlThumbnails);
+  FSelectionController := TSelectionController.Create(chkSelectAll, lvwItems, stbMain);
   FItemsManager := TItemsManager.Create;
   FReader := TFileMetadataReader.Create;
 end;
 
 procedure TfmMain.FormDestroy(Sender: TObject);
 begin
+  FSelectionController.Free;
   FListViewController.Free;
   FItemsManager.Free;
 end;
@@ -110,11 +113,6 @@ begin
       FListViewController.Build(FItemsManager);
     end
   );
-end;
-
-procedure TfmMain.Button1Click(Sender: TObject);
-begin
-
 end;
 
 {

@@ -16,6 +16,7 @@ type
   TListViewController = class
   private
     FListView: TListView;
+    FStatusBar: TStatusBar;
     FImageList: TImageList;
     FSortColumn: Integer;
     FSortAscending: Boolean;
@@ -24,25 +25,29 @@ type
     procedure CompareItems(Sender: TObject; Item1, Item2: TListItem;
       Data: Integer; var Compare: Integer);
 
+    procedure ItemChecked(Sender: TObject; Item: TListItem);
+    procedure UpdateStatusBar;
   public
-    constructor Create(AListView: TListView; AImageList: TImageList);
-
-    procedure Clear;
-    procedure Build(AItemsManager: TItemsManager);
+    constructor Create(AListView: TListView; AStatusBar: TStatusBar; AImageList: TImageList);
     procedure AddItem(AItem: TItem);
+    procedure Build(AItemsManager: TItemsManager);
+    procedure Clear;
   end;
 
 implementation
 
-constructor TListViewController.Create(AListView: TListView; AImageList: TImageList);
+constructor TListViewController.Create(AListView: TListView; AStatusBar: TStatusBar; AImageList: TImageList);
 begin
   FListView := AListView;
+  FStatusBar := AStatusBar;
   FImageList := AImageList;
 
   FSortColumn := -1;
   FSortAscending := True;
+
   FListView.OnColumnClick := ColumnClick;
   FListView.OnCompare := CompareItems;
+  FListView.OnItemChecked := ItemChecked;
 end;
 
 procedure TListViewController.Clear;
@@ -55,6 +60,7 @@ begin
   finally
     FListView.Items.EndUpdate;
   end;
+  UpdateStatusBar;
 end;
 
 procedure TListViewController.AddItem(AItem: TItem);
@@ -101,6 +107,14 @@ begin
   finally
     FListView.Items.EndUpdate;
   end;
+
+  if FListView.Items.Count > 0 then
+  begin
+    FListView.Items[0].Selected := True;
+    FListView.Items[0].Focused := True;
+  end;
+
+  UpdateStatusBar;
 end;
 
 procedure TListViewController.ColumnClick(Sender: TObject; Column: TListColumn);
@@ -140,5 +154,23 @@ begin
     Compare := -Compare;
 end;
 
+procedure TListViewController.UpdateStatusBar;
+var
+  Item: TListITem;
+  CheckedCount: Integer;
+begin
+  CheckedCount := 0;
+  for Item in FListView.Items do
+    if Item.Checked then
+      Inc(CheckedCount);
+
+  FStatusBar.Panels[0].Text := Format('Total: %d', [FListView.Items.Count]);
+  FStatusBar.Panels[1].Text := Format('Selected: %d', [CheckedCount]);
+end;
+
+procedure TListViewController.ItemChecked(Sender: TObject; Item: TListItem);
+begin
+  UpdateStatusBar;
+end;
 
 end.

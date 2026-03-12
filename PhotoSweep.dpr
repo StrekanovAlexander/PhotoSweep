@@ -23,7 +23,8 @@ uses
   uListViewController in 'src\Controllers\uListViewController.pas',
   uAppConsts in 'src\Model\uAppConsts.pas',
   uFileUtils in 'src\Utils\uFileUtils.pas',
-  uGraphicUtils in 'src\Utils\uGraphicUtils.pas';
+  uGraphicUtils in 'src\Utils\uGraphicUtils.pas',
+  uSelectionController in 'src\Controllers\uSelectionController.pas';
 
 {$R *.res}
 

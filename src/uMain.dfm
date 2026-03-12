@@ -90,8 +90,7 @@ object fmMain: TfmMain
         Font.Name = 'Roboto'
         Font.Style = []
         ParentFont = False
-        ExplicitLeft = 10
-        ExplicitTop = 26
+        ExplicitWidth = 68
       end
     end
     object btnAbout: TBitBtn
@@ -108,9 +107,6 @@ object fmMain: TfmMain
       ImageName = 'about'
       Images = svgBtnList
       TabOrder = 1
-      ExplicitLeft = 854
-      ExplicitTop = 12
-      ExplicitHeight = 38
     end
   end
   object stbMain: TStatusBar
@@ -119,8 +115,15 @@ object fmMain: TfmMain
     Top = 589
     Width = 978
     Height = 19
-    Panels = <>
-    ExplicitLeft = -2
+    Panels = <
+      item
+        Text = 'Total: 0'
+        Width = 100
+      end
+      item
+        Text = 'Selected: 0'
+        Width = 100
+      end>
   end
   object pnlSource: TPanel
     AlignWithMargins = True
@@ -131,9 +134,6 @@ object fmMain: TfmMain
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitLeft = 0
-    ExplicitTop = 67
-    ExplicitWidth = 984
     object lblSource: TLabel
       AlignWithMargins = True
       Left = 99
@@ -194,8 +194,6 @@ object fmMain: TfmMain
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitTop = 495
-      ExplicitWidth = 984
       object btnMove: TBitBtn
         AlignWithMargins = True
         Left = 3
@@ -213,10 +211,11 @@ object fmMain: TfmMain
       end
       object btnCopy: TBitBtn
         AlignWithMargins = True
-        Left = 99
+        Left = 102
         Top = 4
         Width = 90
         Height = 27
+        Margins.Left = 6
         Margins.Top = 4
         Margins.Bottom = 2
         Align = alLeft
@@ -228,6 +227,21 @@ object fmMain: TfmMain
       end
       object btnDupl: TBitBtn
         AlignWithMargins = True
+        Left = 198
+        Top = 4
+        Width = 90
+        Height = 27
+        Margins.Top = 4
+        Margins.Bottom = 2
+        Align = alLeft
+        Caption = 'Duplicates'
+        ImageIndex = 3
+        ImageName = 'duplicates'
+        Images = svgBtnList
+        TabOrder = 2
+      end
+      object btnPreview: TBitBtn
+        AlignWithMargins = True
         Left = 885
         Top = 4
         Width = 90
@@ -235,12 +249,11 @@ object fmMain: TfmMain
         Margins.Top = 4
         Margins.Bottom = 2
         Align = alRight
-        Caption = 'Duplicates'
-        ImageIndex = 3
-        ImageName = 'duplicates'
+        Caption = 'Preview'
+        ImageIndex = 5
+        ImageName = 'preview'
         Images = svgBtnList
-        TabOrder = 2
-        ExplicitLeft = 195
+        TabOrder = 3
       end
     end
     object pnlTools2: TPanel
@@ -251,10 +264,6 @@ object fmMain: TfmMain
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitLeft = 1
-      ExplicitTop = 72
-      ExplicitWidth = 976
-      ExplicitHeight = 102
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -264,17 +273,15 @@ object fmMain: TfmMain
         BevelOuter = bvNone
         Padding.Top = 3
         TabOrder = 0
-        object Label2: TLabel
+        object chkSelectAll: TCheckBox
           AlignWithMargins = True
           Left = 3
           Top = 6
-          Width = 73
+          Width = 97
           Height = 24
           Align = alLeft
-          Caption = 'Total: 125 files'
-          ExplicitLeft = 48
-          ExplicitTop = 8
-          ExplicitHeight = 15
+          Caption = 'Select All'
+          TabOrder = 0
         end
       end
       object Panel2: TPanel
@@ -285,7 +292,6 @@ object fmMain: TfmMain
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitTop = 32
         object CheckBox1: TCheckBox
           AlignWithMargins = True
           Left = 3
@@ -295,9 +301,6 @@ object fmMain: TfmMain
           Align = alLeft
           Caption = 'JPG'
           TabOrder = 0
-          ExplicitLeft = 24
-          ExplicitTop = 8
-          ExplicitHeight = 17
         end
         object CheckBox2: TCheckBox
           AlignWithMargins = True
@@ -308,9 +311,6 @@ object fmMain: TfmMain
           Align = alLeft
           Caption = 'PNG'
           TabOrder = 1
-          ExplicitLeft = 96
-          ExplicitTop = 8
-          ExplicitHeight = 17
         end
         object CheckBox3: TCheckBox
           AlignWithMargins = True
@@ -321,9 +321,6 @@ object fmMain: TfmMain
           Align = alLeft
           Caption = 'GIF'
           TabOrder = 2
-          ExplicitLeft = 192
-          ExplicitTop = 8
-          ExplicitHeight = 17
         end
         object CheckBox7: TCheckBox
           AlignWithMargins = True
@@ -334,9 +331,6 @@ object fmMain: TfmMain
           Align = alLeft
           Caption = 'Has EXIF'
           TabOrder = 3
-          ExplicitLeft = 336
-          ExplicitTop = 8
-          ExplicitHeight = 17
         end
       end
       object Panel3: TPanel
@@ -347,7 +341,6 @@ object fmMain: TfmMain
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitTop = 64
         object CheckBox4: TCheckBox
           AlignWithMargins = True
           Left = 3
@@ -357,9 +350,6 @@ object fmMain: TfmMain
           Align = alLeft
           Caption = 'Landscape'
           TabOrder = 0
-          ExplicitLeft = 32
-          ExplicitTop = 8
-          ExplicitHeight = 17
         end
         object CheckBox5: TCheckBox
           AlignWithMargins = True
@@ -370,9 +360,6 @@ object fmMain: TfmMain
           Align = alLeft
           Caption = 'Portrait'
           TabOrder = 1
-          ExplicitLeft = 144
-          ExplicitTop = 8
-          ExplicitHeight = 17
         end
         object CheckBox6: TCheckBox
           AlignWithMargins = True
@@ -383,9 +370,6 @@ object fmMain: TfmMain
           Align = alLeft
           Caption = 'Square'
           TabOrder = 2
-          ExplicitLeft = 224
-          ExplicitTop = 8
-          ExplicitHeight = 17
         end
       end
     end
@@ -400,9 +384,6 @@ object fmMain: TfmMain
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
-    ExplicitLeft = -8
-    ExplicitTop = 383
-    ExplicitWidth = 984
     object Label1: TLabel
       AlignWithMargins = True
       Left = 99
@@ -428,7 +409,7 @@ object fmMain: TfmMain
       TabOrder = 0
     end
   end
-  object lvwImgItems: TListView
+  object lvwItems: TListView
     AlignWithMargins = True
     Left = 6
     Top = 109
@@ -489,8 +470,6 @@ object fmMain: TfmMain
     SmallImages = imlThumbnails
     TabOrder = 5
     ViewStyle = vsReport
-    ExplicitLeft = 8
-    ExplicitWidth = 978
   end
   object svgBtnList: TSVGIconImageList
     SVGIconItems = <
@@ -554,15 +533,27 @@ object fmMain: TfmMain
           '2,2v14 c0,1.1-0.9,2-2,2H5c-1.1,0-2-0.9-2-2V5c0-1.1,0.9-2,2-2H19L' +
           '19,3z"/></g></svg>'
         FixedColor = clLightgray
+      end
+      item
+        IconName = 'preview'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M21 15h2v2h-2v-2zm0-4h2v2h-2v-2zm2 8h-2v2c' +
+          '1 0 2-1 2-2zM13 3h2v2h-2V3zm8 4h2v2h-2V7zm0-4v2h2c0-1-1-2-2-2zM1' +
+          ' 7h2v2H1V7zm16-4h2v2h-2V3zm0 16h2v2h-2v-2zM3 3C2 3 1 4 1 5h2V3zm' +
+          '6 0h2v2H9V3zM5 3h2v2H5V3zm-4 8v8c0 1.1.9 2 2 2h12V11H1zm2 8l2.5-' +
+          '3.21 1.79 2.15 2.5-3.22L13 19H3z"/></svg>'
+        FixedColor = clLightgray
       end>
     Scaled = True
-    Left = 48
-    Top = 168
+    Left = 56
+    Top = 264
   end
   object imlThumbnails: TImageList
     Height = 48
     Width = 48
-    Left = 45
-    Top = 239
+    Left = 53
+    Top = 167
   end
 end
