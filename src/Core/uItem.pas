@@ -50,6 +50,7 @@ type
     property FullDeviceName: string read GetFullDeviceName;
     property Width: Integer read FWidth;
     property Height: Integer read FHeight;
+    property Orientation: TOrientation read FOrientation;
     property Resolution: string read GetResolution;
     property MegaPixels: Double read GetMegaPixels;
     property OrientationText: string read GetOrientationText;

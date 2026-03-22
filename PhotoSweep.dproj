@@ -155,6 +155,7 @@
         <DCCReference Include="src\Core\uHasExifFilter.pas"/>
         <DCCReference Include="src\Core\uFilterSet.pas"/>
         <DCCReference Include="src\Controllers\uFilterController.pas"/>
+        <DCCReference Include="src\Core\uOrientationFilter.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

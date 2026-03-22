@@ -28,7 +28,8 @@ uses
   uIFilter in 'src\Core\Interfaces\uIFilter.pas',
   uHasExifFilter in 'src\Core\uHasExifFilter.pas',
   uFilterSet in 'src\Core\uFilterSet.pas',
-  uFilterController in 'src\Controllers\uFilterController.pas';
+  uFilterController in 'src\Controllers\uFilterController.pas',
+  uOrientationFilter in 'src\Core\uOrientationFilter.pas';
 
 {$R *.res}
 

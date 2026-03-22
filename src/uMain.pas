@@ -53,9 +53,9 @@ type
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
-    CheckBox4: TCheckBox;
-    CheckBox5: TCheckBox;
-    CheckBox6: TCheckBox;
+    chkLandscape: TCheckBox;
+    chkPortrait: TCheckBox;
+    chkSquare: TCheckBox;
     chkHasExif: TCheckBox;
     btnPreview: TBitBtn;
     btnSelectAll: TBitBtn;
@@ -94,10 +94,11 @@ begin
   FReader := TFileMetadataReader.Create;
 
   FFilterController := TFilterController.Create(
-    chkHasExif,
-    FFilterSet,
     FItemsManager,
-    FListViewController
+    FFilterSet,
+    FListViewController,
+    chkHasExif,
+    chkLandscape, chkPortrait, chkSquare
   );
 end;
 

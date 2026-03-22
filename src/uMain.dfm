@@ -359,7 +359,7 @@ object fmMain: TfmMain
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 2
-        object CheckBox4: TCheckBox
+        object chkLandscape: TCheckBox
           AlignWithMargins = True
           Left = 3
           Top = 3
@@ -369,7 +369,8 @@ object fmMain: TfmMain
           Caption = 'Landscape'
           TabOrder = 0
         end
-        object CheckBox5: TCheckBox
+        object chkPortrait: TCheckBox
+          Tag = 1
           AlignWithMargins = True
           Left = 106
           Top = 3
@@ -379,7 +380,8 @@ object fmMain: TfmMain
           Caption = 'Portrait'
           TabOrder = 1
         end
-        object CheckBox6: TCheckBox
+        object chkSquare: TCheckBox
+          Tag = 2
           AlignWithMargins = True
           Left = 209
           Top = 3

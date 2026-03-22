@@ -25,9 +25,6 @@ function THasExifFilter.Apply(Item: TItem): Boolean;
 begin
   Result := False;
 
-  if Item = nil then
-    Exit(Result);
-
   if not FActive then
     Exit(True);
 
