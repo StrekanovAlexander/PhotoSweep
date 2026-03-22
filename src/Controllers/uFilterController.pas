@@ -95,6 +95,7 @@ end;
 procedure TFilterController.RefreshListView;
 begin
   FListViewController.Clear;
+
   for var Item in FItemsManager.ItemsList do
     if FFilterSet.Accept(Item) then
       FListViewController.AddItem(Item);

@@ -29,7 +29,8 @@ uses
   uHasExifFilter in 'src\Core\uHasExifFilter.pas',
   uFilterSet in 'src\Core\uFilterSet.pas',
   uFilterController in 'src\Controllers\uFilterController.pas',
-  uOrientationFilter in 'src\Core\uOrientationFilter.pas';
+  uOrientationFilter in 'src\Core\uOrientationFilter.pas',
+  uExtensionFilter in 'src\Core\uExtensionFilter.pas';
 
 {$R *.res}
 
