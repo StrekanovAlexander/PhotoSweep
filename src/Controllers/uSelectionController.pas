@@ -11,9 +11,6 @@ uses
 
 type TSelectionController = class
   private
-    FCheckBox: TCheckBox;
-    FDeselectAllCheckBox: TCheckBox;
-
     FSelectBtn: TBitBtn;
     FDeselectBtn: TBitBtn;
 
@@ -46,27 +43,13 @@ begin
 end;
 
 procedure TSelectionController.SelectAll;
-//var
-//  Item: TListItem;
 begin
   MarkItems(True);
-//  FListView.Items.BeginUpdate;
-//  for Item in FListView.Items do
-//    Item.Checked := True;
-//  FListView.Items.EndUpdate;
-//  UpdateStatusBar;
 end;
 
 procedure TSelectionController.DeselectAll;
-//var
-//  Item: TListItem;
 begin
   MarkItems(False);
-//  FListView.Items.BeginUpdate;
-//  for Item in FListView.Items do
-//    Item.Checked := False;
-//  FListView.Items.EndUpdate;
-//  UpdateStatusBar;
 end;
 
 procedure TSelectionController.MarkItems(ABool: Boolean);

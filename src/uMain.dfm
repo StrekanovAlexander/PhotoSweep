@@ -223,7 +223,6 @@ object fmMain: TfmMain
         ImageName = 'copy'
         Images = svgBtnList
         TabOrder = 1
-        ExplicitLeft = 107
       end
       object btnDupl: TBitBtn
         AlignWithMargins = True
@@ -239,7 +238,6 @@ object fmMain: TfmMain
         ImageName = 'duplicates'
         Images = svgBtnList
         TabOrder = 2
-        ExplicitLeft = 208
       end
       object btnPreview: TBitBtn
         AlignWithMargins = True
@@ -287,8 +285,6 @@ object fmMain: TfmMain
           ImageName = 'checkbox'
           Images = svgBtnList
           TabOrder = 0
-          ExplicitTop = 7
-          ExplicitHeight = 24
         end
         object btnDeselectAll: TBitBtn
           AlignWithMargins = True
@@ -304,8 +300,6 @@ object fmMain: TfmMain
           ImageName = 'checkbox-blank'
           Images = svgBtnList
           TabOrder = 1
-          ExplicitTop = 7
-          ExplicitHeight = 24
         end
       end
       object Panel2: TPanel
@@ -346,7 +340,7 @@ object fmMain: TfmMain
           Caption = 'GIF'
           TabOrder = 2
         end
-        object CheckBox7: TCheckBox
+        object chkHasExif: TCheckBox
           AlignWithMargins = True
           Left = 312
           Top = 3

@@ -9,14 +9,15 @@ uses
   Vcl.Buttons, Vcl.ComCtrls,
   System.IOUtils,
   System.Types,
-  uListViewController, uSelectionController,
+  uListViewController, uSelectionController, uFilterController,
   uItem,
   uFileScanThread,
   uFileMetadata,
   uIFileMetadataReader,
   uFileMetadataReader,
   uItemsManager,
-  uFileUtils
+  uFileUtils,
+  uFilterSet
 ;
 
 type
@@ -55,7 +56,7 @@ type
     CheckBox4: TCheckBox;
     CheckBox5: TCheckBox;
     CheckBox6: TCheckBox;
-    CheckBox7: TCheckBox;
+    chkHasExif: TCheckBox;
     btnPreview: TBitBtn;
     btnSelectAll: TBitBtn;
     btnDeselectAll: TBitBtn;
@@ -65,6 +66,8 @@ type
   private
     FListViewController: TListViewController;
     FSelectionController: TSelectionController;
+    FFilterController: TFilterController;
+    FFilterSet: TFilterSet;
     FItemsManager: TItemsManager;
     FReader: IFileMetadataReader;
   public
@@ -84,14 +87,26 @@ begin
   FSelectionController := TSelectionController.Create(
     btnSelectAll, btnDeselectAll, lvwItems, stbMain
   );
+
+  FFilterSet := TFilterSet.Create;
+
   FItemsManager := TItemsManager.Create;
   FReader := TFileMetadataReader.Create;
+
+  FFilterController := TFilterController.Create(
+    chkHasExif,
+    FFilterSet,
+    FItemsManager,
+    FListViewController
+  );
 end;
 
 procedure TfmMain.FormDestroy(Sender: TObject);
 begin
   FSelectionController.Free;
   FListViewController.Free;
+  FFilterController.Free;
+  FFilterSet.Free;
   FItemsManager.Free;
 end;
 

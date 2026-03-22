@@ -9,7 +9,7 @@ uses
 type
   TItemsManager = class
   private
-    FList: TObjectList<TItem>;
+    FItemsList: TObjectList<TItem>;
   public
     constructor Create;
     destructor Destroy; override;
@@ -18,6 +18,7 @@ type
     procedure AddItem(const Meta: TFileMetadata);
     function Count: Integer;
     function GetItem(Index: Integer): TItem;
+    property ItemsList: TObjectList<TItem> read FItemsList;
   end;
 
 implementation
@@ -25,12 +26,12 @@ implementation
 constructor TItemsManager.Create;
 begin
   inherited;
-  FList := TObjectList<TItem>.Create(True);
+  FItemsList := TObjectList<TItem>.Create(True);
 end;
 
 destructor TItemsManager.Destroy;
 begin
-  FList.Free;
+  FItemsList.Free;
   inherited;
 end;
 
@@ -39,22 +40,22 @@ var
   Item: TItem;
 begin
   Item := TItem.Create(Meta.FilePath, Meta);
-  FList.Add(Item);
+  FItemsList.Add(Item);
 end;
 
 function TItemsManager.Count: Integer;
 begin
-  Result := FList.Count;
+  Result := FItemsList.Count;
 end;
 
 function TItemsManager.GetItem(Index: Integer): TItem;
 begin
-  Result := FList[Index];
+  Result := FItemsList[Index];
 end;
 
 procedure TItemsManager.Clear;
 begin
-  FList.Clear;
+  FItemsList.Clear;
 end;
 
 end.

@@ -25,7 +25,10 @@ uses
   uFileUtils in 'src\Utils\uFileUtils.pas',
   uGraphicUtils in 'src\Utils\uGraphicUtils.pas',
   uSelectionController in 'src\Controllers\uSelectionController.pas',
-  uIFilter in 'src\Core\Interfaces\uIFilter.pas';
+  uIFilter in 'src\Core\Interfaces\uIFilter.pas',
+  uHasExifFilter in 'src\Core\uHasExifFilter.pas',
+  uFilterSet in 'src\Core\uFilterSet.pas',
+  uFilterController in 'src\Controllers\uFilterController.pas';
 
 {$R *.res}
 
