@@ -310,32 +310,35 @@ object fmMain: TfmMain
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        object CheckBox1: TCheckBox
+        object chkJpg: TCheckBox
           AlignWithMargins = True
           Left = 3
           Top = 3
           Width = 97
           Height = 27
+          Hint = '.jpg'
           Align = alLeft
           Caption = 'JPG'
           TabOrder = 0
         end
-        object CheckBox2: TCheckBox
+        object chkPng: TCheckBox
           AlignWithMargins = True
           Left = 106
           Top = 3
           Width = 97
           Height = 27
+          Hint = '.png'
           Align = alLeft
           Caption = 'PNG'
           TabOrder = 1
         end
-        object CheckBox3: TCheckBox
+        object chkGif: TCheckBox
           AlignWithMargins = True
           Left = 209
           Top = 3
           Width = 97
           Height = 27
+          Hint = '.gif'
           Align = alLeft
           Caption = 'GIF'
           TabOrder = 2

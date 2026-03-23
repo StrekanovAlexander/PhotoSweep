@@ -17,13 +17,19 @@ type TFilterController = class
     FListViewController: TListViewController;
 
     FHasExifCheckBox: TCheckBox;
+
     FLandscapeCheckBox: TCheckBox;
     FPortraitCheckBox: TCheckBox;
     FSquareCheckBox: TCheckBox;
 
+    FJpgCheckBox: TCheckBox;
+    FPngCheckBox: TCheckBox;
+    FGifCheckBox: TCheckBox;
+
     procedure HasExifClick(Sender: TObject);
     procedure OrientationClick(Sender: TObject);
-    procedure UpdateHasExifFilter;
+    procedure ExtensionClick(Sender: TObject);
+
     procedure RefreshListView;
   public
     constructor Create(
@@ -31,7 +37,8 @@ type TFilterController = class
       AFilterSet: TFilterSet;
       AListViewController: TListViewController;
       AHasExifCheckBox: TCheckBox;
-      ALandscapeCheckBox, APortraitCheckBox, ASquareCheckBox: TCheckBox
+      ALandscapeCheckBox, APortraitCheckBox, ASquareCheckBox: TCheckBox;
+      AJpgCheckBox, APngCheckBox, AGifCheckBox: TCheckBox
     );
 end;
 
@@ -42,7 +49,8 @@ constructor TFilterController.Create(
   AFilterSet: TFilterSet;
   AListViewController: TListViewController;
   AHasExifCheckBox: TCheckBox;
-  ALandscapeCheckBox, APortraitCheckBox, ASquareCheckBox: TCheckBox
+  ALandscapeCheckBox, APortraitCheckBox, ASquareCheckBox: TCheckBox;
+  AJpgCheckBox, APngCheckBox, AGifCheckBox: TCheckBox
 );
 begin
   FItemsManager := AItemsManager;
@@ -55,16 +63,22 @@ begin
   FLandscapeCheckBox := ALandscapeCheckBox;
   FPortraitCheckBox := APortraitCheckBox;
   FSquareCheckBox := ASquareCheckBox;
-
   FLandscapeCheckBox.OnClick := OrientationClick;
   FPortraitCheckBox.OnClick := OrientationClick;
   FSquareCheckBox.OnClick := OrientationClick;
+
+  FJpgCheckBox := AJpgCheckBox;
+  FPngCheckBox := APngCheckBox;
+  FGifCheckBox := AGifCheckBox;
+  FJpgCheckBox.OnClick := ExtensionClick;
+  FPngCheckBox.OnClick := ExtensionClick;
+  FGifCheckBox.OnClick := ExtensionClick;
 
 end;
 
 procedure TFilterController.HasExifClick(Sender: TObject);
 begin
-  UpdateHasExifFilter;
+  FFilterSet.HasExifFilter.Active := FHasExifCheckBox.Checked;
   RefreshListView;
 end;
 
@@ -87,18 +101,35 @@ begin
   RefreshListView;
 end;
 
-procedure TFilterController.UpdateHasExifFilter;
+procedure TFilterController.ExtensionClick(Sender: TObject);
+var
+  CheckBox: TCheckBox;
+  Ext: string;
 begin
-  FFilterSet.HasExifFilter.Active := FHasExifCheckBox.Checked;
+  if not (Sender is TCheckBox) then Exit;
+
+  CheckBox := Sender as TCheckBox;
+  Ext := CheckBox.Hint;
+
+  if CheckBox.Checked then
+    FFilterSet.ExtensionFilter.Add(Ext)
+  else
+    FFilterSet.ExtensionFilter.Remove(Ext);
+  RefreshListView;
 end;
 
 procedure TFilterController.RefreshListView;
 begin
   FListViewController.Clear;
 
-  for var Item in FItemsManager.ItemsList do
-    if FFilterSet.Accept(Item) then
-      FListViewController.AddItem(Item);
+  FListViewController.ListView.Items.BeginUpdate;
+  try
+    for var Item in FItemsManager.ItemsList do
+      if FFilterSet.Accept(Item) then
+        FListViewController.AddItem(Item);
+  finally
+    FListViewController.ListView.Items.EndUpdate;
+  end;
 end;
 
 end.

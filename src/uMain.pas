@@ -50,9 +50,9 @@ type
     Panel1: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
-    CheckBox1: TCheckBox;
-    CheckBox2: TCheckBox;
-    CheckBox3: TCheckBox;
+    chkJpg: TCheckBox;
+    chkPng: TCheckBox;
+    chkGif: TCheckBox;
     chkLandscape: TCheckBox;
     chkPortrait: TCheckBox;
     chkSquare: TCheckBox;
@@ -98,7 +98,8 @@ begin
     FFilterSet,
     FListViewController,
     chkHasExif,
-    chkLandscape, chkPortrait, chkSquare
+    chkLandscape, chkPortrait, chkSquare,
+    chkJpg, chkPng, chkGif
   );
 end;
 

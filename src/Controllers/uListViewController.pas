@@ -32,6 +32,7 @@ type
     procedure AddItem(AItem: TItem);
     procedure Build(AItemsManager: TItemsManager);
     procedure Clear;
+    property ListView: TListView read FListView;
   end;
 
 implementation
