@@ -6,7 +6,8 @@ uses
   System.SysUtils,
   Vcl.Buttons,
   Vcl.ComCtrls,
-  Vcl.StdCtrls
+  Vcl.StdCtrls,
+  uItem
 ;
 
 type TSelectionController = class
@@ -55,10 +56,15 @@ end;
 procedure TSelectionController.MarkItems(ABool: Boolean);
 var
   Item: TListItem;
+  DataItem: TItem;
 begin
   FListView.Items.BeginUpdate;
   for Item in FListView.Items do
+  begin
     Item.Checked := ABool;
+    DataItem := TItem(Item.Data);
+    DataItem.IsSelected := ABool;
+  end;
   FListView.Items.EndUpdate;
   UpdateStatusBar;
 end;

@@ -4,12 +4,14 @@ interface
 
 uses
   System.SysUtils,
+  Vcl.Buttons,
   Vcl.Graphics,
   Vcl.Controls,
   Vcl.ComCtrls,
   uAppConsts,
   uItem,
-  uItemsManager
+  uItemsManager,
+  uViewer
 ;
 
 type
@@ -18,6 +20,7 @@ type
     FListView: TListView;
     FStatusBar: TStatusBar;
     FImageList: TImageList;
+    FViewerBtn: TBitbtn;
     FSortColumn: Integer;
     FSortAscending: Boolean;
 
@@ -26,9 +29,15 @@ type
       Data: Integer; var Compare: Integer);
 
     procedure ItemChecked(Sender: TObject; Item: TListItem);
+    procedure ListViewDblClick(Sender: TObject);
     procedure UpdateStatusBar;
   public
-    constructor Create(AListView: TListView; AStatusBar: TStatusBar; AImageList: TImageList);
+    constructor Create(
+      AListView: TListView;
+      AStatusBar: TStatusBar;
+      AImageList: TImageList;
+      AViewerBtn: TBitbtn
+    );
     procedure AddItem(AItem: TItem);
     procedure Build(AItemsManager: TItemsManager);
     procedure Clear;
@@ -37,11 +46,17 @@ type
 
 implementation
 
-constructor TListViewController.Create(AListView: TListView; AStatusBar: TStatusBar; AImageList: TImageList);
+constructor TListViewController.Create(
+  AListView: TListView;
+  AStatusBar: TStatusBar;
+  AImageList: TImageList;
+  AViewerBtn: TBitbtn
+);
 begin
   FListView := AListView;
   FStatusBar := AStatusBar;
   FImageList := AImageList;
+  FViewerBtn := AViewerBtn;
 
   FSortColumn := -1;
   FSortAscending := True;
@@ -49,6 +64,8 @@ begin
   FListView.OnColumnClick := ColumnClick;
   FListView.OnCompare := CompareItems;
   FListView.OnItemChecked := ItemChecked;
+  FListView.OnDblClick := ListViewDblClick;
+  FViewerBtn.OnClick := ListViewDblClick;
 end;
 
 procedure TListViewController.Clear;
@@ -170,8 +187,29 @@ begin
 end;
 
 procedure TListViewController.ItemChecked(Sender: TObject; Item: TListItem);
+var
+  DataItem: TItem;
 begin
+  if Assigned(Item.Data) then
+  begin
+    DataItem := TItem(Item.Data);
+    DataItem.IsSelected := Item.Checked;
+  end;
   UpdateStatusBar;
+end;
+
+procedure TListViewController.ListViewDblClick(Sender: TObject);
+var
+  fmViewer: TfmViewer;
+begin
+  if FListView.Items.Count = 0 then
+    Exit;
+  fmViewer := TfmViewer.Create(nil, ListView.ItemIndex);
+  try
+    fmViewer.ShowModal;
+  finally
+    fmViewer.Free;
+  end;
 end;
 
 end.

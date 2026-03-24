@@ -57,7 +57,7 @@ type
     chkPortrait: TCheckBox;
     chkSquare: TCheckBox;
     chkHasExif: TCheckBox;
-    btnPreview: TBitBtn;
+    btnViewer: TBitBtn;
     btnSelectAll: TBitBtn;
     btnDeselectAll: TBitBtn;
     procedure FormCreate(Sender: TObject);
@@ -83,7 +83,9 @@ implementation
 
 procedure TfmMain.FormCreate(Sender: TObject);
 begin
-  FListViewController := TListViewController.Create(lvwItems, stbMain, imlThumbnails);
+  FListViewController := TListViewController.Create(
+    lvwItems, stbMain, imlThumbnails, btnViewer
+  );
   FSelectionController := TSelectionController.Create(
     btnSelectAll, btnDeselectAll, lvwItems, stbMain
   );
@@ -134,51 +136,5 @@ begin
     end
   );
 end;
-
-{
-  without classes...
-  pnlTools.Show;
-  FreeListView(lvwImgItems);
-  lvwImgItems.Items.BeginUpdate;
-  try
-    Files := TDirectory.GetFiles('C:\source4', '*.jpg');
-    Reader := TFileMetadataReader.Create;
-
-    TFileScanThread.Create(Files, Reader,
-      procedure(Meta: TFileMetadata)
-      var
-        Img: TItem;
-        Item: TListItem;
-      begin
-        Img := TItem.Create(Meta.FilePath, Meta);
-        Item := lvwImgItems.Items.Add;
-        Item.Caption := Img.FileName;
-        Item.SubItems.Add(DateToStr(Img.DateTimeOriginal));
-        Item.SubItems.Add(Img.FullDeviceName);
-        Item.SubItems.Add(Img.Resolution);
-        Item.SubItems.Add(FloatToStr(Img.MegaPixels));
-        if Img.HasExif then
-          Item.SubItems.Add('Yes')
-        else
-          Item.SubItems.Add('No');
-
-        if Img.HasThumbnail and Assigned(Img.Thumbnail) then
-        begin
-          Item.SubItems.Add('Thumb');
-          Thumb := CreateSquareThumbnail(Img.Thumbnail, 48);
-            Item.ImageIndex := imlThumbnails.Add(Thumb, nil);
-        end
-        else
-          begin
-            Item.SubItems.Add('No thumb');
-            Item.ImageIndex := -1;
-          end;
-      end
-    );
-
-  finally
-    lvwImgItems.Items.EndUpdate;
-  end;
-}
 
 end.

@@ -30,7 +30,8 @@ uses
   uFilterSet in 'src\Core\uFilterSet.pas',
   uFilterController in 'src\Controllers\uFilterController.pas',
   uOrientationFilter in 'src\Core\uOrientationFilter.pas',
-  uExtensionFilter in 'src\Core\uExtensionFilter.pas';
+  uExtensionFilter in 'src\Core\uExtensionFilter.pas',
+  uViewer in 'src\uViewer.pas' {fmViewer};
 
 {$R *.res}
 
@@ -39,5 +40,6 @@ begin
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Carbon');
   Application.CreateForm(TfmMain, fmMain);
+  Application.CreateForm(TfmViewer, fmViewer);
   Application.Run;
 end.

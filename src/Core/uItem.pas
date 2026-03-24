@@ -27,6 +27,8 @@ type
     FOrientation: TOrientation;
     FThumbnail: TBitmap;
 
+    FIsSelected: Boolean;
+
     function GetFormattedFileSize: string;
     function GetResolution: string;
     function GetMegaPixels: Double;
@@ -56,6 +58,7 @@ type
     property OrientationText: string read GetOrientationText;
 
     property Thumbnail: TBitmap read FThumbnail;
+    property IsSelected: Boolean read FIsSelected write FIsSelected;
   end;
 
 implementation
@@ -87,6 +90,8 @@ begin
     FHasThumbnail := False;
     FThumbnail := nil;
   end;
+
+  FIsSelected := False;
 end;
 
 destructor TItem.Destroy;

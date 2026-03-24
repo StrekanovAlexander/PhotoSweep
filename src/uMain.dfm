@@ -239,7 +239,7 @@ object fmMain: TfmMain
         Images = svgBtnList
         TabOrder = 2
       end
-      object btnPreview: TBitBtn
+      object btnViewer: TBitBtn
         AlignWithMargins = True
         Left = 885
         Top = 4
@@ -248,7 +248,7 @@ object fmMain: TfmMain
         Margins.Top = 4
         Margins.Bottom = 2
         Align = alRight
-        Caption = 'Preview'
+        Caption = 'Viewer'
         ImageIndex = 5
         ImageName = 'preview'
         Images = svgBtnList
