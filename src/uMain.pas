@@ -63,6 +63,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnSourceClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FListViewController: TListViewController;
     FSelectionController: TSelectionController;
@@ -70,6 +71,8 @@ type
     FFilterSet: TFilterSet;
     FItemsManager: TItemsManager;
     FReader: IFileMetadataReader;
+
+    procedure LoadData;
   public
     { Public declarations }
   end;
@@ -114,7 +117,36 @@ begin
   FItemsManager.Free;
 end;
 
+procedure TfmMain.FormShow(Sender: TObject);
+begin
+  LoadData;
+end;
+
 procedure TfmMain.btnSourceClick(Sender: TObject);
+//var
+//  Files: TStringDynArray;
+begin
+  LoadData;
+//  FListViewController.Clear;
+//  FItemsManager.Clear;
+//
+//  Files := ReadFolder('C:\source4');
+//
+//  pnlBottom.Enabled := True;
+//
+//  TFileScanThread.Create(Files, FReader,
+//    procedure(Meta: TFileMetadata)
+//    begin
+//      FItemsManager.AddItem(Meta);
+//    end,
+//    procedure
+//    begin
+//      FListViewController.Build(FItemsManager);
+//    end
+//  );
+end;
+
+procedure TfmMain.LoadData;
 var
   Files: TStringDynArray;
 begin

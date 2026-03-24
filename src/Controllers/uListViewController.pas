@@ -204,7 +204,7 @@ var
 begin
   if FListView.Items.Count = 0 then
     Exit;
-  fmViewer := TfmViewer.Create(nil, ListView.ItemIndex);
+  fmViewer := TfmViewer.Create(nil, ListView.Items, ListView.ItemIndex);
   try
     fmViewer.ShowModal;
   finally

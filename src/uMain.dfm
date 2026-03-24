@@ -19,6 +19,7 @@ object fmMain: TfmMain
   StyleName = 'Carbon'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   TextHeight = 15
   object bvlTop: TBevel
     AlignWithMargins = True
