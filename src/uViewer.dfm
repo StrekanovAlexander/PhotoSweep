@@ -64,23 +64,38 @@ object fmViewer: TfmViewer
     object lblIndicator: TLabel
       AlignWithMargins = True
       Left = 3
-      Top = 24
+      Top = 45
       Width = 1172
       Height = 15
       Align = alTop
       Alignment = taCenter
       Caption = 'lblIndicator'
+      ExplicitTop = 24
       ExplicitWidth = 60
+    end
+    object lblSize: TLabel
+      AlignWithMargins = True
+      Left = 3
+      Top = 24
+      Width = 1172
+      Height = 15
+      Align = alTop
+      Alignment = taCenter
+      Caption = 'lblSize'
+      ExplicitLeft = 0
+      ExplicitTop = 21
+      ExplicitWidth = 33
     end
     object pnlSelected: TPanel
       AlignWithMargins = True
       Left = 3
-      Top = 45
+      Top = 66
       Width = 1172
       Height = 24
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitTop = 45
       object chkSelected: TCheckBox
         Left = 555
         Top = 2
@@ -89,19 +104,22 @@ object fmViewer: TfmViewer
         TabStop = False
         Caption = 'Selected'
         TabOrder = 0
+        OnClick = chkSelectedClick
       end
     end
     object pnlButtons: TPanel
       Left = 0
-      Top = 72
+      Top = 93
       Width = 1178
-      Height = 53
+      Height = 32
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitTop = 72
+      ExplicitHeight = 53
       object btnPrev: TSpeedButton
         Left = 507
-        Top = 11
+        Top = 1
         Width = 75
         Height = 25
         ImageIndex = 0
@@ -111,7 +129,7 @@ object fmViewer: TfmViewer
       end
       object btnNext: TSpeedButton
         Left = 596
-        Top = 11
+        Top = 1
         Width = 75
         Height = 25
         ImageIndex = 1

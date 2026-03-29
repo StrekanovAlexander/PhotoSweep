@@ -22,12 +22,14 @@ type
     stbViewer: TStatusBar;
     btnPrev: TSpeedButton;
     btnNext: TSpeedButton;
+    lblSize: TLabel;
     procedure FormShow(Sender: TObject);
     function RenderIndicator: string;
     procedure Navigate(Step: Integer);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnPrevClick(Sender: TObject);
     procedure btnNextClick(Sender: TObject);
+    procedure chkSelectedClick(Sender: TObject);
   private
     FListItems: TListItems;
     FCurrentIndex: Integer;
@@ -47,6 +49,13 @@ implementation
 procedure TfmViewer.Navigate(Step: Integer);
 begin
   FCurrentIndex := FCurrentIndex + Step;
+
+  if FCurrentIndex < 0 then
+    FCurrentIndex := 0;
+
+  if FCurrentIndex > FListItems.Count - 1 then
+    FCurrentIndex := FListItems.Count - 1;
+
   RefreshViewer;
 end;
 
@@ -115,7 +124,9 @@ begin
   imgViewer.Picture.LoadFromFile(DataItem.FilePath);
 
   lblFileName.Caption := DataItem.FileName;
+  lblSize.Caption := DataItem.Resolution + ' (' + DataItem.FormattedFileSize + ')';
   lblIndicator.Caption := RenderIndicator;
+
   chkSelected.Checked := DataItem.IsSelected;
 
   if FCurrentIndex = 0 then
@@ -141,6 +152,17 @@ end;
 procedure TfmViewer.btnPrevClick(Sender: TObject);
 begin
   Navigate(-1);
+end;
+
+procedure TfmViewer.chkSelectedClick(Sender: TObject);
+var
+  Item: TListItem;
+  DataItem: TItem;
+begin
+  Item := FListItems[FCurrentIndex];
+  DataItem := TItem(Item.Data);
+  DataItem.IsSelected := chkSelected.Checked;
+  Item.Checked := DataItem.IsSelected;
 end;
 
 procedure TfmViewer.btnNextClick(Sender: TObject);
