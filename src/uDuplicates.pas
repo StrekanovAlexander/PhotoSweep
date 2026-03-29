@@ -25,7 +25,11 @@ type
     procedure lvwDuplicatesItemChecked(Sender: TObject; Item: TListItem);
     procedure lvwDuplicatesCustomDrawItem(Sender: TCustomListView;
       Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
+    procedure btnCloseClick(Sender: TObject);
+    procedure btnSelectClick(Sender: TObject);
+    procedure btnDeselectClick(Sender: TObject);
   private
+    FCheckableIndices: TList<Integer>;
     FDuplicateGroups: TDictionary<string, TList<TItem>>;
     procedure PopulateList;
   public
@@ -42,6 +46,35 @@ implementation
 
 {$R *.dfm}
 
+procedure TfmDuplicates.btnCloseClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfmDuplicates.btnDeselectClick(Sender: TObject);
+var
+  Item: TListItem;
+begin
+  for var i in FCheckableIndices do
+  begin
+    Item := lvwDuplicates.Items[i];
+    Item.Checked := False;
+    Item.ImageIndex := -1;
+  end;
+end;
+
+procedure TfmDuplicates.btnSelectClick(Sender: TObject);
+var
+  Item: TListItem;
+begin
+  for var i in FCheckableIndices do
+  begin
+    Item := lvwDuplicates.Items[i];
+    Item.Checked := True;
+    Item.ImageIndex := 1;
+  end;
+end;
+
 constructor TfmDuplicates.Create(
   AOwner: TComponent;
   ADuplicateGroups: TDictionary<string, TList<TItem>>
@@ -49,6 +82,7 @@ constructor TfmDuplicates.Create(
 begin
   inherited Create(AOwner);
   FDuplicateGroups := ADuplicateGroups;
+  FCheckableIndices := TList<Integer>.Create;
 end;
 
 procedure TfmDuplicates.FormShow(Sender: TObject);
@@ -58,50 +92,28 @@ end;
 
 procedure TfmDuplicates.lvwDuplicatesCustomDrawItem(Sender: TCustomListView;
   Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
+const
+  BG_GRAY = $00222222;
 begin
   if Item.Data = nil then
   begin
     Sender.Canvas.Font.Color := clYellow;
-//    Sender.Canvas.Font.Style := [fsBold];
-    if cdsSelected in State then
-      Sender.Canvas.Brush.Color := $00222222 // темно-серый, даже при выделении
-    else
-      Sender.Canvas.Brush.Color := $00222222;
+    Sender.Canvas.Brush.Color := BG_GRAY;
     Sender.Canvas.FillRect(Item.DisplayRect(drBounds));
     Sender.Canvas.TextOut(Item.DisplayRect(drLabel).Left, Item.DisplayRect(drLabel).Top, Item.Caption);
     DefaultDraw := False;
-    {
-    Sender.Canvas.Brush.Color := $00222222;
-    Sender.Canvas.FillRect(Item.DisplayRect(drBounds));
-    Sender.Canvas.Font.Color := clYellow;
-    DefaultDraw := True;
-    }
   end
   else
     DefaultDraw := True;
 end;
 
-procedure TfmDuplicates.lvwDuplicatesItemChecked(Sender: TObject;
-  Item: TListItem);
-var
-  PrevItem: TListItem;
+procedure TfmDuplicates.lvwDuplicatesItemChecked(Sender: TObject; Item: TListItem);
 begin
-  if Item.Data = nil then
+  if (Item.Data = nil) or (FCheckableIndices.IndexOf(Item.Index) = -1) then
   begin
-    Item.Checked := False;
-    Item.ImageIndex := -1;
+    Item.Checked := (Item.Data <> nil) and (Item.Index > 0) and (lvwDuplicates.Items[Item.Index-1].Data = nil);
     Exit;
   end;
-  if Item.Index > 0 then
-  begin
-    PrevItem := lvwDuplicates.Items[Item.Index - 1];
-    if PrevItem.Data = nil then
-    begin
-      Item.Checked := True;
-      Exit;
-    end;
-  end;
-
   if Item.Checked then
     Item.ImageIndex := 1
   else
@@ -115,6 +127,7 @@ var
   ListItem: TListItem;
   GroupIndex: Integer;
 begin
+  FCheckableIndices.Clear;
   lvwDuplicates.Items.BeginUpdate;
   try
     lvwDuplicates.Items.Clear;
@@ -125,6 +138,7 @@ begin
       ListItem.Caption := Format('Duplicates Group %d', [GroupIndex]);
       ListItem.Data := nil;
       ListItem.Checked := False;
+
       for var i := 0 to Pair.Value.Count - 1 do
       begin
         Item := Pair.Value[i];
@@ -132,6 +146,7 @@ begin
         ListItem.Caption := Item.FileName;
         ListItem.SubItems.Add(Item.FilePath);
         ListItem.Data := Item;
+
         if i = 0 then
         begin
           ListItem.Checked := True;
@@ -141,6 +156,7 @@ begin
         begin
           ListItem.Checked := False;
           ListItem.ImageIndex := -1;
+          FCheckableIndices.Add(ListItem.Index);
         end;
       end;
       Inc(GroupIndex);

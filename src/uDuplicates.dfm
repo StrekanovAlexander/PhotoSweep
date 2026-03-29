@@ -63,6 +63,7 @@ object fmDuplicates: TfmDuplicates
       ImageName = 'checkbox'
       Images = svgBtns
       TabOrder = 0
+      OnClick = btnSelectClick
     end
     object btnDeselect: TBitBtn
       AlignWithMargins = True
@@ -76,6 +77,7 @@ object fmDuplicates: TfmDuplicates
       ImageName = 'checkbox-blank'
       Images = svgBtns
       TabOrder = 1
+      OnClick = btnDeselectClick
     end
     object btnDelete: TBitBtn
       AlignWithMargins = True
@@ -103,6 +105,7 @@ object fmDuplicates: TfmDuplicates
       ImageName = 'close'
       Images = svgBtns
       TabOrder = 3
+      OnClick = btnCloseClick
       ExplicitLeft = 512
       ExplicitTop = 8
       ExplicitHeight = 25

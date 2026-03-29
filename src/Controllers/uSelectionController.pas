@@ -69,7 +69,6 @@ begin
   UpdateStatusBar;
 end;
 
-
 procedure TSelectionController.UpdateStatusBar;
 var
   CheckedCount: Integer;
