@@ -12,7 +12,9 @@ object fmViewer: TfmViewer
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  KeyPreview = True
   Position = poScreenCenter
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   TextHeight = 15
   object pnlMain: TPanel
@@ -20,16 +22,15 @@ object fmViewer: TfmViewer
     Left = 3
     Top = 3
     Width = 1178
-    Height = 574
+    Height = 549
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitHeight = 579
     object imgViewer: TImage
       Left = 0
       Top = 0
       Width = 1178
-      Height = 574
+      Height = 549
       Align = alClient
       Center = True
       Proportional = True
@@ -43,16 +44,17 @@ object fmViewer: TfmViewer
   object pnlBottom: TPanel
     AlignWithMargins = True
     Left = 3
-    Top = 583
+    Top = 558
     Width = 1178
     Height = 125
     Align = alBottom
+    BevelOuter = bvNone
     TabOrder = 1
     object lblFileName: TLabel
       AlignWithMargins = True
-      Left = 4
-      Top = 4
-      Width = 1170
+      Left = 3
+      Top = 3
+      Width = 1172
       Height = 15
       Align = alTop
       Alignment = taCenter
@@ -61,9 +63,9 @@ object fmViewer: TfmViewer
     end
     object lblIndicator: TLabel
       AlignWithMargins = True
-      Left = 4
-      Top = 25
-      Width = 1170
+      Left = 3
+      Top = 24
+      Width = 1172
       Height = 15
       Align = alTop
       Alignment = taCenter
@@ -72,9 +74,9 @@ object fmViewer: TfmViewer
     end
     object pnlSelected: TPanel
       AlignWithMargins = True
-      Left = 4
-      Top = 46
-      Width = 1170
+      Left = 3
+      Top = 45
+      Width = 1172
       Height = 24
       Align = alTop
       BevelOuter = bvNone
@@ -90,41 +92,57 @@ object fmViewer: TfmViewer
       end
     end
     object pnlButtons: TPanel
-      Left = 1
-      Top = 73
-      Width = 1176
-      Height = 51
+      Left = 0
+      Top = 72
+      Width = 1178
+      Height = 53
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitLeft = 0
-      ExplicitTop = 76
-      object btnPrev: TBitBtn
-        Left = 537
-        Top = 2
-        Width = 45
-        Height = 35
+      object btnPrev: TSpeedButton
+        Left = 507
+        Top = 11
+        Width = 75
+        Height = 25
         ImageIndex = 0
         ImageName = 'arrow-back'
         Images = svgBtnList
-        TabOrder = 0
         OnClick = btnPrevClick
       end
-      object btnNext: TBitBtn
+      object btnNext: TSpeedButton
         Left = 596
-        Top = 2
-        Width = 45
-        Height = 35
+        Top = 11
+        Width = 75
+        Height = 25
         ImageIndex = 1
         ImageName = 'arrow-forward'
         Images = svgBtnList
-        Layout = blGlyphRight
-        TabOrder = 1
         OnClick = btnNextClick
       end
     end
   end
+  object stbViewer: TStatusBar
+    AlignWithMargins = True
+    Left = 3
+    Top = 689
+    Width = 1178
+    Height = 19
+    Panels = <
+      item
+        Text = #8592' / '#8594'  Navigate'
+        Width = 105
+      end
+      item
+        Text = 'Space  Select'
+        Width = 90
+      end
+      item
+        Text = 'Esc  Exit'
+        Width = 100
+      end>
+  end
   object svgBtnList: TSVGIconImageList
+    Size = 15
     SVGIconItems = <
       item
         IconName = 'arrow-back'

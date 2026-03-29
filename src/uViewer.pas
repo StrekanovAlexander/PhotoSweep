@@ -19,13 +19,15 @@ type
     chkSelected: TCheckBox;
     svgBtnList: TSVGIconImageList;
     pnlButtons: TPanel;
-    btnPrev: TBitBtn;
-    btnNext: TBitBtn;
+    stbViewer: TStatusBar;
+    btnPrev: TSpeedButton;
+    btnNext: TSpeedButton;
     procedure FormShow(Sender: TObject);
     function RenderIndicator: string;
+    procedure Navigate(Step: Integer);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnPrevClick(Sender: TObject);
     procedure btnNextClick(Sender: TObject);
-    procedure Navigate(Step: Integer);
   private
     FListItems: TListItems;
     FCurrentIndex: Integer;
@@ -48,22 +50,54 @@ begin
   RefreshViewer;
 end;
 
-procedure TfmViewer.btnNextClick(Sender: TObject);
-begin
-  Navigate(1);
-end;
-
-procedure TfmViewer.btnPrevClick(Sender: TObject);
-begin
-  Navigate(-1);
-end;
-
 constructor TfmViewer.Create(AOwner: TComponent; AListItems: TListItems; AIndex: Integer);
 begin
   inherited Create(AOwner);
   FListItems := AListItems;
   FCurrentIndex := AIndex;
   FItemsCountText := IntToStr(FListItems.Count);
+end;
+
+procedure TfmViewer.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  Item: TListItem;
+  DataItem: TItem;
+begin
+  case Key of
+    VK_LEFT:
+      begin
+        if FCurrentIndex > 0 then
+        begin
+          Dec(FCurrentIndex);
+          RefreshViewer;
+        end;
+        Key := 0;
+      end;
+
+    VK_RIGHT:
+      begin
+      if FCurrentIndex < FListItems.Count - 1 then
+        begin
+          Inc(FCurrentIndex);
+          RefreshViewer;
+        end;
+        Key := 0;
+      end;
+
+    VK_SPACE:
+      begin
+        Item := FListItems[FCurrentIndex];
+        DataItem := TItem(Item.Data);
+        DataItem.IsSelected := not DataItem.IsSelected;
+        Item.Checked := DataItem.IsSelected;
+        RefreshViewer;
+        Key := 0;
+      end;
+
+    VK_ESCAPE:
+      Close;
+  end;
 end;
 
 procedure TfmViewer.FormShow(Sender: TObject);
@@ -82,6 +116,7 @@ begin
 
   lblFileName.Caption := DataItem.FileName;
   lblIndicator.Caption := RenderIndicator;
+  chkSelected.Checked := DataItem.IsSelected;
 
   if FCurrentIndex = 0 then
     btnPrev.Enabled := False
@@ -101,6 +136,16 @@ var
 begin
   CurrentIndexText := IntToStr(FCurrentIndex + 1);
   Result := CurrentIndexText + ' of ' + FItemsCountText;
+end;
+
+procedure TfmViewer.btnPrevClick(Sender: TObject);
+begin
+  Navigate(-1);
+end;
+
+procedure TfmViewer.btnNextClick(Sender: TObject);
+begin
+  Navigate(1);
 end;
 
 end.
