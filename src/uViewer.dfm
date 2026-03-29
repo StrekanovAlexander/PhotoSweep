@@ -3,7 +3,7 @@ object fmViewer: TfmViewer
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = 'PhotoSweep Viewer'
+  Caption = 'PhotoSweep - Viewer'
   ClientHeight = 711
   ClientWidth = 1184
   Color = clBtnFace
@@ -70,7 +70,6 @@ object fmViewer: TfmViewer
       Align = alTop
       Alignment = taCenter
       Caption = 'lblIndicator'
-      ExplicitTop = 24
       ExplicitWidth = 60
     end
     object lblSize: TLabel
@@ -82,8 +81,6 @@ object fmViewer: TfmViewer
       Align = alTop
       Alignment = taCenter
       Caption = 'lblSize'
-      ExplicitLeft = 0
-      ExplicitTop = 21
       ExplicitWidth = 33
     end
     object pnlSelected: TPanel
@@ -95,7 +92,6 @@ object fmViewer: TfmViewer
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitTop = 45
       object chkSelected: TCheckBox
         Left = 555
         Top = 2
@@ -115,8 +111,6 @@ object fmViewer: TfmViewer
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitTop = 72
-      ExplicitHeight = 53
       object btnPrev: TSpeedButton
         Left = 507
         Top = 1

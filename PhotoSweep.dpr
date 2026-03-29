@@ -31,7 +31,9 @@ uses
   uFilterController in 'src\Controllers\uFilterController.pas',
   uOrientationFilter in 'src\Core\uOrientationFilter.pas',
   uExtensionFilter in 'src\Core\uExtensionFilter.pas',
-  uViewer in 'src\uViewer.pas' {fmViewer};
+  uViewer in 'src\uViewer.pas' {fmViewer},
+  uDuplicatesController in 'src\Controllers\uDuplicatesController.pas',
+  uDuplicates in 'src\uDuplicates.pas' {fmDuplicates};
 
 {$R *.res}
 
@@ -41,5 +43,6 @@ begin
   TStyleManager.TrySetStyle('Carbon');
   Application.CreateForm(TfmMain, fmMain);
   Application.CreateForm(TfmViewer, fmViewer);
+  Application.CreateForm(TfmDuplicates, fmDuplicates);
   Application.Run;
 end.

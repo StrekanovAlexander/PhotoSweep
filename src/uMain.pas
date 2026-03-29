@@ -9,7 +9,7 @@ uses
   Vcl.Buttons, Vcl.ComCtrls,
   System.IOUtils,
   System.Types,
-  uListViewController, uSelectionController, uFilterController,
+  uListViewController, uSelectionController, uFilterController, uDuplicatesController,
   uItem,
   uFileScanThread,
   uFileMetadata,
@@ -40,14 +40,14 @@ type
     pnlButtons: TPanel;
     btnMove: TBitBtn;
     btnCopy: TBitBtn;
-    btnDupl: TBitBtn;
+    btnDuplicates: TBitBtn;
     pnlTarget: TPanel;
     Label1: TLabel;
     btnTarget: TBitBtn;
     pnlTools2: TPanel;
     bvlTools: TBevel;
     lvwItems: TListView;
-    Panel1: TPanel;
+    pnlSelectBtns: TPanel;
     Panel2: TPanel;
     Panel3: TPanel;
     chkJpg: TCheckBox;
@@ -65,6 +65,7 @@ type
     procedure btnSourceClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
+    FDuplicatesController: TDuplicatesController;
     FListViewController: TListViewController;
     FSelectionController: TSelectionController;
     FFilterController: TFilterController;
@@ -106,10 +107,16 @@ begin
     chkLandscape, chkPortrait, chkSquare,
     chkJpg, chkPng, chkGif
   );
+
+  FDuplicatesController := TDuplicatesController.Create(
+    FItemsManager,
+    btnDuplicates
+  );
 end;
 
 procedure TfmMain.FormDestroy(Sender: TObject);
 begin
+  FDuplicatesController.Free;
   FSelectionController.Free;
   FListViewController.Free;
   FFilterController.Free;

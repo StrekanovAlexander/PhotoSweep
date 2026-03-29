@@ -161,6 +161,11 @@
             <Form>fmViewer</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="src\Controllers\uDuplicatesController.pas"/>
+        <DCCReference Include="src\uDuplicates.pas">
+            <Form>fmDuplicates</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

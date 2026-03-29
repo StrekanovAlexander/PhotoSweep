@@ -225,7 +225,7 @@ object fmMain: TfmMain
         Images = svgBtnList
         TabOrder = 1
       end
-      object btnDupl: TBitBtn
+      object btnDuplicates: TBitBtn
         AlignWithMargins = True
         Left = 205
         Top = 4
@@ -264,7 +264,7 @@ object fmMain: TfmMain
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      object Panel1: TPanel
+      object pnlSelectBtns: TPanel
         Left = 0
         Top = 0
         Width = 978
