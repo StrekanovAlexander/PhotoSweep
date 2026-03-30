@@ -19,7 +19,7 @@ object fmDuplicates: TfmDuplicates
     Left = 0
     Top = 0
     Width = 784
-    Height = 528
+    Height = 503
     Align = alClient
     Checkboxes = True
     Columns = <
@@ -38,27 +38,23 @@ object fmDuplicates: TfmDuplicates
     ViewStyle = vsReport
     OnCustomDrawItem = lvwDuplicatesCustomDrawItem
     OnItemChecked = lvwDuplicatesItemChecked
-    ExplicitWidth = 624
-    ExplicitHeight = 385
   end
   object pnlSelectBtns: TPanel
     Left = 0
-    Top = 528
+    Top = 503
     Width = 784
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 414
-    ExplicitWidth = 624
     object btnSelect: TBitBtn
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 75
+      Width = 135
       Height = 27
       Align = alLeft
-      Caption = 'Select'
+      Caption = 'Select Duplicates'
       ImageIndex = 0
       ImageName = 'checkbox'
       Images = svgBtns
@@ -67,12 +63,12 @@ object fmDuplicates: TfmDuplicates
     end
     object btnDeselect: TBitBtn
       AlignWithMargins = True
-      Left = 84
+      Left = 144
       Top = 3
-      Width = 75
+      Width = 135
       Height = 27
       Align = alLeft
-      Caption = 'Deselect'
+      Caption = 'Deselect Duplicates'
       ImageIndex = 1
       ImageName = 'checkbox-blank'
       Images = svgBtns
@@ -81,9 +77,9 @@ object fmDuplicates: TfmDuplicates
     end
     object btnDelete: TBitBtn
       AlignWithMargins = True
-      Left = 575
+      Left = 646
       Top = 3
-      Width = 125
+      Width = 135
       Height = 27
       Align = alRight
       Caption = 'Delete Duplicates'
@@ -91,25 +87,17 @@ object fmDuplicates: TfmDuplicates
       ImageName = 'trash'
       Images = svgBtns
       TabOrder = 2
-      ExplicitLeft = 403
+      OnClick = btnDeleteClick
     end
-    object btnClose: TBitBtn
-      AlignWithMargins = True
-      Left = 706
-      Top = 3
-      Width = 75
-      Height = 27
-      Align = alRight
-      Caption = 'Close'
-      ImageIndex = 3
-      ImageName = 'close'
-      Images = svgBtns
-      TabOrder = 3
-      OnClick = btnCloseClick
-      ExplicitLeft = 512
-      ExplicitTop = 8
-      ExplicitHeight = 25
-    end
+  end
+  object stbDuplicates: TStatusBar
+    AlignWithMargins = True
+    Left = 3
+    Top = 539
+    Width = 778
+    Height = 19
+    Panels = <>
+    SimplePanel = True
   end
   object svgIcons: TSVGIconImageList
     Size = 15

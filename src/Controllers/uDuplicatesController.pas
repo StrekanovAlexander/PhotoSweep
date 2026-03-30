@@ -5,14 +5,14 @@ interface
 uses
   System.SysUtils, System.Classes, IdHash, IdHashMessageDigest,
   System.Generics.Collections, System.Generics.Defaults,
-  Vcl.Buttons,
-  uItem,
-  uItemsManager,
+  Vcl.Dialogs, Vcl.Buttons,
+  uItem, uItemsManager, uListViewController,
   uDuplicates;
 
 type TDuplicatesController = class
   private
     FItemsManager: TItemsManager;
+    FListViewController: TListViewController;
     FDuplicatesDictionary: TDictionary<string, TList<TItem>>;
     FDuplicatesBtn: TBitbtn;
 
@@ -20,15 +20,27 @@ type TDuplicatesController = class
     function BuildDuplicateGroups: TDictionary<string, TList<TItem>>;
     function GetFileHash(const AFilePath: string): string;
   public
-    constructor Create(AItemsManager: TItemsManager; ADuplicatesBtn: TBitbtn);
+    constructor Create(
+      AItemsManager: TItemsManager;
+      AListViewController: TListViewController;
+      ADuplicatesBtn: TBitbtn
+    );
     destructor Destroy; override;
 end;
 
 implementation
 
-constructor TDuplicatesController.Create(AItemsManager: TItemsManager; ADuplicatesBtn: TBitbtn);
+const
+  MR_OK = 1;
+
+constructor TDuplicatesController.Create(
+  AItemsManager: TItemsManager;
+  AListViewController: TListViewController;
+  ADuplicatesBtn: TBitbtn
+);
 begin
   FItemsManager :=  AItemsManager;
+  FListViewController := AListViewController;
   FDuplicatesBtn := ADuplicatesBtn;
   FDuplicatesBtn.OnClick := DuplicatesBtnClick;
 end;
@@ -40,7 +52,10 @@ begin
   if Assigned(FDuplicatesDictionary) then
   begin
     for List in FDuplicatesDictionary.Values do
+    begin
+      List.Clear;
       List.Free;
+    end;
     FDuplicatesDictionary.Free;
   end;
   inherited;
@@ -49,15 +64,26 @@ end;
 procedure TDuplicatesController.DuplicatesBtnClick(Sender: TObject);
 var
   fmDuplicates: TfmDuplicates;
+  Item: TItem;
 begin
   if FItemsManager.Count = 0 then
     Exit;
 
+  FDuplicatesDictionary.Free;
   FDuplicatesDictionary := BuildDuplicateGroups;
-
   fmDuplicates := TfmDuplicates.Create(nil, FDuplicatesDictionary);
+
   try
-    fmDuplicates.ShowModal;
+    if fmDuplicates.ShowModal = MR_OK then
+    begin
+      for Item in fmDuplicates.SelectedDuplicatesList do
+      begin
+        if FileExists(Item.FilePath) then
+          DeleteFile(Item.FilePath);
+        FItemsManager.RemoveItem(Item);
+      end;
+      FListViewController.Refresh(FItemsManager);
+    end;
   finally
     fmDuplicates.Free;
   end;

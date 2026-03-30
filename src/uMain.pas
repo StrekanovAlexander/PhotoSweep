@@ -110,6 +110,7 @@ begin
 
   FDuplicatesController := TDuplicatesController.Create(
     FItemsManager,
+    FListViewController,
     btnDuplicates
   );
 end;

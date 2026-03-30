@@ -4,6 +4,8 @@ interface
 
 uses
   System.SysUtils,
+  System.Generics.Collections,
+//  System.Generics.Defaults,
   Vcl.Buttons,
   Vcl.Graphics,
   Vcl.Controls,
@@ -40,6 +42,7 @@ type
     );
     procedure AddItem(AItem: TItem);
     procedure Build(AItemsManager: TItemsManager);
+    procedure Refresh(AItemsManager: TItemsManager);
     procedure Clear;
     property ListView: TListView read FListView;
   end;
@@ -210,6 +213,53 @@ begin
   finally
     fmViewer.Free;
   end;
+end;
+
+procedure TListViewController.Refresh(AItemsManager: TItemsManager);
+var
+  i: Integer;
+  Item: TItem;
+  ListItem: TListItem;
+  ExistingItems: TDictionary<TItem, Boolean>;
+begin
+  FListView.Items.BeginUpdate;
+  try
+    // 1. Creating current items Dictionary in ListView
+    ExistingItems := TDictionary<TItem, Boolean>.Create;
+    try
+      for i := 0 to FListView.Items.Count - 1 do
+        ExistingItems.Add(TItem(FListView.Items[i].Data), True);
+      // 2. Delete from ListView items, deleted in ItemsManager
+      i := 0;
+      while i < FListView.Items.Count do
+      begin
+        ListItem := FListView.Items[i];
+        Item := TItem(ListItem.Data);
+        if not AItemsManager.ItemsList.Contains(Item) then
+          FListView.Items.Delete(i)
+        else
+          Inc(i);
+      end;
+      // 3. Add new items from из ItemsManager
+      for Item in AItemsManager.ItemsList do
+      begin
+        if not ExistingItems.ContainsKey(Item) then
+          AddItem(Item);
+      end;
+    finally
+      ExistingItems.Free;
+    end;
+  finally
+    FListView.Items.EndUpdate;
+  end;
+
+  if FListView.Items.Count > 0 then
+  begin
+    FListView.Items[0].Selected := True;
+    FListView.Items[0].Focused := True;
+  end;
+
+  UpdateStatusBar;
 end;
 
 end.

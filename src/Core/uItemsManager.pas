@@ -16,6 +16,7 @@ type
 
     procedure Clear;
     procedure AddItem(const Meta: TFileMetadata);
+    procedure RemoveItem(AItem: TItem);
     function Count: Integer;
     function GetItem(Index: Integer): TItem;
     property ItemsList: TObjectList<TItem> read FItemsList;
@@ -41,6 +42,11 @@ var
 begin
   Item := TItem.Create(Meta.FilePath, Meta);
   FItemsList.Add(Item);
+end;
+
+procedure TItemsManager.RemoveItem(AItem: TItem);
+begin
+  FItemsList.Remove(AItem);
 end;
 
 function TItemsManager.Count: Integer;

@@ -20,23 +20,29 @@ type
     btnDeselect: TBitBtn;
     svgBtns: TSVGIconImageList;
     btnDelete: TBitBtn;
-    btnClose: TBitBtn;
+    stbDuplicates: TStatusBar;
     procedure FormShow(Sender: TObject);
     procedure lvwDuplicatesItemChecked(Sender: TObject; Item: TListItem);
     procedure lvwDuplicatesCustomDrawItem(Sender: TCustomListView;
       Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
-    procedure btnCloseClick(Sender: TObject);
     procedure btnSelectClick(Sender: TObject);
     procedure btnDeselectClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
   private
     FCheckableIndices: TList<Integer>;
     FDuplicateGroups: TDictionary<string, TList<TItem>>;
+    FSelectedDuplicatesList: TList<TItem>;
+    FSelectedDuplicatesCount: Integer;
+    FUpdatingChecks: Boolean;
     procedure PopulateList;
+    procedure UpdateStatusBar;
   public
     constructor Create(
       AOwner: TComponent;
       ADuplicateGroups: TDictionary<string, TList<TItem>>
     ); reintroduce;
+    destructor Destroy; override;
+    property SelectedDuplicatesList: TList<TItem> read FSelectedDuplicatesList;
   end;
 
 var
@@ -46,35 +52,6 @@ implementation
 
 {$R *.dfm}
 
-procedure TfmDuplicates.btnCloseClick(Sender: TObject);
-begin
-  Close;
-end;
-
-procedure TfmDuplicates.btnDeselectClick(Sender: TObject);
-var
-  Item: TListItem;
-begin
-  for var i in FCheckableIndices do
-  begin
-    Item := lvwDuplicates.Items[i];
-    Item.Checked := False;
-    Item.ImageIndex := -1;
-  end;
-end;
-
-procedure TfmDuplicates.btnSelectClick(Sender: TObject);
-var
-  Item: TListItem;
-begin
-  for var i in FCheckableIndices do
-  begin
-    Item := lvwDuplicates.Items[i];
-    Item.Checked := True;
-    Item.ImageIndex := 1;
-  end;
-end;
-
 constructor TfmDuplicates.Create(
   AOwner: TComponent;
   ADuplicateGroups: TDictionary<string, TList<TItem>>
@@ -83,11 +60,91 @@ begin
   inherited Create(AOwner);
   FDuplicateGroups := ADuplicateGroups;
   FCheckableIndices := TList<Integer>.Create;
+  FSelectedDuplicatesList := TList<TItem>.Create;
+  FSelectedDuplicatesCount := 0;
+end;
+
+destructor TfmDuplicates.Destroy;
+begin
+  FCheckableIndices.Free;
+  FSelectedDuplicatesList.Free;
+  inherited;
+end;
+
+procedure TfmDuplicates.btnDeleteClick(Sender: TObject);
+var Item: TItem;
+begin
+  if FSelectedDuplicatesCount = 0 then
+  begin
+    ShowMessage('No duplicates selected.');
+    Exit;
+  end;
+
+  if MessageDlg(
+    Format('Are you sure you want to delete the selected %d duplicates?', [FSelectedDuplicatesCount]),
+    mtConfirmation, [mbYes, mbNo], 0
+  ) <> mrYes then
+    Exit;
+
+  FSelectedDuplicatesList.Clear;
+  for var i in FCheckableIndices do
+  begin
+    if lvwDuplicates.Items[i].Checked = True then
+    begin
+      Item := TItem(lvwDuplicates.Items[i].Data);
+      FSelectedDuplicatesList.Add(Item);
+    end;
+  end;
+
+  ModalResult := mrOk;
+end;
+
+procedure TfmDuplicates.btnDeselectClick(Sender: TObject);
+var
+  Item: TListItem;
+begin
+  if FSelectedDuplicatesCount = 0 then
+    Exit;
+  FUpdatingChecks := True;
+  try
+    for var i in FCheckableIndices do
+    begin
+      Item := lvwDuplicates.Items[i];
+      Item.Checked := False;
+      Item.ImageIndex := -1;
+    end;
+    FSelectedDuplicatesCount := 0;
+  finally
+    FUpdatingChecks := False;
+  end;
+  UpdateStatusBar;
+end;
+
+procedure TfmDuplicates.btnSelectClick(Sender: TObject);
+var
+  Item: TListItem;
+begin
+  if FSelectedDuplicatesCount = FCheckableIndices.Count then
+    Exit;
+  FUpdatingChecks := True;
+  try
+    for var i in FCheckableIndices do
+    begin
+      Item := lvwDuplicates.Items[i];
+      Item.Checked := True;
+      Item.ImageIndex := 1;
+    end;
+    FSelectedDuplicatesCount := FCheckableIndices.Count;
+  finally
+    FUpdatingChecks := False;
+  end;
+  UpdateStatusBar;
 end;
 
 procedure TfmDuplicates.FormShow(Sender: TObject);
 begin
   PopulateList;
+  UpdateStatusBar;
 end;
 
 procedure TfmDuplicates.lvwDuplicatesCustomDrawItem(Sender: TCustomListView;
@@ -109,15 +166,26 @@ end;
 
 procedure TfmDuplicates.lvwDuplicatesItemChecked(Sender: TObject; Item: TListItem);
 begin
+  if FUpdatingChecks then
+    Exit;
+
   if (Item.Data = nil) or (FCheckableIndices.IndexOf(Item.Index) = -1) then
   begin
     Item.Checked := (Item.Data <> nil) and (Item.Index > 0) and (lvwDuplicates.Items[Item.Index-1].Data = nil);
     Exit;
   end;
+
   if Item.Checked then
-    Item.ImageIndex := 1
+  begin
+    Item.ImageIndex := 1;
+    Inc(FSelectedDuplicatesCount);
+  end
   else
+  begin
     Item.ImageIndex := -1;
+    Dec(FSelectedDuplicatesCount);
+  end;
+  UpdateStatusBar;
 end;
 
 procedure TfmDuplicates.PopulateList;
@@ -164,6 +232,13 @@ begin
   finally
     lvwDuplicates.Items.EndUpdate;
   end;
+end;
+
+procedure TfmDuplicates.UpdateStatusBar;
+begin
+  stbDuplicates.SimpleText := Format(
+    'Selected duplicates: %d', [FSelectedDuplicatesCount]
+  );
 end;
 
 end.
