@@ -71,8 +71,14 @@ begin
 
   FDuplicatesDictionary.Free;
   FDuplicatesDictionary := BuildDuplicateGroups;
-  fmDuplicates := TfmDuplicates.Create(nil, FDuplicatesDictionary);
 
+  if FDuplicatesDictionary.Count = 0 then
+  begin
+     ShowMessage('No duplicates.');
+     Exit;
+  end;
+
+  fmDuplicates := TfmDuplicates.Create(nil, FDuplicatesDictionary);
   try
     if fmDuplicates.ShowModal = MR_OK then
     begin
