@@ -135,7 +135,7 @@ object fmMain: TfmMain
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    object lblSource: TLabel
+    object lblSourceFolder: TLabel
       AlignWithMargins = True
       Left = 104
       Top = 8
@@ -227,7 +227,7 @@ object fmMain: TfmMain
       end
       object btnDuplicates: TBitBtn
         AlignWithMargins = True
-        Left = 205
+        Left = 301
         Top = 4
         Width = 95
         Height = 27
@@ -238,22 +238,36 @@ object fmMain: TfmMain
         ImageIndex = 3
         ImageName = 'duplicates'
         Images = svgBtnList
-        TabOrder = 2
+        TabOrder = 3
       end
       object btnViewer: TBitBtn
         AlignWithMargins = True
-        Left = 885
+        Left = 205
         Top = 4
         Width = 90
         Height = 27
         Margins.Top = 4
         Margins.Bottom = 2
-        Align = alRight
+        Align = alLeft
         Caption = 'Viewer'
         ImageIndex = 5
         ImageName = 'preview'
         Images = svgBtnList
-        TabOrder = 3
+        TabOrder = 2
+      end
+      object btnLog: TBitBtn
+        AlignWithMargins = True
+        Left = 880
+        Top = 3
+        Width = 95
+        Height = 27
+        Align = alRight
+        Caption = 'Log'
+        ImageIndex = 8
+        ImageName = 'description'
+        Images = svgBtnList
+        TabOrder = 4
+        OnClick = btnLogClick
       end
     end
     object pnlTools2: TPanel
@@ -408,7 +422,7 @@ object fmMain: TfmMain
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
-    object Label1: TLabel
+    object lblTargetFolder: TLabel
       AlignWithMargins = True
       Left = 104
       Top = 8
@@ -587,6 +601,16 @@ object fmMain: TfmMain
           ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
           'fill="none"/><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0' +
           ' 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>'
+        FixedColor = clLightgray
+      end
+      item
+        IconName = 'description'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M8 16h8v2H8zm0-4h8v2H8zm6-10H6c-1.1 0-2 .9' +
+          '-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5' +
+          'h5v11z"/></svg>'
         FixedColor = clLightgray
       end>
     Scaled = True

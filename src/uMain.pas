@@ -9,15 +9,17 @@ uses
   Vcl.Buttons, Vcl.ComCtrls,
   System.IOUtils,
   System.Types,
-  uListViewController, uSelectionController, uFilterController, uDuplicatesController,
-  uItem,
+  uListViewController, uSelectionController, uFilterController,
+  uDuplicatesController, uFileController,
+  uItem, uLogger,
   uFileScanThread,
   uFileMetadata,
   uIFileMetadataReader,
   uFileMetadataReader,
   uItemsManager,
   uFileUtils,
-  uFilterSet
+  uFilterSet,
+  uLog
 ;
 
 type
@@ -35,14 +37,14 @@ type
     btnAbout: TBitBtn;
     pnlSource: TPanel;
     btnSource: TBitBtn;
-    lblSource: TLabel;
+    lblSourceFolder: TLabel;
     pnlBottom: TPanel;
     pnlButtons: TPanel;
     btnMove: TBitBtn;
     btnCopy: TBitBtn;
     btnDuplicates: TBitBtn;
     pnlTarget: TPanel;
-    Label1: TLabel;
+    lblTargetFolder: TLabel;
     btnTarget: TBitBtn;
     pnlTools2: TPanel;
     bvlTools: TBevel;
@@ -60,18 +62,24 @@ type
     btnViewer: TBitBtn;
     btnSelectAll: TBitBtn;
     btnDeselectAll: TBitBtn;
+    btnLog: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnSourceClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnLogClick(Sender: TObject);
   private
     FDuplicatesController: TDuplicatesController;
     FListViewController: TListViewController;
     FSelectionController: TSelectionController;
     FFilterController: TFilterController;
+    FFileController: TFileController;
     FFilterSet: TFilterSet;
     FItemsManager: TItemsManager;
     FReader: IFileMetadataReader;
+
+    FSourceFolder: string;
+    FTargetFolder: string;
 
     procedure LoadData;
   public
@@ -113,6 +121,20 @@ begin
     FListViewController,
     btnDuplicates
   );
+
+  FSourceFolder := 'C:\source4';
+  FTargetFolder := 'C:\target4';
+
+  lblSourceFolder.Caption := FSourceFolder;
+  lblTargetFolder.Caption := FTargetFolder;
+
+  FFileController := TFileController.Create(
+    FItemsManager,
+    FSourceFolder,
+    FTargetFolder,
+    btnMove,
+    btnCopy
+  );
 end;
 
 procedure TfmMain.FormDestroy(Sender: TObject);
@@ -123,6 +145,7 @@ begin
   FFilterController.Free;
   FFilterSet.Free;
   FItemsManager.Free;
+  FFileController.Free;
 end;
 
 procedure TfmMain.FormShow(Sender: TObject);
@@ -130,28 +153,20 @@ begin
   LoadData;
 end;
 
+procedure TfmMain.btnLogClick(Sender: TObject);
+var fmLog: TfmLog;
+begin
+  fmLog := TfmLog.Create(nil);
+  try
+    fmLog.ShowModal;
+  finally
+    fmLog.Free;
+  end;
+end;
+
 procedure TfmMain.btnSourceClick(Sender: TObject);
-//var
-//  Files: TStringDynArray;
 begin
   LoadData;
-//  FListViewController.Clear;
-//  FItemsManager.Clear;
-//
-//  Files := ReadFolder('C:\source4');
-//
-//  pnlBottom.Enabled := True;
-//
-//  TFileScanThread.Create(Files, FReader,
-//    procedure(Meta: TFileMetadata)
-//    begin
-//      FItemsManager.AddItem(Meta);
-//    end,
-//    procedure
-//    begin
-//      FListViewController.Build(FItemsManager);
-//    end
-//  );
 end;
 
 procedure TfmMain.LoadData;
@@ -161,7 +176,8 @@ begin
   FListViewController.Clear;
   FItemsManager.Clear;
 
-  Files := ReadFolder('C:\source4');
+  Files := ReadFolder(FSourceFolder);
+  Logger.Add('123');
 
   pnlBottom.Enabled := True;
 

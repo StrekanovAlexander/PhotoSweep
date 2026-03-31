@@ -19,6 +19,7 @@ type
     procedure RemoveItem(AItem: TItem);
     function Count: Integer;
     function GetItem(Index: Integer): TItem;
+    function GetSelectedItemsCount: Integer;
     property ItemsList: TObjectList<TItem> read FItemsList;
   end;
 
@@ -57,6 +58,16 @@ end;
 function TItemsManager.GetItem(Index: Integer): TItem;
 begin
   Result := FItemsList[Index];
+end;
+
+function TItemsManager.GetSelectedItemsCount: Integer;
+begin
+  Result := 0;
+  for var Item in FItemsList do
+  begin
+    if Item.IsSelected then
+      Inc(Result);
+  end;
 end;
 
 procedure TItemsManager.Clear;

@@ -77,17 +77,35 @@ object fmDuplicates: TfmDuplicates
     end
     object btnDelete: TBitBtn
       AlignWithMargins = True
-      Left = 646
+      Left = 285
       Top = 3
       Width = 135
       Height = 27
-      Align = alRight
+      Align = alLeft
       Caption = 'Delete Duplicates'
       ImageIndex = 2
       ImageName = 'trash'
       Images = svgBtns
       TabOrder = 2
       OnClick = btnDeleteClick
+      ExplicitLeft = 646
+    end
+    object btnClose: TBitBtn
+      AlignWithMargins = True
+      Left = 686
+      Top = 3
+      Width = 95
+      Height = 27
+      Align = alRight
+      Caption = 'Close'
+      ImageIndex = 3
+      ImageName = 'close'
+      Images = svgBtns
+      TabOrder = 3
+      OnClick = btnCloseClick
+      ExplicitLeft = 543
+      ExplicitTop = 0
+      ExplicitHeight = 25
     end
   end
   object stbDuplicates: TStatusBar

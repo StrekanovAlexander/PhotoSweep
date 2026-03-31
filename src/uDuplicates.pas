@@ -21,6 +21,7 @@ type
     svgBtns: TSVGIconImageList;
     btnDelete: TBitBtn;
     stbDuplicates: TStatusBar;
+    btnClose: TBitBtn;
     procedure FormShow(Sender: TObject);
     procedure lvwDuplicatesItemChecked(Sender: TObject; Item: TListItem);
     procedure lvwDuplicatesCustomDrawItem(Sender: TCustomListView;
@@ -28,6 +29,7 @@ type
     procedure btnSelectClick(Sender: TObject);
     procedure btnDeselectClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
   private
     FCheckableIndices: TList<Integer>;
     FDuplicateGroups: TDictionary<string, TList<TItem>>;
@@ -69,6 +71,11 @@ begin
   FCheckableIndices.Free;
   FSelectedDuplicatesList.Free;
   inherited;
+end;
+
+procedure TfmDuplicates.btnCloseClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TfmDuplicates.btnDeleteClick(Sender: TObject);

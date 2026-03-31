@@ -33,7 +33,10 @@ uses
   uExtensionFilter in 'src\Core\uExtensionFilter.pas',
   uViewer in 'src\uViewer.pas' {fmViewer},
   uDuplicatesController in 'src\Controllers\uDuplicatesController.pas',
-  uDuplicates in 'src\uDuplicates.pas' {fmDuplicates};
+  uDuplicates in 'src\uDuplicates.pas' {fmDuplicates},
+  uLogger in 'src\Core\uLogger.pas',
+  uLog in 'src\uLog.pas' {fmLog},
+  uFileController in 'src\Controllers\uFileController.pas';
 
 {$R *.res}
 
@@ -41,8 +44,11 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Carbon');
+  Logger := TLogger.Create;
   Application.CreateForm(TfmMain, fmMain);
   Application.CreateForm(TfmViewer, fmViewer);
   Application.CreateForm(TfmDuplicates, fmDuplicates);
+  Application.CreateForm(TfmLog, fmLog);
   Application.Run;
+  Logger.Free;
 end.
