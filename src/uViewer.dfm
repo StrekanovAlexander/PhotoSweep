@@ -5,7 +5,7 @@ object fmViewer: TfmViewer
   BorderStyle = bsSingle
   Caption = 'PhotoSweep - Viewer'
   ClientHeight = 711
-  ClientWidth = 1184
+  ClientWidth = 984
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,15 +21,16 @@ object fmViewer: TfmViewer
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 1178
+    Width = 978
     Height = 549
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 1178
     object imgViewer: TImage
       Left = 0
       Top = 0
-      Width = 1178
+      Width = 978
       Height = 549
       Align = alClient
       Center = True
@@ -45,16 +46,17 @@ object fmViewer: TfmViewer
     AlignWithMargins = True
     Left = 3
     Top = 558
-    Width = 1178
+    Width = 978
     Height = 125
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 1178
     object lblFileName: TLabel
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 1172
+      Width = 972
       Height = 15
       Align = alTop
       Alignment = taCenter
@@ -65,7 +67,7 @@ object fmViewer: TfmViewer
       AlignWithMargins = True
       Left = 3
       Top = 45
-      Width = 1172
+      Width = 972
       Height = 15
       Align = alTop
       Alignment = taCenter
@@ -76,7 +78,7 @@ object fmViewer: TfmViewer
       AlignWithMargins = True
       Left = 3
       Top = 24
-      Width = 1172
+      Width = 972
       Height = 15
       Align = alTop
       Alignment = taCenter
@@ -87,13 +89,14 @@ object fmViewer: TfmViewer
       AlignWithMargins = True
       Left = 3
       Top = 66
-      Width = 1172
+      Width = 972
       Height = 24
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 1172
       object chkSelected: TCheckBox
-        Left = 555
+        Left = 453
         Top = 2
         Width = 67
         Height = 17
@@ -106,13 +109,14 @@ object fmViewer: TfmViewer
     object pnlButtons: TPanel
       Left = 0
       Top = 93
-      Width = 1178
+      Width = 978
       Height = 32
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitWidth = 1178
       object btnPrev: TSpeedButton
-        Left = 507
+        Left = 405
         Top = 1
         Width = 75
         Height = 25
@@ -122,7 +126,7 @@ object fmViewer: TfmViewer
         OnClick = btnPrevClick
       end
       object btnNext: TSpeedButton
-        Left = 596
+        Left = 494
         Top = 1
         Width = 75
         Height = 25
@@ -137,7 +141,7 @@ object fmViewer: TfmViewer
     AlignWithMargins = True
     Left = 3
     Top = 689
-    Width = 1178
+    Width = 978
     Height = 19
     Panels = <
       item
@@ -152,6 +156,7 @@ object fmViewer: TfmViewer
         Text = 'Esc  Exit'
         Width = 100
       end>
+    ExplicitWidth = 1178
   end
   object svgBtnList: TSVGIconImageList
     Size = 15
@@ -176,7 +181,7 @@ object fmViewer: TfmViewer
         FixedColor = clLightgray
       end>
     Scaled = True
-    Left = 971
-    Top = 435
+    Left = 478
+    Top = 499
   end
 end

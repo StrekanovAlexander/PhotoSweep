@@ -9,6 +9,7 @@ uses
   Vcl.Buttons, Vcl.ComCtrls,
   System.IOUtils,
   System.Types,
+  uAppEnums,
   uListViewController, uSelectionController, uFilterController,
   uDuplicatesController, uFileController,
   uItem, uLogger,
@@ -23,8 +24,6 @@ uses
 ;
 
 type
-  TAppMode = (amSort, amDuplicates);
-
   TfmMain = class(TForm)
     pnlTop: TPanel;
     pnlTopLogo: TPanel;
@@ -35,39 +34,57 @@ type
     imlThumbnails: TImageList;
     bvlTop: TBevel;
     btnAbout: TBitBtn;
+    pnlContainer: TPanel;
+    pnlActions: TPanel;
+    pnlMain: TPanel;
     pnlSource: TPanel;
     btnSource: TBitBtn;
-    lblSourceFolder: TLabel;
-    pnlBottom: TPanel;
-    pnlButtons: TPanel;
-    btnMove: TBitBtn;
-    btnCopy: TBitBtn;
-    btnDuplicates: TBitBtn;
-    pnlTarget: TPanel;
-    lblTargetFolder: TLabel;
-    btnTarget: TBitBtn;
-    pnlTools2: TPanel;
-    bvlTools: TBevel;
+    btnDeselectAll: TBitBtn;
+    btnSelectAll: TBitBtn;
+    pnlFiles: TPanel;
+    pnlFilters: TPanel;
     lvwItems: TListView;
-    pnlSelectBtns: TPanel;
-    Panel2: TPanel;
-    Panel3: TPanel;
+    pnlFiltersHeader: TPanel;
+    lblFilters: TLabel;
+    pnlFileTypes: TPanel;
+    lblFileType: TLabel;
     chkJpg: TCheckBox;
     chkPng: TCheckBox;
     chkGif: TCheckBox;
+    pnlOrientation: TPanel;
+    lblOrientation: TLabel;
     chkLandscape: TCheckBox;
     chkPortrait: TCheckBox;
     chkSquare: TCheckBox;
+    pnlFiltersOther: TPanel;
+    lblFiltersOther: TLabel;
     chkHasExif: TCheckBox;
+    edSourceFolder: TEdit;
+    pnlActionsHeader: TPanel;
+    lblActionsHeader: TLabel;
+    pnlAnalyse: TPanel;
+    lblAnalyse: TLabel;
+    btnDuplicates: TBitBtn;
     btnViewer: TBitBtn;
-    btnSelectAll: TBitBtn;
-    btnDeselectAll: TBitBtn;
+    pnlOperations: TPanel;
+    lblOperations: TLabel;
+    rbMove: TRadioButton;
+    rbCopy: TRadioButton;
+    lblTarget: TLabel;
+    pnlTarget: TPanel;
+    edTargetFolder: TEdit;
+    btnTarget: TBitBtn;
+    btnExecute: TBitBtn;
+    pnlReports: TPanel;
+    lblReports: TLabel;
     btnLog: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnSourceClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnLogClick(Sender: TObject);
+    procedure rbMoveClick(Sender: TObject);
+    procedure btnExecuteClick(Sender: TObject);
   private
     FDuplicatesController: TDuplicatesController;
     FListViewController: TListViewController;
@@ -80,6 +97,8 @@ type
 
     FSourceFolder: string;
     FTargetFolder: string;
+
+    FActionMode: TActionMode;
 
     procedure LoadData;
   public
@@ -122,20 +141,21 @@ begin
     btnDuplicates
   );
 
+
   FSourceFolder := 'C:\source4';
   FTargetFolder := 'C:\target4';
 
-  lblSourceFolder.Caption := FSourceFolder;
-  lblTargetFolder.Caption := FTargetFolder;
+  edSourceFolder.Text := FSourceFolder;
+  edTargetFolder.Text := FTargetFolder;
 
   FFileController := TFileController.Create(
     FItemsManager,
     FListViewController,
     FSourceFolder,
-    FTargetFolder,
-    btnMove,
-    btnCopy
+    FTargetFolder
   );
+
+  FActionMode := mdMove;
 end;
 
 procedure TfmMain.FormDestroy(Sender: TObject);
@@ -152,6 +172,11 @@ end;
 procedure TfmMain.FormShow(Sender: TObject);
 begin
   LoadData;
+end;
+
+procedure TfmMain.btnExecuteClick(Sender: TObject);
+begin
+  FFileController.Execute(FActionMode);
 end;
 
 procedure TfmMain.btnLogClick(Sender: TObject);
@@ -180,7 +205,6 @@ begin
   Files := ReadFolder(FSourceFolder);
   Logger.Add('123');
 
-  pnlBottom.Enabled := True;
 
   TFileScanThread.Create(Files, FReader,
     procedure(Meta: TFileMetadata)
@@ -192,6 +216,11 @@ begin
       FListViewController.Build(FItemsManager);
     end
   );
+end;
+
+procedure TfmMain.rbMoveClick(Sender: TObject);
+begin
+  FActionMode := TActionMode((Sender as TRadioButton).Tag);
 end;
 
 end.

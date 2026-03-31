@@ -1,11 +1,12 @@
 program PhotoSweep;
 
 uses
+  Winapi.Windows,
+  System.SysUtils,
   Vcl.Forms,
   uMain in 'src\uMain.pas' {fmMain},
   Vcl.Themes,
   Vcl.Styles,
-  uAppTypes in 'src\Model\uAppTypes.pas',
   uItem in 'src\Core\uItem.pas',
   CCR.Exif in 'libs\CCRExif\CCR.Exif.pas',
   CCR.Exif.BaseUtils in 'libs\CCRExif\CCR.Exif.BaseUtils.pas',
@@ -36,11 +37,18 @@ uses
   uDuplicates in 'src\uDuplicates.pas' {fmDuplicates},
   uLogger in 'src\Core\uLogger.pas',
   uLog in 'src\uLog.pas' {fmLog},
-  uFileController in 'src\Controllers\uFileController.pas';
+  uFileController in 'src\Controllers\uFileController.pas',
+  uAppEnums in 'src\Model\uAppEnums.pas';
+
+var
+  hMutex: THandle;
 
 {$R *.res}
 
 begin
+  hMutex := CreateMutex(nil, True, 'MyUniqueAppNameMutex');
+  if (hMutex = 0) or (GetLastError = ERROR_ALREADY_EXISTS) then
+    Exit;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Carbon');

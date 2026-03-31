@@ -15,7 +15,9 @@ object fmMain: TfmMain
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Padding.Left = 7
   Position = poScreenCenter
+  WindowState = wsMaximized
   StyleName = 'Carbon'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -23,16 +25,18 @@ object fmMain: TfmMain
   TextHeight = 15
   object bvlTop: TBevel
     AlignWithMargins = True
-    Left = 3
+    Left = 10
     Top = 63
-    Width = 978
+    Width = 971
     Height = 1
     Align = alTop
+    ExplicitLeft = 3
+    ExplicitWidth = 978
   end
   object pnlTop: TPanel
-    Left = 0
+    Left = 7
     Top = 0
-    Width = 984
+    Width = 977
     Height = 60
     Align = alTop
     BevelOuter = bvNone
@@ -96,25 +100,25 @@ object fmMain: TfmMain
     end
     object btnAbout: TBitBtn
       AlignWithMargins = True
-      Left = 879
+      Left = 935
       Top = 16
-      Width = 90
+      Width = 27
       Height = 27
       Margins.Top = 8
       Margins.Bottom = 9
       Align = alRight
-      Caption = 'About'
-      ImageIndex = 4
-      ImageName = 'about'
+      ImageIndex = 9
+      ImageName = 'info'
       Images = svgBtnList
       TabOrder = 1
+      TabStop = False
     end
   end
   object stbMain: TStatusBar
     AlignWithMargins = True
-    Left = 3
+    Left = 10
     Top = 589
-    Width = 978
+    Width = 971
     Height = 19
     Panels = <
       item
@@ -126,388 +130,630 @@ object fmMain: TfmMain
         Width = 100
       end>
   end
-  object pnlSource: TPanel
-    AlignWithMargins = True
-    Left = 3
-    Top = 70
-    Width = 978
-    Height = 33
-    Align = alTop
+  object pnlContainer: TPanel
+    Left = 7
+    Top = 67
+    Width = 977
+    Height = 519
+    Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    object lblSourceFolder: TLabel
+    object pnlActions: TPanel
       AlignWithMargins = True
-      Left = 104
-      Top = 8
-      Width = 148
-      Height = 22
-      Margins.Top = 8
-      Align = alLeft
-      Caption = 'Select a source folder path...'
-      ExplicitHeight = 15
-    end
-    object btnSource: TBitBtn
-      AlignWithMargins = True
-      Left = 3
+      Left = 754
       Top = 3
-      Width = 95
-      Height = 27
-      Align = alLeft
-      Caption = 'Source'
-      Default = True
-      ImageIndex = 0
-      ImageName = 'folder-open'
-      Images = svgBtnList
-      TabOrder = 0
-      OnClick = btnSourceClick
-    end
-  end
-  object pnlBottom: TPanel
-    AlignWithMargins = True
-    Left = 3
-    Top = 441
-    Width = 978
-    Height = 142
-    Align = alBottom
-    BevelOuter = bvNone
-    Enabled = False
-    TabOrder = 3
-    object bvlTools: TBevel
-      AlignWithMargins = True
-      Left = 3
-      Top = 39
-      Width = 972
-      Height = 1
-      Align = alTop
-      ExplicitLeft = 1
-      ExplicitTop = 34
-      ExplicitWidth = 976
-    end
-    object pnlButtons: TPanel
-      AlignWithMargins = True
-      Left = 0
-      Top = 0
-      Width = 978
-      Height = 33
-      Margins.Left = 0
-      Margins.Top = 0
-      Margins.Right = 0
-      Align = alTop
+      Width = 220
+      Height = 513
+      Align = alRight
       BevelOuter = bvNone
+      Padding.Top = 2
       TabOrder = 0
-      object btnMove: TBitBtn
+      object pnlActionsHeader: TPanel
         AlignWithMargins = True
         Left = 3
-        Top = 4
-        Width = 95
-        Height = 27
-        Margins.Top = 4
-        Margins.Bottom = 2
-        Align = alLeft
-        Caption = 'Move'
-        ImageIndex = 1
-        ImageName = 'move'
-        Images = svgBtnList
+        Top = 5
+        Width = 214
+        Height = 35
+        Margins.Bottom = 0
+        Align = alTop
+        Alignment = taLeftJustify
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        Padding.Left = 7
+        Padding.Top = 5
+        Padding.Right = 5
+        ParentFont = False
         TabOrder = 0
+        object lblActionsHeader: TLabel
+          AlignWithMargins = True
+          Left = 11
+          Top = 9
+          Width = 41
+          Height = 22
+          Align = alLeft
+          Caption = 'Actions'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -12
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ExplicitHeight = 15
+        end
       end
-      object btnCopy: TBitBtn
+      object pnlAnalyse: TPanel
         AlignWithMargins = True
-        Left = 104
-        Top = 4
-        Width = 95
-        Height = 27
-        Margins.Top = 4
-        Margins.Bottom = 2
-        Align = alLeft
-        Caption = 'Copy'
-        ImageIndex = 2
-        ImageName = 'copy'
-        Images = svgBtnList
+        Left = 3
+        Top = 40
+        Width = 214
+        Height = 120
+        Margins.Top = 0
+        Margins.Bottom = 0
+        Align = alTop
+        Padding.Left = 7
+        Padding.Top = 3
+        Padding.Right = 7
+        Padding.Bottom = 3
         TabOrder = 1
+        object lblAnalyse: TLabel
+          AlignWithMargins = True
+          Left = 11
+          Top = 7
+          Width = 192
+          Height = 15
+          Margins.Bottom = 5
+          Align = alTop
+          Caption = 'Analyse'
+          ExplicitWidth = 41
+        end
+        object btnDuplicates: TBitBtn
+          AlignWithMargins = True
+          Left = 11
+          Top = 31
+          Width = 192
+          Height = 35
+          Margins.Top = 4
+          Margins.Bottom = 2
+          Align = alTop
+          Caption = 'Find Duplicates'
+          ImageIndex = 3
+          ImageName = 'duplicates'
+          Images = svgBtnList
+          TabOrder = 0
+        end
+        object btnViewer: TBitBtn
+          AlignWithMargins = True
+          Left = 11
+          Top = 72
+          Width = 192
+          Height = 35
+          Margins.Top = 4
+          Margins.Bottom = 2
+          Align = alTop
+          Caption = 'Viewer Mode'
+          ImageIndex = 5
+          ImageName = 'preview'
+          Images = svgBtnList
+          TabOrder = 1
+          ExplicitTop = 67
+        end
       end
-      object btnDuplicates: TBitBtn
+      object pnlOperations: TPanel
         AlignWithMargins = True
-        Left = 301
-        Top = 4
-        Width = 95
-        Height = 27
-        Margins.Top = 4
-        Margins.Bottom = 2
-        Align = alLeft
-        Caption = 'Duplicates'
-        ImageIndex = 3
-        ImageName = 'duplicates'
-        Images = svgBtnList
-        TabOrder = 3
-      end
-      object btnViewer: TBitBtn
-        AlignWithMargins = True
-        Left = 205
-        Top = 4
-        Width = 90
-        Height = 27
-        Margins.Top = 4
-        Margins.Bottom = 2
-        Align = alLeft
-        Caption = 'Viewer'
-        ImageIndex = 5
-        ImageName = 'preview'
-        Images = svgBtnList
+        Left = 3
+        Top = 160
+        Width = 214
+        Height = 180
+        Margins.Top = 0
+        Margins.Bottom = 0
+        Align = alTop
+        Padding.Left = 7
+        Padding.Top = 3
+        Padding.Right = 7
+        Padding.Bottom = 3
         TabOrder = 2
+        ExplicitTop = 150
+        object lblOperations: TLabel
+          AlignWithMargins = True
+          Left = 11
+          Top = 7
+          Width = 192
+          Height = 15
+          Margins.Bottom = 5
+          Align = alTop
+          Caption = 'Operations'
+          ExplicitWidth = 58
+        end
+        object lblTarget: TLabel
+          AlignWithMargins = True
+          Left = 11
+          Top = 76
+          Width = 192
+          Height = 15
+          Align = alTop
+          Caption = 'Target'
+          ExplicitWidth = 32
+        end
+        object rbMove: TRadioButton
+          AlignWithMargins = True
+          Left = 11
+          Top = 30
+          Width = 192
+          Height = 17
+          Align = alTop
+          Caption = 'Move'
+          Checked = True
+          TabOrder = 0
+          TabStop = True
+          OnClick = rbMoveClick
+        end
+        object rbCopy: TRadioButton
+          Tag = 1
+          AlignWithMargins = True
+          Left = 11
+          Top = 53
+          Width = 192
+          Height = 17
+          Align = alTop
+          Caption = 'Copy'
+          TabOrder = 1
+          OnClick = rbMoveClick
+        end
+        object pnlTarget: TPanel
+          AlignWithMargins = True
+          Left = 11
+          Top = 97
+          Width = 192
+          Height = 27
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'pnlTarget'
+          TabOrder = 2
+          object edTargetFolder: TEdit
+            Left = 0
+            Top = 0
+            Width = 157
+            Height = 27
+            Align = alClient
+            ReadOnly = True
+            TabOrder = 0
+            Text = 'Select a target folder path...'
+            ExplicitHeight = 23
+          end
+          object btnTarget: TBitBtn
+            Left = 157
+            Top = 0
+            Width = 35
+            Height = 27
+            Align = alRight
+            ImageIndex = 0
+            ImageName = 'folder-open'
+            Images = svgBtnList
+            TabOrder = 1
+          end
+        end
+        object btnExecute: TBitBtn
+          AlignWithMargins = True
+          Left = 11
+          Top = 132
+          Width = 192
+          Height = 35
+          Margins.Top = 5
+          Align = alTop
+          Caption = 'Execute'
+          ImageIndex = 10
+          ImageName = 'sync'
+          Images = svgBtnList
+          TabOrder = 3
+          StyleName = 'Carbon'
+          OnClick = btnExecuteClick
+          ExplicitTop = 130
+        end
       end
-      object btnLog: TBitBtn
+      object pnlReports: TPanel
         AlignWithMargins = True
-        Left = 880
-        Top = 3
-        Width = 95
-        Height = 27
-        Align = alRight
-        Caption = 'Log'
-        ImageIndex = 8
-        ImageName = 'description'
-        Images = svgBtnList
-        TabOrder = 4
-        OnClick = btnLogClick
+        Left = 3
+        Top = 340
+        Width = 214
+        Height = 80
+        Margins.Top = 0
+        Margins.Bottom = 0
+        Align = alTop
+        Padding.Left = 7
+        Padding.Top = 3
+        Padding.Right = 7
+        Padding.Bottom = 3
+        TabOrder = 3
+        object lblReports: TLabel
+          AlignWithMargins = True
+          Left = 11
+          Top = 7
+          Width = 192
+          Height = 15
+          Margins.Bottom = 5
+          Align = alTop
+          Caption = 'Reports'
+          ExplicitWidth = 40
+        end
+        object btnLog: TBitBtn
+          AlignWithMargins = True
+          Left = 11
+          Top = 30
+          Width = 192
+          Height = 35
+          Align = alTop
+          Caption = 'Events Log'
+          ImageIndex = 8
+          ImageName = 'description'
+          Images = svgBtnList
+          TabOrder = 0
+          OnClick = btnLogClick
+          ExplicitWidth = 199
+        end
       end
     end
-    object pnlTools2: TPanel
+    object pnlMain: TPanel
       Left = 0
-      Top = 43
-      Width = 978
-      Height = 99
+      Top = 0
+      Width = 751
+      Height = 519
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      object pnlSelectBtns: TPanel
-        Left = 0
-        Top = 0
-        Width = 978
+      object pnlSource: TPanel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 745
         Height = 33
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object btnSelectAll: TBitBtn
+        object btnSource: TBitBtn
           AlignWithMargins = True
           Left = 3
-          Top = 4
-          Width = 95
+          Top = 3
+          Width = 80
           Height = 27
-          Margins.Top = 4
-          Margins.Bottom = 2
           Align = alLeft
-          Caption = 'Select All'
-          ImageIndex = 6
-          ImageName = 'checkbox'
+          Caption = 'Source'
+          Default = True
+          ImageIndex = 0
+          ImageName = 'folder-open'
           Images = svgBtnList
           TabOrder = 0
+          OnClick = btnSourceClick
         end
         object btnDeselectAll: TBitBtn
           AlignWithMargins = True
-          Left = 104
+          Left = 647
           Top = 4
           Width = 95
           Height = 27
           Margins.Top = 4
           Margins.Bottom = 2
-          Align = alLeft
+          Align = alRight
           Caption = 'Deselect All'
           ImageIndex = 7
           ImageName = 'checkbox-blank'
           Images = svgBtnList
           TabOrder = 1
         end
+        object btnSelectAll: TBitBtn
+          AlignWithMargins = True
+          Left = 546
+          Top = 4
+          Width = 95
+          Height = 27
+          Margins.Top = 4
+          Margins.Bottom = 2
+          Align = alRight
+          Caption = 'Select All'
+          ImageIndex = 6
+          ImageName = 'checkbox'
+          Images = svgBtnList
+          TabOrder = 2
+        end
+        object edSourceFolder: TEdit
+          AlignWithMargins = True
+          Left = 89
+          Top = 3
+          Width = 451
+          Height = 27
+          Align = alClient
+          AutoSelect = False
+          ReadOnly = True
+          TabOrder = 3
+          Text = 'Select a source folder path...'
+          ExplicitHeight = 23
+        end
       end
-      object Panel2: TPanel
+      object pnlFiles: TPanel
         Left = 0
-        Top = 33
-        Width = 978
-        Height = 33
-        Align = alTop
+        Top = 39
+        Width = 751
+        Height = 480
+        Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        object chkJpg: TCheckBox
+        object pnlFilters: TPanel
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 97
-          Height = 27
-          Hint = '.jpg'
+          Width = 220
+          Height = 474
           Align = alLeft
-          Caption = 'JPG'
+          BevelOuter = bvNone
           TabOrder = 0
+          object pnlFiltersHeader: TPanel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 214
+            Height = 35
+            Margins.Bottom = 0
+            Align = alTop
+            Alignment = taLeftJustify
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -12
+            Font.Name = 'Segoe UI'
+            Font.Style = []
+            Padding.Left = 7
+            Padding.Top = 5
+            Padding.Right = 5
+            ParentFont = False
+            TabOrder = 0
+            object lblFilters: TLabel
+              AlignWithMargins = True
+              Left = 11
+              Top = 9
+              Width = 34
+              Height = 22
+              Align = alLeft
+              Caption = 'Filters'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -12
+              Font.Name = 'Segoe UI'
+              Font.Style = [fsBold]
+              ParentFont = False
+              ExplicitHeight = 15
+            end
+          end
+          object pnlFileTypes: TPanel
+            AlignWithMargins = True
+            Left = 3
+            Top = 38
+            Width = 214
+            Height = 115
+            Margins.Top = 0
+            Margins.Bottom = 0
+            Align = alTop
+            Padding.Left = 7
+            Padding.Top = 3
+            Padding.Bottom = 3
+            TabOrder = 1
+            object lblFileType: TLabel
+              AlignWithMargins = True
+              Left = 11
+              Top = 7
+              Width = 199
+              Height = 15
+              Margins.Bottom = 5
+              Align = alTop
+              Caption = 'File Type'
+              ExplicitWidth = 45
+            end
+            object chkJpg: TCheckBox
+              AlignWithMargins = True
+              Left = 11
+              Top = 28
+              Width = 199
+              Height = 24
+              Hint = '.jpg'
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Align = alTop
+              Caption = 'JPG'
+              TabOrder = 0
+            end
+            object chkPng: TCheckBox
+              AlignWithMargins = True
+              Left = 11
+              Top = 54
+              Width = 199
+              Height = 24
+              Hint = '.png'
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Align = alTop
+              Caption = 'PNG'
+              TabOrder = 1
+            end
+            object chkGif: TCheckBox
+              AlignWithMargins = True
+              Left = 11
+              Top = 80
+              Width = 199
+              Height = 24
+              Hint = '.gif'
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Align = alTop
+              Caption = 'GIF'
+              TabOrder = 2
+            end
+          end
+          object pnlOrientation: TPanel
+            AlignWithMargins = True
+            Left = 3
+            Top = 153
+            Width = 214
+            Height = 115
+            Margins.Top = 0
+            Margins.Bottom = 0
+            Align = alTop
+            Padding.Left = 7
+            Padding.Top = 3
+            Padding.Bottom = 3
+            TabOrder = 2
+            object lblOrientation: TLabel
+              AlignWithMargins = True
+              Left = 11
+              Top = 7
+              Width = 199
+              Height = 15
+              Margins.Bottom = 5
+              Align = alTop
+              Caption = 'Orientation'
+              ExplicitWidth = 60
+            end
+            object chkLandscape: TCheckBox
+              AlignWithMargins = True
+              Left = 11
+              Top = 28
+              Width = 199
+              Height = 24
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Align = alTop
+              Caption = 'Landscape'
+              TabOrder = 0
+            end
+            object chkPortrait: TCheckBox
+              Tag = 1
+              AlignWithMargins = True
+              Left = 11
+              Top = 54
+              Width = 199
+              Height = 24
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Align = alTop
+              Caption = 'Portrait'
+              TabOrder = 1
+            end
+            object chkSquare: TCheckBox
+              Tag = 2
+              AlignWithMargins = True
+              Left = 11
+              Top = 80
+              Width = 199
+              Height = 24
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Align = alTop
+              Caption = 'Square'
+              TabOrder = 2
+            end
+          end
+          object pnlFiltersOther: TPanel
+            AlignWithMargins = True
+            Left = 3
+            Top = 268
+            Width = 214
+            Height = 65
+            Margins.Top = 0
+            Margins.Bottom = 0
+            Align = alTop
+            Padding.Left = 7
+            Padding.Top = 3
+            Padding.Bottom = 3
+            TabOrder = 3
+            object lblFiltersOther: TLabel
+              AlignWithMargins = True
+              Left = 11
+              Top = 7
+              Width = 199
+              Height = 15
+              Margins.Bottom = 5
+              Align = alTop
+              Caption = 'Other'
+              ExplicitWidth = 30
+            end
+            object chkHasExif: TCheckBox
+              AlignWithMargins = True
+              Left = 11
+              Top = 28
+              Width = 199
+              Height = 24
+              Margins.Top = 1
+              Margins.Bottom = 1
+              Align = alTop
+              Caption = 'Has EXIF'
+              TabOrder = 0
+            end
+          end
         end
-        object chkPng: TCheckBox
+        object lvwItems: TListView
           AlignWithMargins = True
-          Left = 106
-          Top = 3
-          Width = 97
-          Height = 27
-          Hint = '.png'
-          Align = alLeft
-          Caption = 'PNG'
+          Left = 232
+          Top = 5
+          Width = 513
+          Height = 472
+          Margins.Left = 6
+          Margins.Top = 5
+          Margins.Right = 6
+          Align = alClient
+          Checkboxes = True
+          Columns = <
+            item
+              Caption = 'File Name'
+              Width = 250
+            end
+            item
+              Caption = 'Date Taken'
+              Width = 150
+            end
+            item
+              Caption = 'Camera'
+              Width = 200
+            end
+            item
+              Alignment = taCenter
+              Caption = 'Resolution'
+              Width = 100
+            end
+            item
+              Alignment = taCenter
+              Caption = 'MP'
+              Width = 100
+            end
+            item
+              Alignment = taRightJustify
+              Caption = 'Size'
+              Width = 100
+            end
+            item
+              Alignment = taCenter
+              Caption = 'Extension'
+              Width = 100
+            end
+            item
+              Caption = 'Orientation'
+              Width = 100
+            end
+            item
+              AutoSize = True
+              Caption = 'Has EXIF'
+              WidthType = (
+                -591)
+            end>
+          DoubleBuffered = True
+          FlatScrollBars = True
+          ReadOnly = True
+          RowSelect = True
+          ParentDoubleBuffered = False
+          SmallImages = imlThumbnails
           TabOrder = 1
-        end
-        object chkGif: TCheckBox
-          AlignWithMargins = True
-          Left = 209
-          Top = 3
-          Width = 97
-          Height = 27
-          Hint = '.gif'
-          Align = alLeft
-          Caption = 'GIF'
-          TabOrder = 2
-        end
-        object chkHasExif: TCheckBox
-          AlignWithMargins = True
-          Left = 312
-          Top = 3
-          Width = 97
-          Height = 27
-          Align = alLeft
-          Caption = 'Has EXIF'
-          TabOrder = 3
-        end
-      end
-      object Panel3: TPanel
-        Left = 0
-        Top = 66
-        Width = 978
-        Height = 32
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 2
-        object chkLandscape: TCheckBox
-          AlignWithMargins = True
-          Left = 3
-          Top = 3
-          Width = 97
-          Height = 26
-          Align = alLeft
-          Caption = 'Landscape'
-          TabOrder = 0
-        end
-        object chkPortrait: TCheckBox
-          Tag = 1
-          AlignWithMargins = True
-          Left = 106
-          Top = 3
-          Width = 97
-          Height = 26
-          Align = alLeft
-          Caption = 'Portrait'
-          TabOrder = 1
-        end
-        object chkSquare: TCheckBox
-          Tag = 2
-          AlignWithMargins = True
-          Left = 209
-          Top = 3
-          Width = 97
-          Height = 26
-          Align = alLeft
-          Caption = 'Square'
-          TabOrder = 2
+          ViewStyle = vsReport
         end
       end
     end
-  end
-  object pnlTarget: TPanel
-    AlignWithMargins = True
-    Left = 3
-    Top = 405
-    Width = 978
-    Height = 33
-    Margins.Bottom = 0
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 4
-    object lblTargetFolder: TLabel
-      AlignWithMargins = True
-      Left = 104
-      Top = 8
-      Width = 144
-      Height = 22
-      Margins.Top = 8
-      Align = alLeft
-      Caption = 'Select a target folder path...'
-      ExplicitHeight = 15
-    end
-    object btnTarget: TBitBtn
-      AlignWithMargins = True
-      Left = 3
-      Top = 3
-      Width = 95
-      Height = 27
-      Align = alLeft
-      Caption = 'Target'
-      ImageIndex = 0
-      ImageName = 'folder-open'
-      Images = svgBtnList
-      TabOrder = 0
-    end
-  end
-  object lvwItems: TListView
-    AlignWithMargins = True
-    Left = 6
-    Top = 109
-    Width = 972
-    Height = 290
-    Margins.Left = 6
-    Margins.Right = 6
-    Align = alClient
-    Checkboxes = True
-    Columns = <
-      item
-        Caption = 'File Name'
-        Width = 250
-      end
-      item
-        Caption = 'Date Taken'
-        Width = 150
-      end
-      item
-        Caption = 'Camera'
-        Width = 200
-      end
-      item
-        Alignment = taCenter
-        Caption = 'Resolution'
-        Width = 100
-      end
-      item
-        Alignment = taCenter
-        Caption = 'MP'
-        Width = 100
-      end
-      item
-        Alignment = taRightJustify
-        Caption = 'Size'
-        Width = 100
-      end
-      item
-        Alignment = taCenter
-        Caption = 'Extension'
-        Width = 100
-      end
-      item
-        Caption = 'Orientation'
-        Width = 100
-      end
-      item
-        AutoSize = True
-        Caption = 'Has EXIF'
-        WidthType = (
-          -132)
-      end>
-    DoubleBuffered = True
-    FlatScrollBars = True
-    ReadOnly = True
-    RowSelect = True
-    ParentDoubleBuffered = False
-    SmallImages = imlThumbnails
-    TabOrder = 5
-    ViewStyle = vsReport
   end
   object svgBtnList: TSVGIconImageList
     SVGIconItems = <
@@ -612,15 +858,36 @@ object fmMain: TfmMain
           '-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5' +
           'h5v11z"/></svg>'
         FixedColor = clLightgray
+      end
+      item
+        IconName = 'info'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
+          ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
+          'fill="none"/><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.4' +
+          '8 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-' +
+          '3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>'
+        FixedColor = clLightgray
+      end
+      item
+        IconName = 'sync'
+        SVGText = 
+          '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0' +
+          ' 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#' +
+          '1f1f1f"><g><rect fill="none" height="24" width="24" x="0"/></g><' +
+          'g><g><polygon points="7.41,13.41 6,12 2,16 6,20 7.41,18.59 5.83,' +
+          '17 21,17 21,15 5.83,15"/><polygon points="16.59,10.59 18,12 22,8' +
+          ' 18,4 16.59,5.41 18.17,7 3,7 3,9 18.17,9"/></g></g></svg>'
+        FixedColor = clLightgray
       end>
     Scaled = True
-    Left = 928
-    Top = 496
+    Left = 680
+    Top = 384
   end
   object imlThumbnails: TImageList
     Height = 48
     Width = 48
-    Left = 53
-    Top = 167
+    Left = 277
+    Top = 289
   end
 end

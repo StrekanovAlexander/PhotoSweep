@@ -132,9 +132,7 @@
         </DelphiCompile>
         <DCCReference Include="src\uMain.pas">
             <Form>fmMain</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="src\Model\uAppTypes.pas"/>
         <DCCReference Include="src\Core\uItem.pas"/>
         <DCCReference Include="libs\CCRExif\CCR.Exif.pas"/>
         <DCCReference Include="libs\CCRExif\CCR.Exif.BaseUtils.pas"/>
@@ -162,19 +160,17 @@
         <DCCReference Include="src\Core\uExtensionFilter.pas"/>
         <DCCReference Include="src\uViewer.pas">
             <Form>fmViewer</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\Controllers\uDuplicatesController.pas"/>
         <DCCReference Include="src\uDuplicates.pas">
             <Form>fmDuplicates</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\Core\uLogger.pas"/>
         <DCCReference Include="src\uLog.pas">
             <Form>fmLog</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\Controllers\uFileController.pas"/>
+        <DCCReference Include="src\Model\uAppEnums.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

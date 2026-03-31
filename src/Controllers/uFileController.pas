@@ -5,6 +5,7 @@ interface
 uses
   System.IOUtils, System.SysUtils, System.Generics.Collections,
   Vcl.Dialogs, Vcl.Buttons,
+  uAppEnums,
   uItem,
   uItemsManager,
   uLogger,
@@ -16,21 +17,17 @@ type TFileController = class
     FListViewController: TListViewController;
     FSourceFolder: string;
     FTargetFolder: string;
-    FMoveBtn: TBitBtn;
-    FCopyBtn: TBitBtn;
-
-    procedure MoveBtnClick(Sender: TObject);
-    procedure CopyBtnClick(Sender: TObject);
+    procedure Move;
+    procedure Copy;
   public
     constructor Create(
       AItemsManager: TItemsManager;
       AListViewController: TListViewController;
       ASourceFolder: string;
-      ATargetFolder: string;
-      AMoveBtn: TBitBtn;
-      ACopyBtn: TBitBtn
+      ATargetFolder: string
     );
 
+    procedure Execute(ActionMode: TActionMode);
 end;
 
 implementation
@@ -39,78 +36,24 @@ constructor TFileController.Create(
   AItemsManager: TItemsManager;
   AListViewController: TListViewController;
   ASourceFolder: string;
-  ATargetFolder: string;
-  AMoveBtn: TBitBtn;
-  ACopyBtn: TBitBtn
+  ATargetFolder: string
 );
 begin
   FItemsManager := AItemsManager;
   FListViewController := AListViewController;
   FSourceFolder := ASourceFolder;
   FTargetFolder := ATargetFolder;
-
-  FMoveBtn := AMoveBtn;
-  FCopyBtn := ACopyBtn;
-  FMoveBtn.OnClick := MoveBtnClick;
-  FCopyBtn.OnClick := CopyBtnClick;
 end;
 
-
-
-{
-procedure TFileController.MoveBtnClick(Sender: TObject);
-var
-  Item: TItem;
-  SourcePath, TargetPath, TempPath: string;
-  MovedCount: Integer;
+procedure TFileController.Execute(ActionMode: TActionMode);
 begin
-  if FItemsManager.GetSelectedItemsCount = 0 then
-  begin
-    ShowMessage('No files selected.');
-    Exit;
+  case ActionMode of
+    mdMove: Move;
+    mdCopy: Copy;
   end;
-  MovedCount := 0;
-  for var i := FItemsManager.Count - 1 downto 0 do
-  begin
-    Item := FItemsManager.GetItem(i);
-    if Item.IsSelected then
-    begin
-      SourcePath := Item.FilePath;
-      TargetPath := TPath.Combine(FTargetFolder, Item.FileName);
-      TempPath := TargetPath + '.part';
-      try
-        TFile.Copy(SourcePath, TempPath, True);
-        if not FileExists(TempPath) then
-        begin
-          Logger.Add(Format('ERROR: Failed to copy %s to temp %s', [SourcePath, TempPath]));
-          Continue;
-        end;
-        if FileExists(TargetPath) then
-          TFile.Delete(TargetPath);
-        TFile.Move(TempPath, TargetPath);
-        TFile.Delete(SourcePath);
-
-        FItemsManager.RemoveItem(Item);
-
-        Inc(MovedCount);
-        Logger.Add(Format('Moved: %s -> %s', [SourcePath, TargetPath]));
-      except
-        on E: Exception do
-        begin
-          Logger.Add(Format('ERROR: Failed to move %s. Exception: %s', [SourcePath, E.Message]));
-          if FileExists(TempPath) then
-            TFile.Delete(TempPath);
-        end;
-      end;
-    end;
-  end;
-  FListViewController.Refresh(FItemsManager);
-  ShowMessage(Format('%d file(s) moved successfully.', [MovedCount]));
 end;
 
-}
-
-procedure TFileController.MoveBtnClick(Sender: TObject);
+procedure TFileController.Move;
 var
   Item: TItem;
   SourcePath, TargetPath, TempPath: string;
@@ -165,7 +108,7 @@ begin
   ShowMessage(Format('%d file(s) moved successfully.', [MovedCount]));
 end;
 
-procedure TFileController.CopyBtnClick(Sender: TObject);
+procedure TFileController.Copy;
 var
   Item: TItem;
   SourcePath, TargetPath: string;
@@ -201,5 +144,6 @@ begin
   end;
   ShowMessage(Format('%d file(s) copied successfully.', [CopiedCount]));
 end;
+
 
 end.
