@@ -130,6 +130,7 @@ begin
 
   FFileController := TFileController.Create(
     FItemsManager,
+    FListViewController,
     FSourceFolder,
     FTargetFolder,
     btnMove,
