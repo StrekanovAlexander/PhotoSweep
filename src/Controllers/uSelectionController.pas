@@ -45,11 +45,15 @@ end;
 
 procedure TSelectionController.SelectAll;
 begin
+  if FListView.Items.Count = 0 then
+    Exit;
   MarkItems(True);
 end;
 
 procedure TSelectionController.DeselectAll;
 begin
+  if FListView.Items.Count = 0 then
+    Exit;
   MarkItems(False);
 end;
 

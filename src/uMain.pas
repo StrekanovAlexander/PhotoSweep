@@ -33,7 +33,6 @@ type
     stbMain: TStatusBar;
     imlThumbnails: TImageList;
     bvlTop: TBevel;
-    btnAbout: TBitBtn;
     pnlContainer: TPanel;
     pnlActions: TPanel;
     pnlMain: TPanel;
@@ -78,13 +77,14 @@ type
     pnlReports: TPanel;
     lblReports: TLabel;
     btnLog: TBitBtn;
+    btnAbout: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnSourceClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnLogClick(Sender: TObject);
     procedure rbMoveClick(Sender: TObject);
     procedure btnExecuteClick(Sender: TObject);
+    procedure btnTargetClick(Sender: TObject);
   private
     FDuplicatesController: TDuplicatesController;
     FListViewController: TListViewController;
@@ -117,6 +117,7 @@ begin
   FListViewController := TListViewController.Create(
     lvwItems, stbMain, imlThumbnails, btnViewer
   );
+
   FSelectionController := TSelectionController.Create(
     btnSelectAll, btnDeselectAll, lvwItems, stbMain
   );
@@ -141,18 +142,9 @@ begin
     btnDuplicates
   );
 
-
-  FSourceFolder := 'C:\source4';
-  FTargetFolder := 'C:\target4';
-
-  edSourceFolder.Text := FSourceFolder;
-  edTargetFolder.Text := FTargetFolder;
-
   FFileController := TFileController.Create(
     FItemsManager,
-    FListViewController,
-    FSourceFolder,
-    FTargetFolder
+    FListViewController
   );
 
   FActionMode := mdMove;
@@ -169,14 +161,24 @@ begin
   FFileController.Free;
 end;
 
-procedure TfmMain.FormShow(Sender: TObject);
-begin
-  LoadData;
-end;
-
 procedure TfmMain.btnExecuteClick(Sender: TObject);
 begin
-  FFileController.Execute(FActionMode);
+  if FSourceFolder = '' then
+  begin
+    ShowMessage('Select source folder.');
+    Exit;
+  end;
+  if FTargetFolder = '' then
+  begin
+    ShowMessage('Select target folder.');
+    Exit;
+  end;
+  if FSourceFolder = FTargetFolder then
+  begin
+    ShowMessage('Source and target folders cannot be the same.');
+    Exit;
+  end;
+  FFileController.Execute(FActionMode, FTargetFolder);
 end;
 
 procedure TfmMain.btnLogClick(Sender: TObject);
@@ -191,8 +193,39 @@ begin
 end;
 
 procedure TfmMain.btnSourceClick(Sender: TObject);
+var OpenDialog: TFileOpenDialog;
 begin
+  OpenDialog := TFileOpenDialog.Create(Self);
+  try
+    OpenDialog.Title := 'Select source folder';
+    OpenDialog.Options := OpenDialog.Options + [fdoPickFolders];
+    if OpenDialog.Execute then
+    begin
+      FSourceFolder := OpenDialog.FileName;
+      edSourceFolder.Text := FSourceFolder;
+      pnlFilters.Enabled := FSourceFolder <> '';
+    end;
+  finally
+    OpenDialog.Free;
+  end;
   LoadData;
+end;
+
+procedure TfmMain.btnTargetClick(Sender: TObject);
+var OpenDialog: TFileOpenDialog;
+begin
+  OpenDialog := TFileOpenDialog.Create(Self);
+  try
+    OpenDialog.Title := 'Select target folder';
+    OpenDialog.Options := OpenDialog.Options + [fdoPickFolders];
+    if OpenDialog.Execute then
+    begin
+      FTargetFolder := OpenDialog.FileName;
+      edTargetFolder.Text := FTargetFolder;
+    end;
+  finally
+    OpenDialog.Free;
+  end;
 end;
 
 procedure TfmMain.LoadData;
@@ -201,11 +234,7 @@ var
 begin
   FListViewController.Clear;
   FItemsManager.Clear;
-
   Files := ReadFolder(FSourceFolder);
-  Logger.Add('123');
-
-
   TFileScanThread.Create(Files, FReader,
     procedure(Meta: TFileMetadata)
     begin

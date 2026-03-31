@@ -21,71 +21,88 @@ object fmMain: TfmMain
   StyleName = 'Carbon'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnShow = FormShow
   TextHeight = 15
   object bvlTop: TBevel
     AlignWithMargins = True
     Left = 10
-    Top = 63
+    Top = 58
     Width = 971
     Height = 1
     Align = alTop
     ExplicitLeft = 3
+    ExplicitTop = 63
     ExplicitWidth = 978
   end
   object pnlTop: TPanel
     Left = 7
     Top = 0
     Width = 977
-    Height = 60
+    Height = 55
     Align = alTop
     BevelOuter = bvNone
-    Padding.Left = 12
-    Padding.Top = 8
+    Padding.Left = 3
+    Padding.Top = 3
     Padding.Right = 12
-    Padding.Bottom = 8
+    Padding.Bottom = 3
     TabOrder = 0
+    object btnAbout: TSpeedButton
+      AlignWithMargins = True
+      Left = 935
+      Top = 14
+      Width = 27
+      Height = 27
+      Margins.Top = 11
+      Margins.Bottom = 11
+      Align = alRight
+      ImageIndex = 9
+      ImageName = 'info'
+      Images = svgBtnList
+      Flat = True
+      ExplicitLeft = 939
+      ExplicitTop = 6
+      ExplicitHeight = 43
+    end
     object pnlTopLogo: TPanel
-      Left = 12
-      Top = 8
-      Width = 109
-      Height = 44
+      AlignWithMargins = True
+      Left = 6
+      Top = 3
+      Width = 80
+      Height = 49
+      Margins.Top = 0
+      Margins.Bottom = 0
       Align = alLeft
       BevelOuter = bvNone
-      Padding.Left = 10
-      Padding.Right = 10
       ParentBackground = False
       TabOrder = 0
       object svgLogo: TSVGIconImage
         AlignWithMargins = True
-        Left = 10
-        Top = 4
-        Width = 83
-        Height = 24
+        Left = 0
+        Top = 0
+        Width = 74
+        Height = 30
         Margins.Left = 0
-        Margins.Top = 4
+        Margins.Top = 0
         Margins.Right = 6
         Margins.Bottom = 0
         AutoSize = False
         SVGText = 
           '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0' +
           ' 0 24 24" width="24px" fill="#1f1f1f"><path d="M0 0h24v24H0V0z" ' +
-          'fill="none"/><path d="M14.12 4l1.83 2H20v12H4V6h4.05l1.83-2h4.24' +
-          'M15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 ' +
-          '2-2V6c0-1.1-.9-2-2-2h-3.17L15 2zm-3 7c1.65 0 3 1.35 3 3s-1.35 3-' +
-          '3 3-3-1.35-3-3 1.35-3 3-3m0-2c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.' +
-          '24 5-5-2.24-5-5-5z"/></svg>'
+          'fill="none"/><path d="M16.66 4.52l2.83 2.83-2.83 2.83-2.83-2.83 ' +
+          '2.83-2.83M9 5v4H5V5h4m10 10v4h-4v-4h4M9 15v4H5v-4h4m7.66-13.31L1' +
+          '1 7.34 16.66 13l5.66-5.66-5.66-5.65zM11 3H3v8h8V3zm10 10h-8v8h8v' +
+          '-8zm-10 0H3v8h8v-8z"/></svg>'
         FixedColor = clLightgray
         Align = alTop
       end
       object lblLogo: TLabel
         AlignWithMargins = True
-        Left = 13
-        Top = 28
-        Width = 83
+        Left = 3
+        Top = 35
+        Width = 74
         Height = 14
         Margins.Top = 0
-        Margins.Bottom = 2
+        Margins.Bottom = 0
         Align = alBottom
         Alignment = taCenter
         Caption = 'PhotoSweep'
@@ -97,21 +114,6 @@ object fmMain: TfmMain
         ParentFont = False
         ExplicitWidth = 68
       end
-    end
-    object btnAbout: TBitBtn
-      AlignWithMargins = True
-      Left = 935
-      Top = 16
-      Width = 27
-      Height = 27
-      Margins.Top = 8
-      Margins.Bottom = 9
-      Align = alRight
-      ImageIndex = 9
-      ImageName = 'info'
-      Images = svgBtnList
-      TabOrder = 1
-      TabStop = False
     end
   end
   object stbMain: TStatusBar
@@ -132,9 +134,9 @@ object fmMain: TfmMain
   end
   object pnlContainer: TPanel
     Left = 7
-    Top = 67
+    Top = 62
     Width = 977
-    Height = 519
+    Height = 524
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
@@ -143,7 +145,7 @@ object fmMain: TfmMain
       Left = 754
       Top = 3
       Width = 220
-      Height = 513
+      Height = 518
       Align = alRight
       BevelOuter = bvNone
       Padding.Top = 2
@@ -238,7 +240,6 @@ object fmMain: TfmMain
           ImageName = 'preview'
           Images = svgBtnList
           TabOrder = 1
-          ExplicitTop = 67
         end
       end
       object pnlOperations: TPanel
@@ -255,7 +256,6 @@ object fmMain: TfmMain
         Padding.Right = 7
         Padding.Bottom = 3
         TabOrder = 2
-        ExplicitTop = 150
         object lblOperations: TLabel
           AlignWithMargins = True
           Left = 11
@@ -320,7 +320,7 @@ object fmMain: TfmMain
             Align = alClient
             ReadOnly = True
             TabOrder = 0
-            Text = 'Select a target folder path...'
+            Text = ' Select a target folder path...'
             ExplicitHeight = 23
           end
           object btnTarget: TBitBtn
@@ -333,6 +333,7 @@ object fmMain: TfmMain
             ImageName = 'folder-open'
             Images = svgBtnList
             TabOrder = 1
+            OnClick = btnTargetClick
           end
         end
         object btnExecute: TBitBtn
@@ -350,7 +351,6 @@ object fmMain: TfmMain
           TabOrder = 3
           StyleName = 'Carbon'
           OnClick = btnExecuteClick
-          ExplicitTop = 130
         end
       end
       object pnlReports: TPanel
@@ -391,7 +391,6 @@ object fmMain: TfmMain
           Images = svgBtnList
           TabOrder = 0
           OnClick = btnLogClick
-          ExplicitWidth = 199
         end
       end
     end
@@ -399,7 +398,7 @@ object fmMain: TfmMain
       Left = 0
       Top = 0
       Width = 751
-      Height = 519
+      Height = 524
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
@@ -467,7 +466,7 @@ object fmMain: TfmMain
           AutoSelect = False
           ReadOnly = True
           TabOrder = 3
-          Text = 'Select a source folder path...'
+          Text = ' Select a source folder path...'
           ExplicitHeight = 23
         end
       end
@@ -475,7 +474,7 @@ object fmMain: TfmMain
         Left = 0
         Top = 39
         Width = 751
-        Height = 480
+        Height = 485
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
@@ -484,9 +483,10 @@ object fmMain: TfmMain
           Left = 3
           Top = 3
           Width = 220
-          Height = 474
+          Height = 479
           Align = alLeft
           BevelOuter = bvNone
+          Enabled = False
           TabOrder = 0
           object pnlFiltersHeader: TPanel
             AlignWithMargins = True
@@ -694,7 +694,7 @@ object fmMain: TfmMain
           Left = 232
           Top = 5
           Width = 513
-          Height = 472
+          Height = 477
           Margins.Left = 6
           Margins.Top = 5
           Margins.Right = 6

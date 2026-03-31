@@ -15,45 +15,30 @@ type TFileController = class
   private
     FItemsManager: TItemsManager;
     FListViewController: TListViewController;
-    FSourceFolder: string;
-    FTargetFolder: string;
-    procedure Move;
-    procedure Copy;
+    procedure Move(TargetFolder: string);
+    procedure Copy(TargetFolder: string);
   public
-    constructor Create(
-      AItemsManager: TItemsManager;
-      AListViewController: TListViewController;
-      ASourceFolder: string;
-      ATargetFolder: string
-    );
-
-    procedure Execute(ActionMode: TActionMode);
+    constructor Create(AItemsManager: TItemsManager; AListViewController: TListViewController);
+    procedure Execute(ActionMode: TActionMode; TargetFolder: string);
 end;
 
 implementation
 
-constructor TFileController.Create(
-  AItemsManager: TItemsManager;
-  AListViewController: TListViewController;
-  ASourceFolder: string;
-  ATargetFolder: string
-);
+constructor TFileController.Create(AItemsManager: TItemsManager;AListViewController: TListViewController);
 begin
   FItemsManager := AItemsManager;
   FListViewController := AListViewController;
-  FSourceFolder := ASourceFolder;
-  FTargetFolder := ATargetFolder;
 end;
 
-procedure TFileController.Execute(ActionMode: TActionMode);
+procedure TFileController.Execute(ActionMode: TActionMode; TargetFolder: string);
 begin
   case ActionMode of
-    mdMove: Move;
-    mdCopy: Copy;
+    mdMove: Move(TargetFolder);
+    mdCopy: Copy(TargetFolder);
   end;
 end;
 
-procedure TFileController.Move;
+procedure TFileController.Move(TargetFolder: string);
 var
   Item: TItem;
   SourcePath, TargetPath, TempPath: string;
@@ -75,7 +60,7 @@ begin
     for Item in ToMove do
     begin
       SourcePath := Item.FilePath;
-      TargetPath := TPath.Combine(FTargetFolder, Item.FileName);
+      TargetPath := TPath.Combine(TargetFolder, Item.FileName);
       TempPath := TargetPath + '.part';
       try
         TFile.Copy(SourcePath, TempPath, True);
@@ -108,7 +93,7 @@ begin
   ShowMessage(Format('%d file(s) moved successfully.', [MovedCount]));
 end;
 
-procedure TFileController.Copy;
+procedure TFileController.Copy(TargetFolder: string);
 var
   Item: TItem;
   SourcePath, TargetPath: string;
@@ -126,7 +111,7 @@ begin
     if Item.IsSelected then
     begin
       SourcePath := Item.FilePath;
-      TargetPath := TPath.Combine(FTargetFolder, Item.FileName);
+      TargetPath := TPath.Combine(TargetFolder, Item.FileName);
       try
         TFile.Copy(SourcePath, TargetPath, True);
         if FileExists(TargetPath) then
@@ -144,6 +129,5 @@ begin
   end;
   ShowMessage(Format('%d file(s) copied successfully.', [CopiedCount]));
 end;
-
 
 end.
