@@ -2,7 +2,7 @@ object fmAbout: TfmAbout
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
+  BorderStyle = bsDialog
   Caption = 'PhotoSweep - About'
   ClientHeight = 211
   ClientWidth = 384
@@ -16,7 +16,7 @@ object fmAbout: TfmAbout
   TextHeight = 15
   object svgLogo: TSVGIconImage
     Left = 174
-    Top = 16
+    Top = 12
     Width = 30
     Height = 30
     AutoSize = False

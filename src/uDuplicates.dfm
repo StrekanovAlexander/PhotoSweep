@@ -2,7 +2,7 @@ object fmDuplicates: TfmDuplicates
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
+  BorderStyle = bsDialog
   Caption = 'PhotoSweep - Duplicates'
   ClientHeight = 561
   ClientWidth = 784
@@ -88,7 +88,6 @@ object fmDuplicates: TfmDuplicates
       Images = svgBtns
       TabOrder = 2
       OnClick = btnDeleteClick
-      ExplicitLeft = 646
     end
     object btnClose: TBitBtn
       AlignWithMargins = True
@@ -103,9 +102,6 @@ object fmDuplicates: TfmDuplicates
       Images = svgBtns
       TabOrder = 3
       OnClick = btnCloseClick
-      ExplicitLeft = 543
-      ExplicitTop = 0
-      ExplicitHeight = 25
     end
   end
   object stbDuplicates: TStatusBar

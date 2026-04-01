@@ -2,7 +2,7 @@ object fmLog: TfmLog
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
+  BorderStyle = bsDialog
   Caption = 'PhotoSweep - Log'
   ClientHeight = 441
   ClientWidth = 624
@@ -47,7 +47,6 @@ object fmLog: TfmLog
       Images = svgBtns
       TabOrder = 0
       OnClick = btnCloseClick
-      ExplicitLeft = 543
     end
   end
   object svgBtns: TSVGIconImageList

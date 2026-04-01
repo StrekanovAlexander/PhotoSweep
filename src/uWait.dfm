@@ -1,6 +1,7 @@
 object fmWait: TfmWait
   Left = 0
   Top = 0
+  BorderIcons = []
   BorderStyle = bsNone
   ClientHeight = 120
   ClientWidth = 300
@@ -21,8 +22,6 @@ object fmWait: TfmWait
     Align = alTop
     Alignment = taCenter
     Caption = 'Please wait, loading files'#8230
-    ExplicitLeft = 75
-    ExplicitTop = 67
     ExplicitWidth = 137
   end
   object svgImg: TSVGIconImage

@@ -2,7 +2,7 @@ object fmViewer: TfmViewer
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsSingle
+  BorderStyle = bsDialog
   Caption = 'PhotoSweep - Viewer'
   ClientHeight = 711
   ClientWidth = 984
@@ -26,7 +26,6 @@ object fmViewer: TfmViewer
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 1178
     object imgViewer: TImage
       Left = 0
       Top = 0
@@ -51,7 +50,6 @@ object fmViewer: TfmViewer
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 1178
     object lblFileName: TLabel
       AlignWithMargins = True
       Left = 3
@@ -94,7 +92,6 @@ object fmViewer: TfmViewer
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 1172
       object chkSelected: TCheckBox
         Left = 453
         Top = 2
@@ -114,7 +111,6 @@ object fmViewer: TfmViewer
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 1178
       object btnPrev: TSpeedButton
         Left = 405
         Top = 1
@@ -156,7 +152,6 @@ object fmViewer: TfmViewer
         Text = 'Esc  Exit'
         Width = 100
       end>
-    ExplicitWidth = 1178
   end
   object svgBtnList: TSVGIconImageList
     Size = 15
