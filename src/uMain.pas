@@ -20,7 +20,7 @@ uses
   uItemsManager,
   uFileUtils,
   uFilterSet,
-  uLog
+  uLog, uAbout, uWait
 ;
 
 type
@@ -85,6 +85,7 @@ type
     procedure rbMoveClick(Sender: TObject);
     procedure btnExecuteClick(Sender: TObject);
     procedure btnTargetClick(Sender: TObject);
+    procedure btnAboutClick(Sender: TObject);
   private
     FDuplicatesController: TDuplicatesController;
     FListViewController: TListViewController;
@@ -139,6 +140,7 @@ begin
   FDuplicatesController := TDuplicatesController.Create(
     FItemsManager,
     FListViewController,
+    FFilterController,
     btnDuplicates
   );
 
@@ -159,6 +161,17 @@ begin
   FFilterSet.Free;
   FItemsManager.Free;
   FFileController.Free;
+end;
+
+procedure TfmMain.btnAboutClick(Sender: TObject);
+var fmAbout: TfmAbout;
+begin
+  fmAbout := TfmAbout.Create(nil);
+  try
+    fmAbout.ShowModal;
+  finally
+    fmAbout.Free;
+  end;
 end;
 
 procedure TfmMain.btnExecuteClick(Sender: TObject);
@@ -230,21 +243,30 @@ end;
 
 procedure TfmMain.LoadData;
 var
+  fmWait: TfmWait;
   Files: TStringDynArray;
 begin
-  FListViewController.Clear;
-  FItemsManager.Clear;
-  Files := ReadFolder(FSourceFolder);
-  TFileScanThread.Create(Files, FReader,
-    procedure(Meta: TFileMetadata)
-    begin
-      FItemsManager.AddItem(Meta);
-    end,
-    procedure
-    begin
-      FListViewController.Build(FItemsManager);
-    end
-  );
+  fmWait := TfmWait.Create(nil);
+  try
+    FListViewController.Clear;
+    FItemsManager.Clear;
+    Files := ReadFolder(FSourceFolder);
+    TFileScanThread.Create(Files, FReader,
+      procedure(Meta: TFileMetadata)
+      begin
+        FItemsManager.AddItem(Meta);
+      end,
+      procedure
+      begin
+        fmWait.Close;         // показываем форму
+        FListViewController.Build(FItemsManager);
+      end
+    );
+    fmWait.ShowModal;         // показываем форму
+  finally
+    fmWait.Free;
+  end;
+  FFilterController.ResetCheckBoxes;
 end;
 
 procedure TfmMain.rbMoveClick(Sender: TObject);

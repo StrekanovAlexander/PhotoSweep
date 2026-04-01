@@ -107,6 +107,7 @@
         <DCC_ExeOutput>.\dist\x86\</DCC_ExeOutput>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <Icon_MainIcon>assets\ico\widgets.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
@@ -171,6 +172,14 @@
         </DCCReference>
         <DCCReference Include="src\Controllers\uFileController.pas"/>
         <DCCReference Include="src\Model\uAppEnums.pas"/>
+        <DCCReference Include="src\uAbout.pas">
+            <Form>fmAbout</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\uWait.pas">
+            <Form>fmWait</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

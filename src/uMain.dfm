@@ -58,6 +58,7 @@ object fmMain: TfmMain
       ImageName = 'info'
       Images = svgBtnList
       Flat = True
+      OnClick = btnAboutClick
       ExplicitLeft = 939
       ExplicitTop = 6
       ExplicitHeight = 43

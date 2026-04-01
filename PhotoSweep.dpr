@@ -38,7 +38,9 @@ uses
   uLogger in 'src\Core\uLogger.pas',
   uLog in 'src\uLog.pas' {fmLog},
   uFileController in 'src\Controllers\uFileController.pas',
-  uAppEnums in 'src\Model\uAppEnums.pas';
+  uAppEnums in 'src\Model\uAppEnums.pas',
+  uAbout in 'src\uAbout.pas' {fmAbout},
+  uWait in 'src\uWait.pas' {fmWait};
 
 var
   hMutex: THandle;
@@ -57,6 +59,8 @@ begin
   Application.CreateForm(TfmViewer, fmViewer);
   Application.CreateForm(TfmDuplicates, fmDuplicates);
   Application.CreateForm(TfmLog, fmLog);
+  Application.CreateForm(TfmAbout, fmAbout);
+  Application.CreateForm(TfmWait, fmWait);
   Application.Run;
   Logger.Free;
 end.

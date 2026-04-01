@@ -6,13 +6,15 @@ uses
   System.SysUtils, System.Classes, IdHash, IdHashMessageDigest,
   System.Generics.Collections, System.Generics.Defaults,
   Vcl.Dialogs, Vcl.Buttons,
-  uItem, uItemsManager, uListViewController,
+  uItem, uItemsManager,
+  uListViewController, uFilterController,
   uDuplicates;
 
 type TDuplicatesController = class
   private
     FItemsManager: TItemsManager;
     FListViewController: TListViewController;
+    FFilterController: TFilterController;
     FDuplicatesDictionary: TDictionary<string, TList<TItem>>;
     FDuplicatesBtn: TBitbtn;
 
@@ -23,6 +25,7 @@ type TDuplicatesController = class
     constructor Create(
       AItemsManager: TItemsManager;
       AListViewController: TListViewController;
+      AFilterController: TFilterController;
       ADuplicatesBtn: TBitbtn
     );
     destructor Destroy; override;
@@ -36,11 +39,13 @@ const
 constructor TDuplicatesController.Create(
   AItemsManager: TItemsManager;
   AListViewController: TListViewController;
+  AFilterController: TFilterController;
   ADuplicatesBtn: TBitbtn
 );
 begin
   FItemsManager :=  AItemsManager;
   FListViewController := AListViewController;
+  FFilterController := AFilterController;
   FDuplicatesBtn := ADuplicatesBtn;
   FDuplicatesBtn.OnClick := DuplicatesBtnClick;
 end;
@@ -77,6 +82,8 @@ begin
      ShowMessage('No duplicates.');
      Exit;
   end;
+
+  FFilterController.ResetCheckBoxes;
 
   fmDuplicates := TfmDuplicates.Create(nil, FDuplicatesDictionary);
   try

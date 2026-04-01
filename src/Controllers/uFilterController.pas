@@ -40,6 +40,7 @@ type TFilterController = class
       ALandscapeCheckBox, APortraitCheckBox, ASquareCheckBox: TCheckBox;
       AJpgCheckBox, APngCheckBox, AGifCheckBox: TCheckBox
     );
+    procedure ResetCheckBoxes;
 end;
 
 implementation
@@ -130,6 +131,19 @@ begin
   finally
     FListViewController.ListView.Items.EndUpdate;
   end;
+end;
+
+procedure TFilterController.ResetCheckBoxes;
+begin
+  FHasExifCheckBox.Checked := False;
+
+  FLandscapeCheckBox.Checked := False;
+  FPortraitCheckBox.Checked := False;
+  FSquareCheckBox.Checked := False;
+
+  FJpgCheckBox.Checked := False;
+  FPngCheckBox.Checked := False;
+  FGifCheckBox.Checked := False;
 end;
 
 end.
